@@ -22,7 +22,7 @@ public class App {
 		if (((Skladiste) session.get(Skladiste.class, broj_skladista)) == null) {
 			System.out.println("Pravim skaldište...");
 			Skladiste s = new Skladiste();
-			s.setBroj_skladista(2);
+			s.setBroj_skladista(broj_skladista);
 			Integer id = (Integer) session.save(s);
 			System.out.println("Novo skladište sa brojem " + id);
 			t.commit();
