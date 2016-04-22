@@ -13,7 +13,7 @@ import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
 public class App {
 	public static void main(String[] args) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		kreirajSkladiste(session, 1);
+		kreirajSkladiste(session, 3);
 	}
 
 	private static void kreirajSkladiste(Session session, int broj_skladista) {
