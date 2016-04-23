@@ -1,9 +1,10 @@
-package ba.unsa.etf.si.app.SIDEVS.Interfejsi;
+package ba.unsa.etf.si.app.SIDEVS.Forms;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
@@ -43,6 +44,7 @@ public class Login {
 		frmLogin = new JFrame();
 		frmLogin.setTitle("Login");
 		frmLogin.setBounds(100, 100, 279, 267);
+		frmLogin.setResizable(false);
 		frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmLogin.getContentPane().setLayout(null);
 		
@@ -59,7 +61,7 @@ public class Login {
 		frmLogin.getContentPane().add(korisnickoIme);
 		korisnickoIme.setColumns(10);
 		
-		password = new JTextField();
+		password = new JPasswordField();
 		password.setBounds(64, 115, 131, 20);
 		frmLogin.getContentPane().add(password);
 		password.setColumns(10);

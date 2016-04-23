@@ -1,4 +1,4 @@
-package ba.unsa.etf.si.app.SIDEVS.Klase;
+package ba.unsa.etf.si.app.SIDEVS.Class;
 
 import java.io.Serializable;
 import javax.persistence.Entity;

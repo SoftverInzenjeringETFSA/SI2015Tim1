@@ -1,9 +1,14 @@
-package ba.unsa.etf.si.app.SIDEVS.Interfejsi;
+package ba.unsa.etf.si.app.SIDEVS.Forms;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+
+import ba.unsa.etf.si.app.SIDEVS.Class.Korisnik;
+import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
+import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
+
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
@@ -128,7 +133,8 @@ public class AdminModifikacijaKorisnika {
 		btnModifikacija.setBounds(129, 390, 89, 23);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(btnModifikacija);
 		
-		JComboBox listaKorisnikaModifikacija = new JComboBox();
+		//JComboBox listaKorisnikaModifikacija = new JComboBox();
+		AutoCompleteJComboBox  listaKorisnikaModifikacija = new AutoCompleteJComboBox(HibernateUtil.getSessionFactory().openSession(), Korisnik.class);
 		listaKorisnikaModifikacija.setBounds(129, 34, 143, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(listaKorisnikaModifikacija);
 		
