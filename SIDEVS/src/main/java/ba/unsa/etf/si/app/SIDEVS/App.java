@@ -24,15 +24,15 @@ import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
 public class App {
 	public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		/*
-	 	kreirajSkladiste(session, 3);
+	 	//kreirajSkladiste(session, 3);
 		try {
-			Radnik k = new Radnik();
+			System.out.println("Kreiram!");
+			Administrator k = new Administrator();
 			k.setIme("Korisnik");
 			k.setPrezime("Korisnicki");
 			k.setJmbg("1234567891234");
 			k.setAdresa("Adresa bb");
-			k.setEmail("example@test.com");
+			k.setEmail("admin");
 			k.setTelefon("012353451");
 			k.setDatum_polaska_rada(new Date());
 			k.setRadno_mjesto("radnik");
@@ -42,11 +42,10 @@ public class App {
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
-		*/
-		dajSveKorisnike(session);
+		//dajSveKorisnike(session);
 	}
 
-	private static void kreirajKorisnikaAdmin(Session session, Radnik a) {
+	private static void kreirajKorisnikaAdmin(Session session, Administrator a) {
 		Transaction t = session.beginTransaction();
 		session.save(a);
 		t.commit();

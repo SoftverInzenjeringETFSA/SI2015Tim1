@@ -1,6 +1,8 @@
 package ba.unsa.etf.si.app.SIDEVS.Forms;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -72,6 +74,16 @@ public class Login {
 		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setBounds(64, 152, 131, 23);
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+					AdminPocetniEkran ape = new AdminPocetniEkran(korisnickoIme.getText(), password.getText());
+				}
+				catch(Exception ex){
+					System.out.println(ex);
+				}
+			}
+		});
 		frmLogin.getContentPane().add(btnLogin);
 	}
 }

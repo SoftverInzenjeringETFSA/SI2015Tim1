@@ -5,14 +5,14 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 
-public class AdminPocetniEkran {
+public class AdminPocetniEkran extends Sessions {
 
 	private JFrame frmAdministratorPocetniEkran;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -23,13 +23,16 @@ public class AdminPocetniEkran {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the application.
+	 * @throws Exception 
 	 */
-	public AdminPocetniEkran() {
+	public AdminPocetniEkran(String email, String password) throws Exception {
+		super(email, password);
 		initialize();
+		frmAdministratorPocetniEkran.setVisible(true);
 	}
 
 	/**

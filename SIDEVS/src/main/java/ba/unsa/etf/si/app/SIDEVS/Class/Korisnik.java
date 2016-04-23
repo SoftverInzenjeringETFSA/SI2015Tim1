@@ -13,7 +13,9 @@ import java.util.Date;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +23,9 @@ import javax.persistence.Id;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+/*@Table(name = "user", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email")
+})*/
 public abstract class Korisnik {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,9 +39,15 @@ public abstract class Korisnik {
 	private Date datum_polaska_rada;
 	private String radno_mjesto;
 	private byte[] lozinka;
-	
-	@Transient
 	private byte[] salt;
+
+	public byte[] getSalt() {
+		return salt;
+	}
+
+	public void setSalt(byte[] salt) {
+		this.salt = salt;
+	}
 
 	public int getId() {
 		return id;
@@ -123,7 +134,7 @@ public abstract class Korisnik {
 	}
 	
 	// enkripcija lozinke
-	public boolean authenticate(String attemptedPassword, byte[] encryptedPassword)
+	public boolean authenticate(String attemptedPassword)
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
 		// Encrypt the clear-text password using the same salt that was used to
 		// encrypt the original password
@@ -131,7 +142,7 @@ public abstract class Korisnik {
 
 		// Authentication succeeds if encrypted password that the user entered
 		// is equal to the stored hash
-		return Arrays.equals(encryptedPassword, encryptedAttemptedPassword);
+		return Arrays.equals(lozinka, encryptedAttemptedPassword);
 	}
 
 	public byte[] getEncryptedPassword(String password)
@@ -152,7 +163,6 @@ public abstract class Korisnik {
 		KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, iterations, derivedKeyLength);
 
 		SecretKeyFactory f = SecretKeyFactory.getInstance(algorithm);
-
 		return f.generateSecret(spec).getEncoded();
 	}
 
