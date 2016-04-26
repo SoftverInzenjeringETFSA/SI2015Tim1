@@ -1,10 +1,10 @@
-package ba.unsa.etf.si.app.SIDEVS.Forms;
+package ba.unsa.etf.si.app.SIDEVS.View;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
-import ba.unsa.etf.si.app.SIDEVS.Class.Korisnik;
+import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
 import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
 
 public abstract class Sessions {

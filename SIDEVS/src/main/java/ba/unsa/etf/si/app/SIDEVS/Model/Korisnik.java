@@ -1,4 +1,4 @@
-package ba.unsa.etf.si.app.SIDEVS.Class;
+package ba.unsa.etf.si.app.SIDEVS.Model;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -12,9 +12,7 @@ import java.util.Date;
 
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,9 +21,9 @@ import javax.persistence.Id;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-/*@Table(name = "user", uniqueConstraints = {
+@Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = "email")
-})*/
+})
 public abstract class Korisnik {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

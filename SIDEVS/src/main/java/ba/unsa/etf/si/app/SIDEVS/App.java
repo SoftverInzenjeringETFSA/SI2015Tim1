@@ -11,10 +11,10 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import ba.unsa.etf.si.app.SIDEVS.Class.Administrator;
-import ba.unsa.etf.si.app.SIDEVS.Class.Korisnik;
-import ba.unsa.etf.si.app.SIDEVS.Class.Radnik;
-import ba.unsa.etf.si.app.SIDEVS.Class.Skladiste;
+import ba.unsa.etf.si.app.SIDEVS.Model.Administrator;
+import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
+import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
+import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
 
 /**

@@ -1,4 +1,4 @@
-package ba.unsa.etf.si.app.SIDEVS.Class;
+package ba.unsa.etf.si.app.SIDEVS.Model;
 
 import java.security.NoSuchAlgorithmException;
 import javax.persistence.Entity;

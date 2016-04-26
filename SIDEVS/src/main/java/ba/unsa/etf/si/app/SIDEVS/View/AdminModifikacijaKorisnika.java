@@ -1,11 +1,11 @@
-package ba.unsa.etf.si.app.SIDEVS.Forms;
+package ba.unsa.etf.si.app.SIDEVS.View;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-import ba.unsa.etf.si.app.SIDEVS.Class.Korisnik;
+import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
 import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 

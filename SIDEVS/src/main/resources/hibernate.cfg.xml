@@ -9,11 +9,16 @@
   <property name="hibernate.connection.password">2015SIEtf</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
   <property name="hibernate.hbm2ddl.auto">update</property>
-  <mapping class="ba.unsa.etf.si.app.SIDEVS.Class.Skladiste"/>
-  <mapping class="ba.unsa.etf.si.app.SIDEVS.Class.Lijek"/>
-  <mapping class="ba.unsa.etf.si.app.SIDEVS.Class.Korisnik"/>
-  <mapping class="ba.unsa.etf.si.app.SIDEVS.Class.Radnik"/>
-  <mapping class="ba.unsa.etf.si.app.SIDEVS.Class.Menadzer"/>
-  <mapping class="ba.unsa.etf.si.app.SIDEVS.Class.Administrator"/>
+  <mapping class="ba.unsa.etf.si.app.SIDEVS.Model.Korisnik"/>
+  <mapping class="ba.unsa.etf.si.app.SIDEVS.Model.Administrator"/>
+  <mapping class="ba.unsa.etf.si.app.SIDEVS.Model.Lijek"/>
+  <mapping class="ba.unsa.etf.si.app.SIDEVS.Model.Menadzer"/>
+  <mapping class="ba.unsa.etf.si.app.SIDEVS.Model.Radnik"/>
+  <mapping class="ba.unsa.etf.si.app.SIDEVS.Model.Skladiste"/>
+  <mapping class="ba.unsa.etf.si.app.SIDEVS.Model.Kupac"/>
+  <mapping class="ba.unsa.etf.si.app.SIDEVS.Model.Lot"/>
+  <mapping class="ba.unsa.etf.si.app.SIDEVS.Model.ObrisanLot"/>
+  <mapping class="ba.unsa.etf.si.app.SIDEVS.Model.Pakovanje"/>
+  <mapping class="ba.unsa.etf.si.app.SIDEVS.Model.Faktura"/>
  </session-factory>
 </hibernate-configuration>

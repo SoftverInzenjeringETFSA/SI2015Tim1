@@ -1,4 +1,4 @@
-package ba.unsa.etf.si.app.SIDEVS.Forms;
+package ba.unsa.etf.si.app.SIDEVS.View;
 
 import java.awt.EventQueue;
 
