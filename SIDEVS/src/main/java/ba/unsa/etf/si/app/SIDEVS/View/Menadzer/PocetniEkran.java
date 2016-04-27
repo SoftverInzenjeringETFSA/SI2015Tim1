@@ -1,4 +1,4 @@
-package ba.unsa.etf.si.app.SIDEVS.View;
+package ba.unsa.etf.si.app.SIDEVS.View.Menadzer;
 
 import java.awt.EventQueue;
 
@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
-public class MenadzerPocetniEkran {
+public class PocetniEkran {
 
 	private JFrame frmMenadzerPocetniEkran;
 
@@ -17,7 +17,7 @@ public class MenadzerPocetniEkran {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenadzerPocetniEkran window = new MenadzerPocetniEkran();
+					PocetniEkran window = new PocetniEkran();
 					window.frmMenadzerPocetniEkran.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -29,7 +29,7 @@ public class MenadzerPocetniEkran {
 	/**
 	 * Create the application.
 	 */
-	public MenadzerPocetniEkran() {
+	public PocetniEkran() {
 		initialize();
 	}
 

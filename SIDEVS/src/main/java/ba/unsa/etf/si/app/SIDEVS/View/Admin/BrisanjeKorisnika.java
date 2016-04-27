@@ -1,4 +1,4 @@
-package ba.unsa.etf.si.app.SIDEVS.View;
+package ba.unsa.etf.si.app.SIDEVS.View.Admin;
 
 import java.awt.EventQueue;
 
@@ -7,7 +7,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
-public class AdminBrisanjeKorisnika {
+public class BrisanjeKorisnika {
 
 	private JFrame frmAdministratorBrisanjeKorisnika;
 
@@ -18,7 +18,7 @@ public class AdminBrisanjeKorisnika {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdminBrisanjeKorisnika window = new AdminBrisanjeKorisnika();
+					BrisanjeKorisnika window = new BrisanjeKorisnika();
 					window.frmAdministratorBrisanjeKorisnika.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -30,7 +30,7 @@ public class AdminBrisanjeKorisnika {
 	/**
 	 * Create the application.
 	 */
-	public AdminBrisanjeKorisnika() {
+	public BrisanjeKorisnika() {
 		initialize();
 	}
 

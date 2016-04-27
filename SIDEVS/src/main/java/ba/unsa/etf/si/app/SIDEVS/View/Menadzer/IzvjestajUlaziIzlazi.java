@@ -1,4 +1,4 @@
-package ba.unsa.etf.si.app.SIDEVS.View;
+package ba.unsa.etf.si.app.SIDEVS.View.Menadzer;
 
 import java.awt.EventQueue;
 
@@ -11,7 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class MenadzerIzvjestajUlaziIzlazi {
+public class IzvjestajUlaziIzlazi {
 
 	private JFrame frmMenadzerIzvjestaO;
 	private JTextField datumOd;
@@ -25,7 +25,7 @@ public class MenadzerIzvjestajUlaziIzlazi {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenadzerIzvjestajUlaziIzlazi window = new MenadzerIzvjestajUlaziIzlazi();
+					IzvjestajUlaziIzlazi window = new IzvjestajUlaziIzlazi();
 					window.frmMenadzerIzvjestaO.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,7 +37,7 @@ public class MenadzerIzvjestajUlaziIzlazi {
 	/**
 	 * Create the application.
 	 */
-	public MenadzerIzvjestajUlaziIzlazi() {
+	public IzvjestajUlaziIzlazi() {
 		initialize();
 	}
 

@@ -1,4 +1,4 @@
-package ba.unsa.etf.si.app.SIDEVS.View;
+package ba.unsa.etf.si.app.SIDEVS.View.Menadzer;
 
 import java.awt.EventQueue;
 
@@ -11,7 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class MenadzerIzvjestajZaOdredjeniPeriod {
+public class IzvjestajZaOdredjeniPeriod {
 
 	private JFrame frmMenadzerIzvjestajZa;
 	private JTable IzvjestajZaodredjeniPeriodTable;
@@ -25,7 +25,7 @@ public class MenadzerIzvjestajZaOdredjeniPeriod {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenadzerIzvjestajZaOdredjeniPeriod window = new MenadzerIzvjestajZaOdredjeniPeriod();
+					IzvjestajZaOdredjeniPeriod window = new IzvjestajZaOdredjeniPeriod();
 					window.frmMenadzerIzvjestajZa.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,7 +37,7 @@ public class MenadzerIzvjestajZaOdredjeniPeriod {
 	/**
 	 * Create the application.
 	 */
-	public MenadzerIzvjestajZaOdredjeniPeriod() {
+	public IzvjestajZaOdredjeniPeriod() {
 		initialize();
 	}
 

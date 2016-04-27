@@ -1,4 +1,4 @@
-package ba.unsa.etf.si.app.SIDEVS.View;
+package ba.unsa.etf.si.app.SIDEVS.View.Admin;
 
 import java.awt.EventQueue;
 
@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 
-public class AdminDodavanjeKorisnika {
+public class DodavanjeKorisnika {
 
 	private JFrame frmAdministratorDodavanjeKorisnika;
 	private JTextField ime;
@@ -26,7 +26,7 @@ public class AdminDodavanjeKorisnika {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdminDodavanjeKorisnika window = new AdminDodavanjeKorisnika();
+					DodavanjeKorisnika window = new DodavanjeKorisnika();
 					window.frmAdministratorDodavanjeKorisnika.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,7 +38,7 @@ public class AdminDodavanjeKorisnika {
 	/**
 	 * Create the application.
 	 */
-	public AdminDodavanjeKorisnika() {
+	public DodavanjeKorisnika() {
 		initialize();
 	}
 

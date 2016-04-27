@@ -8,6 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran;
+
 import javax.swing.JButton;
 
 public class Login {
@@ -77,7 +80,7 @@ public class Login {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					AdminPocetniEkran ape = new AdminPocetniEkran(korisnickoIme.getText(), password.getText());
+					PocetniEkran ape = new PocetniEkran(korisnickoIme.getText(), password.getText());
 				}
 				catch(Exception ex){
 					System.out.println(ex);

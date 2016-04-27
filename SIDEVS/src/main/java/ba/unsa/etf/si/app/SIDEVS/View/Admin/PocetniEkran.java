@@ -1,11 +1,14 @@
-package ba.unsa.etf.si.app.SIDEVS.View;
+package ba.unsa.etf.si.app.SIDEVS.View.Admin;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+
+import ba.unsa.etf.si.app.SIDEVS.View.Sessions;
+
 import javax.swing.JButton;
 
-public class AdminPocetniEkran extends Sessions {
+public class PocetniEkran extends Sessions {
 
 	private JFrame frmAdministratorPocetniEkran;
 
@@ -29,7 +32,7 @@ public class AdminPocetniEkran extends Sessions {
 	 * Create the application.
 	 * @throws Exception 
 	 */
-	public AdminPocetniEkran(String email, String password) throws Exception {
+	public PocetniEkran(String email, String password) throws Exception {
 		super(email, password);
 		initialize();
 		frmAdministratorPocetniEkran.setVisible(true);

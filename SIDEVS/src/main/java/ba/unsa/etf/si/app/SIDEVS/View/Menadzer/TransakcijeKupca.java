@@ -1,4 +1,4 @@
-package ba.unsa.etf.si.app.SIDEVS.View;
+package ba.unsa.etf.si.app.SIDEVS.View.Menadzer;
 
 import java.awt.EventQueue;
 
@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
-public class MenadzerTransakcijeKupca {
+public class TransakcijeKupca {
 
 	private JFrame frmMenadzerTransakcijeKupca;
 	private JTable transkacijeKupacaTable;
@@ -26,7 +26,7 @@ public class MenadzerTransakcijeKupca {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenadzerTransakcijeKupca window = new MenadzerTransakcijeKupca();
+					TransakcijeKupca window = new TransakcijeKupca();
 					window.frmMenadzerTransakcijeKupca.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,7 +38,7 @@ public class MenadzerTransakcijeKupca {
 	/**
 	 * Create the application.
 	 */
-	public MenadzerTransakcijeKupca() {
+	public TransakcijeKupca() {
 		initialize();
 	}
 
