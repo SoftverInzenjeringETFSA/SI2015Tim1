@@ -2,7 +2,7 @@ package ba.unsa.etf.si.app.SIDEVS.ViewModel;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 
-public class Lijek {
+public final class Lijek {
 
 	private Sessions s;
 	public Sessions getSessions(){
