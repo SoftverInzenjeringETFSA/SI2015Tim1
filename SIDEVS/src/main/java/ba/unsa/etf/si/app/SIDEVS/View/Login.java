@@ -9,7 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran;
+import ba.unsa.etf.si.app.SIDEVS.ViewModel.Lijek;
 
 import javax.swing.JButton;
 
@@ -52,6 +54,7 @@ public class Login {
 		frmLogin.setResizable(false);
 		frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmLogin.getContentPane().setLayout(null);
+		frmLogin.setLocationRelativeTo(null);
 		
 		JLabel lblKorisnikoIme = new JLabel("Korisničko ime:");
 		lblKorisnikoIme.setBounds(64, 32, 131, 14);
@@ -80,7 +83,10 @@ public class Login {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					PocetniEkran ape = new PocetniEkran(korisnickoIme.getText(), password.getText());
+					Sessions s = Sessions.getInstance(korisnickoIme.getText(), password.getText());
+					PocetniEkran pe = new PocetniEkran(s);
+					frmLogin.setVisible(false);
+					frmLogin.dispose();
 				}
 				catch(Exception ex){
 					System.out.println(ex);
