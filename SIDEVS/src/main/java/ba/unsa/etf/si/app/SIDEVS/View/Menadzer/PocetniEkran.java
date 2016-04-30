@@ -38,12 +38,12 @@ public class PocetniEkran {
 	 */
 	private void initialize() {
 		frmMenadzerPocetniEkran = new JFrame();
-		frmMenadzerPocetniEkran.setTitle("Menadzer-  Pocetni ekran");
+		frmMenadzerPocetniEkran.setTitle("Početni ekran");
 		frmMenadzerPocetniEkran.setBounds(100, 100, 695, 300);
 		frmMenadzerPocetniEkran.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenadzerPocetniEkran.getContentPane().setLayout(null);
 		
-		JLabel lblIzvjestaj = new JLabel("Izvjestaj");
+		JLabel lblIzvjestaj = new JLabel("Izvještaj");
 		lblIzvjestaj.setBounds(10, 11, 106, 14);
 		frmMenadzerPocetniEkran.getContentPane().add(lblIzvjestaj);
 		
@@ -59,7 +59,7 @@ public class PocetniEkran {
 		lblKupac.setBounds(373, 135, 46, 14);
 		frmMenadzerPocetniEkran.getContentPane().add(lblKupac);
 		
-		JButton btnTrenutnoStanjeNa = new JButton("Trenutno stanje na skladistima");
+		JButton btnTrenutnoStanjeNa = new JButton("Trenutno stanje na skladištima");
 		btnTrenutnoStanjeNa.setBounds(10, 28, 299, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnTrenutnoStanjeNa);
 		
@@ -83,19 +83,19 @@ public class PocetniEkran {
 		btnOtpisLijekova.setBounds(528, 62, 141, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnOtpisLijekova);
 		
-		JButton btnDesavanjaZaOdredjeni = new JButton("Desavanja za odredjeni vremenski period");
+		JButton btnDesavanjaZaOdredjeni = new JButton("Dešavanja za određeni vremenski period");
 		btnDesavanjaZaOdredjeni.setBounds(10, 160, 309, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnDesavanjaZaOdredjeni);
 		
-		JButton btnIzvjestajOUlazima = new JButton("Izvjestaj o ulazima i izlazima");
+		JButton btnIzvjestajOUlazima = new JButton("Izvještaj o ulazima i izlazima");
 		btnIzvjestajOUlazima.setBounds(10, 194, 309, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnIzvjestajOUlazima);
 		
-		JButton btnIzvjestajOUlazima_1 = new JButton("Izvjestaj o ulazima i izlazima na osnovu lota");
+		JButton btnIzvjestajOUlazima_1 = new JButton("Izvještaj o ulazima i izlazima na osnovu lota");
 		btnIzvjestajOUlazima_1.setBounds(10, 228, 309, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnIzvjestajOUlazima_1);
 		
-		JButton btnObrisi = new JButton("Obrisi");
+		JButton btnObrisi = new JButton("Obriši");
 		btnObrisi.setBounds(373, 160, 296, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnObrisi);
 		
@@ -103,7 +103,7 @@ public class PocetniEkran {
 		btnOdjava.setBounds(373, 228, 145, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnOdjava);
 		
-		JButton btnPomoc = new JButton("Pomoc");
+		JButton btnPomoc = new JButton("Pomoć");
 		btnPomoc.setBounds(528, 228, 141, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnPomoc);
 	}
