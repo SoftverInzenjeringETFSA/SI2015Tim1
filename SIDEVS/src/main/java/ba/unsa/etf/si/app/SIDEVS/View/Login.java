@@ -13,8 +13,6 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Administrator;
 import ba.unsa.etf.si.app.SIDEVS.Model.Menadzer;
 import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
-import ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran;
-import ba.unsa.etf.si.app.SIDEVS.ViewModel.LijekVM;
 
 import javax.swing.JButton;
 import java.awt.Color;
@@ -94,13 +92,13 @@ public class Login {
 				try{
 					Sessions s = Sessions.getInstance(korisnickoIme.getText(), password.getText());
 					if(s.getKorisnik().getClass() == Administrator.class){
-						ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran pe = new ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran(s);
+						new ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran(s);
 					}
 					else if(s.getKorisnik().getClass() == Menadzer.class){
-						ba.unsa.etf.si.app.SIDEVS.View.Menadzer.PocetniEkran pe = new ba.unsa.etf.si.app.SIDEVS.View.Menadzer.PocetniEkran(s);
+						new ba.unsa.etf.si.app.SIDEVS.View.Menadzer.PocetniEkran(s);
 					}
 					else if(s.getKorisnik().getClass() == Radnik.class){
-						ba.unsa.etf.si.app.SIDEVS.View.Radnik.PocetniEkran pe = new ba.unsa.etf.si.app.SIDEVS.View.Radnik.PocetniEkran(s);
+						new ba.unsa.etf.si.app.SIDEVS.View.Radnik.PocetniEkran(s);
 					}
 					frmLogin.setVisible(false);
 					frmLogin.dispose();

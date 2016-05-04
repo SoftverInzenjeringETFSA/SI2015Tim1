@@ -8,10 +8,14 @@ import javax.swing.JLabel;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 
 import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PocetniEkran {
 
 	private JFrame frmMenadzerPocetniEkran;
+	private Sessions s;
+	private EvidencijaLijeka el;
 
 	/**
 	 * Launch the application.
@@ -37,6 +41,7 @@ public class PocetniEkran {
 	}
 	public PocetniEkran(Sessions s) throws Exception{
 		initialize();
+		this.s = s;
 		frmMenadzerPocetniEkran.setVisible(true);
 		if(!s.daLiPostoji()){
 			throw new Exception("Sesija nije kreirana!");
@@ -47,16 +52,18 @@ public class PocetniEkran {
 	 */
 	private void initialize() {
 		frmMenadzerPocetniEkran = new JFrame();
+		frmMenadzerPocetniEkran.setResizable(false);
 		frmMenadzerPocetniEkran.setTitle("Početni ekran");
 		frmMenadzerPocetniEkran.setBounds(100, 100, 695, 300);
 		frmMenadzerPocetniEkran.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenadzerPocetniEkran.getContentPane().setLayout(null);
+		frmMenadzerPocetniEkran.setLocationRelativeTo(null);
 		
 		JLabel lblIzvjestaj = new JLabel("Izvještaj");
 		lblIzvjestaj.setBounds(10, 11, 106, 14);
 		frmMenadzerPocetniEkran.getContentPane().add(lblIzvjestaj);
 		
-		JLabel lblLijek = new JLabel("LijekVM");
+		JLabel lblLijek = new JLabel("Lijek");
 		lblLijek.setBounds(373, 11, 46, 14);
 		frmMenadzerPocetniEkran.getContentPane().add(lblLijek);
 		
@@ -77,6 +84,17 @@ public class PocetniEkran {
 		frmMenadzerPocetniEkran.getContentPane().add(btnTransakcijeKupaca);
 		
 		JButton btnEvidencijaLijekova = new JButton("Evidencija lijekova");
+		btnEvidencijaLijekova.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					if(el == null) el = new EvidencijaLijeka(s);
+					el.prikazi();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		btnEvidencijaLijekova.setBounds(373, 28, 145, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnEvidencijaLijekova);
 		
