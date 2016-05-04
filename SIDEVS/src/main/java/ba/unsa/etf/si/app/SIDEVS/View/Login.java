@@ -9,11 +9,15 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import ba.unsa.etf.si.app.SIDEVS.Model.Administrator;
+import ba.unsa.etf.si.app.SIDEVS.Model.Menadzer;
+import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran;
-import ba.unsa.etf.si.app.SIDEVS.ViewModel.Lijek;
+import ba.unsa.etf.si.app.SIDEVS.ViewModel.LijekVM;
 
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class Login {
 
@@ -49,9 +53,9 @@ public class Login {
 	 */
 	private void initialize() {
 		frmLogin = new JFrame();
-		frmLogin.setTitle("Login");
-		frmLogin.setBounds(100, 100, 279, 267);
 		frmLogin.setResizable(false);
+		frmLogin.setTitle("Login");
+		frmLogin.setBounds(100, 100, 279, 279);
 		frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmLogin.getContentPane().setLayout(null);
 		frmLogin.setLocationRelativeTo(null);
@@ -78,18 +82,31 @@ public class Login {
 		lblPromijeniPassword.setBounds(74, 186, 131, 14);
 		frmLogin.getContentPane().add(lblPromijeniPassword);
 		
+		final JLabel labelError = new JLabel("");
+		labelError.setForeground(Color.RED);
+		labelError.setBounds(10, 216, 253, 14);
+		frmLogin.getContentPane().add(labelError);
+		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setBounds(64, 152, 131, 23);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					Sessions s = Sessions.getInstance(korisnickoIme.getText(), password.getText());
-					PocetniEkran pe = new PocetniEkran(s);
+					if(s.getKorisnik().getClass() == Administrator.class){
+						ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran pe = new ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran(s);
+					}
+					else if(s.getKorisnik().getClass() == Menadzer.class){
+						ba.unsa.etf.si.app.SIDEVS.View.Menadzer.PocetniEkran pe = new ba.unsa.etf.si.app.SIDEVS.View.Menadzer.PocetniEkran(s);
+					}
+					else if(s.getKorisnik().getClass() == Radnik.class){
+						ba.unsa.etf.si.app.SIDEVS.View.Radnik.PocetniEkran pe = new ba.unsa.etf.si.app.SIDEVS.View.Radnik.PocetniEkran(s);
+					}
 					frmLogin.setVisible(false);
 					frmLogin.dispose();
 				}
 				catch(Exception ex){
-					System.out.println(ex);
+					labelError.setText(ex.getMessage());
 				}
 			}
 		});

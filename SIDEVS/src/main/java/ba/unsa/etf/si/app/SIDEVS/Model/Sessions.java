@@ -26,8 +26,7 @@ public final class Sessions {
 		System.out.println("Setup new session");
 		session = HibernateUtil.getSessionFactory().openSession();
 		trasaction = session.beginTransaction();
-		korisnik = (Korisnik) session.createCriteria(Korisnik.class).add(Restrictions.eq("email", email))
-				.uniqueResult();
+		korisnik = (Korisnik) session.createCriteria(Korisnik.class).add(Restrictions.eq("email", email)).uniqueResult();
 		if (korisnik != null) {
 			System.out.println("Korisnik: " + korisnik.getIme());
 			kreirajSesiju(password);

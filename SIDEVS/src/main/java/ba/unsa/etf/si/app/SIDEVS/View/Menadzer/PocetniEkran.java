@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+
 import javax.swing.JButton;
 
 public class PocetniEkran {
@@ -32,7 +35,13 @@ public class PocetniEkran {
 	public PocetniEkran() {
 		initialize();
 	}
-
+	public PocetniEkran(Sessions s) throws Exception{
+		initialize();
+		frmMenadzerPocetniEkran.setVisible(true);
+		if(!s.daLiPostoji()){
+			throw new Exception("Sesija nije kreirana!");
+		}
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -47,7 +56,7 @@ public class PocetniEkran {
 		lblIzvjestaj.setBounds(10, 11, 106, 14);
 		frmMenadzerPocetniEkran.getContentPane().add(lblIzvjestaj);
 		
-		JLabel lblLijek = new JLabel("Lijek");
+		JLabel lblLijek = new JLabel("LijekVM");
 		lblLijek.setBounds(373, 11, 46, 14);
 		frmMenadzerPocetniEkran.getContentPane().add(lblLijek);
 		

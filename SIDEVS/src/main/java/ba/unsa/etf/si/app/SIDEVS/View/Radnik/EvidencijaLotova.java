@@ -56,7 +56,7 @@ public class EvidencijaLotova {
 		lblBrojLota.setBounds(10, 11, 99, 14);
 		frmEvidencijaLota.getContentPane().add(lblBrojLota);
 		
-		JLabel lblLijek = new JLabel("Lijek:");
+		JLabel lblLijek = new JLabel("LijekVM:");
 		lblLijek.setBounds(10, 36, 99, 14);
 		frmEvidencijaLota.getContentPane().add(lblLijek);
 		

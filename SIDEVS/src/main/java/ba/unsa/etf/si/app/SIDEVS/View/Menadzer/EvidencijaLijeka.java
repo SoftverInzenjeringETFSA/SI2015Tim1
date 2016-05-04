@@ -5,7 +5,13 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import ba.unsa.etf.si.app.SIDEVS.ViewModel.LijekVM;
+
 import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Color;
 
 public class EvidencijaLijeka {
 
@@ -74,7 +80,18 @@ public class EvidencijaLijeka {
 		frmEvidencijaLijeka.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
 		
+		final JLabel labelError = new JLabel("");
+		labelError.setForeground(Color.RED);
+		labelError.setBounds(10, 141, 365, 14);
+		frmEvidencijaLijeka.getContentPane().add(labelError);
+		
 		JButton btnEvidentiraj = new JButton("Evidentiraj");
+		btnEvidentiraj.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//LijekVM l = new LijekVM();
+			}
+		});
 		btnEvidentiraj.setBounds(126, 89, 181, 23);
 		frmEvidencijaLijeka.getContentPane().add(btnEvidentiraj);
 	}

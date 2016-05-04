@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+
+import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+
 import javax.swing.JButton;
 
 public class PocetniEkran {
@@ -33,7 +36,13 @@ public class PocetniEkran {
 	public PocetniEkran() {
 		initialize();
 	}
-
+	public PocetniEkran(Sessions s) throws Exception{
+		initialize();
+		frmPoetniEkran.setVisible(true);
+		if(!s.daLiPostoji()){
+			throw new Exception("Sesija nije kreirana!");
+		}
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -45,7 +54,7 @@ public class PocetniEkran {
 		frmPoetniEkran.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Lijek", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(null, "LijekVM", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(10, 11, 414, 98);
 		frmPoetniEkran.getContentPane().add(panel);
 		panel.setLayout(null);
