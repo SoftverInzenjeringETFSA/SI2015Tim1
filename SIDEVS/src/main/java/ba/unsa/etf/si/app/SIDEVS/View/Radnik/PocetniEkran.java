@@ -1,43 +1,28 @@
 package ba.unsa.etf.si.app.SIDEVS.View.Radnik;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.View.Radnik.EvidencijaLotova;
 
 import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PocetniEkran {
 
 	private JFrame frmPoetniEkran;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PocetniEkran window = new PocetniEkran();
-					window.frmPoetniEkran.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private Sessions s;
+	private EvidencijaLotova el;
 
 	/**
 	 * Create the application.
 	 */
-	public PocetniEkran() {
-		initialize();
-	}
 	public PocetniEkran(Sessions s) throws Exception{
 		initialize();
+		this.s = s;
 		frmPoetniEkran.setVisible(true);
 		if(!s.daLiPostoji()){
 			throw new Exception("Sesija nije kreirana!");
@@ -60,6 +45,17 @@ public class PocetniEkran {
 		panel.setLayout(null);
 		
 		JButton btnEvidencijaLotova = new JButton("Evidencija lotova");
+		btnEvidencijaLotova.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					if(el == null) el = new EvidencijaLotova(s);
+					el.prikazi();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		btnEvidencijaLotova.setBounds(10, 21, 195, 23);
 		panel.add(btnEvidencijaLotova);
 		

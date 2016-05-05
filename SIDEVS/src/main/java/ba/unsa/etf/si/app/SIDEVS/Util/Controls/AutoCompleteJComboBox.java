@@ -19,6 +19,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 
+
 public class AutoCompleteJComboBox extends JComboBox<Object> {
 
 	private static final long serialVersionUID = 1L;
@@ -57,7 +58,7 @@ public class AutoCompleteJComboBox extends JComboBox<Object> {
 									for (String s : founds) {
 										foundSet.add(s.toString().toLowerCase());
 									}
-									Collections.sort(founds);//sortiranje
+									//Collections.sort(founds);//sortiranje
 									setEditable(false);
 									removeAllItems();
 									// izbjegavanje dodavanja kopija 
@@ -69,9 +70,11 @@ public class AutoCompleteJComboBox extends JComboBox<Object> {
 									}
 									setEditable(true);
 									setPopupVisible(true);
+									
+									tc.requestFocus();
 								}
 							} catch (Exception e) {
-								System.out.println("Greška pri pristupu bazi");
+								System.out.println("Greska u AutoCompleteJComboBox");
 							}
 						}
 					});

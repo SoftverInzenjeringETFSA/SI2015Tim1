@@ -10,7 +10,6 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 
-import javax.swing.JComboBox;
 import javax.swing.JButton;
 
 public class EvidencijaLotova {
@@ -47,7 +46,14 @@ public class EvidencijaLotova {
 	public EvidencijaLotova() {
 		initialize();
 	}
-
+	public EvidencijaLotova(Sessions s) throws Exception {
+		this.s = s;
+		initialize();
+		frmEvidencijaLota.setVisible(true);
+		if (!s.daLiPostoji()) {
+			throw new Exception("Sesija nije kreirana!");
+		}
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -133,5 +139,7 @@ public class EvidencijaLotova {
 		btnEvidentiraj.setBounds(119, 169, 170, 23);
 		frmEvidencijaLota.getContentPane().add(btnEvidentiraj);
 	}
-
+	public void prikazi() {
+		frmEvidencijaLota.setVisible(true);
+	}
 }

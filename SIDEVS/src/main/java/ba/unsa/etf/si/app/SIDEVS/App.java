@@ -25,30 +25,34 @@ import ba.unsa.etf.si.app.SIDEVS.View.Login;
  */
 public class App {
 	public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException {
-		//Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 	 	//kreirajSkladiste(session, 3);
 		try {
-			/*System.out.println("Kreiram!");
-			Menadzer k = new Menadzer();
-			k.setIme("Menadzer");
-			k.setPrezime("Menadzerski");
+			System.out.println("Kreiram!");
+			Radnik k = new Radnik();
+			k.setIme("Radnik");
+			k.setPrezime("Radnicki");
 			k.setJmbg("1234567891234");
 			k.setAdresa("Adresa bb");
-			k.setEmail("menadzer");
+			k.setEmail("radnik");
 			k.setTelefon("012353451");
 			k.setDatum_polaska_rada(new Date());
-			k.setRadno_mjesto("Vlasnik");
+			k.setRadno_mjesto("Radnik");
 			k.setLozinka("password");
-			kreirajKorisnikaMenadzer(session, k);
-			System.out.println("Korisnik kreiran!");*/
-			Login l = new Login();
-			
+			kreirajKorisnikaRadnik(session, k);
+			System.out.println("Korisnik kreiran!");
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
 		//dajSveKorisnike(session);
 	}
 
+	private static void kreirajKorisnikaRadnik(Session session, Radnik a) {
+		Transaction t = session.beginTransaction();
+		session.save(a);
+		t.commit();
+	}
+	
 	private static void kreirajKorisnikaAdmin(Session session, Administrator a) {
 		Transaction t = session.beginTransaction();
 		session.save(a);
