@@ -17,6 +17,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Menadzer;
 import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
+import ba.unsa.etf.si.app.SIDEVS.View.Login;
 
 /**
  * Hello world!
@@ -24,10 +25,10 @@ import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
  */
 public class App {
 	public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		//Session session = HibernateUtil.getSessionFactory().openSession();
 	 	//kreirajSkladiste(session, 3);
 		try {
-			System.out.println("Kreiram!");
+			/*System.out.println("Kreiram!");
 			Menadzer k = new Menadzer();
 			k.setIme("Menadzer");
 			k.setPrezime("Menadzerski");
@@ -39,7 +40,9 @@ public class App {
 			k.setRadno_mjesto("Vlasnik");
 			k.setLozinka("password");
 			kreirajKorisnikaMenadzer(session, k);
-			System.out.println("Korisnik kreiran!");
+			System.out.println("Korisnik kreiran!");*/
+			Login l = new Login();
+			
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}

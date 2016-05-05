@@ -1,5 +1,8 @@
 package ba.unsa.etf.si.app.SIDEVS.ViewModel;
 
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+
 import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 
@@ -38,11 +41,11 @@ public final class LijekVM {
 				l.setId(id);
 				l.setNaziv(naziv);
 				l.setProizvodjac(proizvodjac);
-				if (s.getSession().get(Lijek.class, id) == null) {
+				if (s.getSession().get(Lijek.class, id) == null && s.getSession().createCriteria(Lijek.class).add(Restrictions.eq("naziv", naziv)) .setProjection(Projections.property("naziv")).uniqueResult() == null) {
 					s.getSession().save(l);
 					s.getTrasaction().commit();
 				} else
-					throw new Exception("Lijek sa ovim ID već postoji");
+					throw new Exception("Lijek sa ovim ID ili nazivom već postoji");
 			} catch (Exception ex) {
 				throw ex;
 			}
