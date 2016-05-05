@@ -16,36 +16,18 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
+import ba.unsa.etf.si.app.SIDEVS.View.Login;
 
-/**
- * Hello world!
- *
- */
+
 public class App {
+	
 	public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-	 	//kreirajSkladiste(session, 3);
-		try {
-			System.out.println("Kreiram!");
-			Administrator k = new Administrator();
-			k.setIme("Korisnik");
-			k.setPrezime("Korisnicki");
-			k.setJmbg("1234567891234");
-			k.setAdresa("Adresa bb");
-			k.setEmail("admin");
-			k.setTelefon("012353451");
-			k.setDatum_polaska_rada(new Date());
-			k.setRadno_mjesto("radnik");
-			k.setLozinka("password");
-			kreirajKorisnikaAdmin(session, k);
-			System.out.println("Korisnik kreiran!");
-		} catch (Exception ex) {
-			System.out.println(ex);
-		}
-		//dajSveKorisnike(session);
+		Login l = new Login();
+		l.main(args);
 	}
 
-	private static void kreirajKorisnikaAdmin(Session session, Administrator a) {
+	/*private static void kreirajKorisnikaAdmin(Session session, Administrator a) {
 		Transaction t = session.beginTransaction();
 		session.save(a);
 		t.commit();
@@ -73,6 +55,6 @@ public class App {
 		} else {
 			System.out.println("Skladište sa ovim brojem već postoji!");
 		}
-	}
+	}*/
 
 }

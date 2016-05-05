@@ -1,15 +1,20 @@
 package ba.unsa.etf.si.app.SIDEVS.View.Admin;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
+import ba.unsa.etf.si.app.SIDEVS.Model.Administrator;
+import ba.unsa.etf.si.app.SIDEVS.Model.Menadzer;
+import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 
 import javax.swing.JButton;
 
 public class PocetniEkran {
-
+	private Sessions _sesija;
 	private JFrame frmAdministratorPocetniEkran;
 
 	/**
@@ -42,6 +47,7 @@ public class PocetniEkran {
 		if(!s.daLiPostoji()){
 			throw new Exception("Sesija nije kreirana!");
 		}
+		_sesija = s;
 	}
 
 	/**
@@ -57,10 +63,36 @@ public class PocetniEkran {
 		
 		JButton btnDodajNovogKorisnika = new JButton("Dodaj novog korisnika");
 		btnDodajNovogKorisnika.setBounds(86, 53, 174, 23);
+		btnDodajNovogKorisnika.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{				
+					ba.unsa.etf.si.app.SIDEVS.View.Admin.DodavanjeKorisnika dk = new ba.unsa.etf.si.app.SIDEVS.View.Admin.DodavanjeKorisnika(_sesija);
+								
+					frmAdministratorPocetniEkran.setVisible(false);
+					frmAdministratorPocetniEkran.dispose();
+				}
+				catch(Exception ex){
+					//EXCEPTION
+				}
+			}
+		});
 		frmAdministratorPocetniEkran.getContentPane().add(btnDodajNovogKorisnika);
 		
 		JButton btnModifikujKorisnika = new JButton("Modifikuj korisnika");
 		btnModifikujKorisnika.setBounds(86, 87, 174, 23);
+		btnModifikujKorisnika.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{				
+					ba.unsa.etf.si.app.SIDEVS.View.Admin.ModifikacijaKorisnika mk = new ba.unsa.etf.si.app.SIDEVS.View.Admin.ModifikacijaKorisnika(_sesija);
+								
+					frmAdministratorPocetniEkran.setVisible(false);
+					frmAdministratorPocetniEkran.dispose();
+				}
+				catch(Exception ex){
+					//EXCEPTION
+				}
+			}
+		});
 		frmAdministratorPocetniEkran.getContentPane().add(btnModifikujKorisnika);
 		
 		JButton btnObrisiKorisnika = new JButton("Obrisi korisnika");
