@@ -58,7 +58,7 @@ public class AutoCompleteJComboBox extends JComboBox<Object> {
 									for (String s : founds) {
 										foundSet.add(s.toString().toLowerCase());
 									}
-									//Collections.sort(founds);//sortiranje
+									Collections.sort(founds);//sortiranje
 									setEditable(false);
 									removeAllItems();
 									// izbjegavanje dodavanja kopija 

@@ -33,13 +33,15 @@ public class PocetniEkran {
 	 */
 	private void initialize() {
 		frmPoetniEkran = new JFrame();
+		frmPoetniEkran.setResizable(false);
 		frmPoetniEkran.setTitle("Početni ekran");
 		frmPoetniEkran.setBounds(100, 100, 450, 300);
 		frmPoetniEkran.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPoetniEkran.getContentPane().setLayout(null);
+		frmPoetniEkran.setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "LijekVM", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(null, "Lijek", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(10, 11, 414, 98);
 		frmPoetniEkran.getContentPane().add(panel);
 		panel.setLayout(null);

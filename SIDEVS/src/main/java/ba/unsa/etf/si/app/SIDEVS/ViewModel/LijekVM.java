@@ -13,17 +13,6 @@ public final class LijekVM {
 	public Sessions getSessions() {
 		return this.s;
 	}
-
-	private LijekVM lijek;
-
-	public LijekVM getLijek() {
-		return lijek;
-	}
-
-	public void setLijek(LijekVM lijek) {
-		this.lijek = lijek;
-	}
-
 	public LijekVM(Sessions s) throws Exception {
 		this.s = s;
 	}
