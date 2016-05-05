@@ -134,9 +134,9 @@ public class ModifikacijaKorisnika {
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(btnModifikacija);
 		
 		//JComboBox listaKorisnikaModifikacija = new JComboBox();
-		AutoCompleteJComboBox  listaKorisnikaModifikacija = new AutoCompleteJComboBox(HibernateUtil.getSessionFactory().openSession(), Korisnik.class);
+		/*AutoCompleteJComboBox  listaKorisnikaModifikacija = new AutoCompleteJComboBox(HibernateUtil.getSessionFactory().openSession(), Korisnik.class);
 		listaKorisnikaModifikacija.setBounds(129, 34, 143, 20);
-		frmAdministratormodifikacijaKorisnika.getContentPane().add(listaKorisnikaModifikacija);
+		frmAdministratormodifikacijaKorisnika.getContentPane().add(listaKorisnikaModifikacija);*/
 		
 		JLabel lblOdaberiKorisnika = new JLabel("Odaberi korisnika");
 		lblOdaberiKorisnika.setBounds(129, 9, 169, 14);
