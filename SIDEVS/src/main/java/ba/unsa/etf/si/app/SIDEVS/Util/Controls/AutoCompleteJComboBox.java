@@ -69,6 +69,8 @@ public class AutoCompleteJComboBox extends JComboBox<Object> {
 									}
 									setEditable(true);
 									setPopupVisible(true);
+									
+									tc.requestFocus();
 								}
 							} catch (Exception e) {
 								System.out.println("Greška pri pristupu bazi");
