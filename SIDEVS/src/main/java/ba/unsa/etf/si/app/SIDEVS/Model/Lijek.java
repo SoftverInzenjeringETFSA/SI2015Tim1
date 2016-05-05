@@ -1,6 +1,8 @@
 package ba.unsa.etf.si.app.SIDEVS.Model;
 
 import java.io.Serializable;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -29,6 +31,7 @@ public class Lijek implements Serializable {
 	public void setProizvodjac(String proizvodjac) {
 		this.proizvodjac = proizvodjac;
 	}
+	@Column(unique=true)
 	private String naziv;
 	private String proizvodjac;
 }

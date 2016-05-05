@@ -13,9 +13,11 @@ import org.hibernate.Transaction;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Administrator;
 import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
+import ba.unsa.etf.si.app.SIDEVS.Model.Menadzer;
 import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
+import ba.unsa.etf.si.app.SIDEVS.View.Login;
 
 /**
  * Hello world!
@@ -27,17 +29,17 @@ public class App {
 	 	//kreirajSkladiste(session, 3);
 		try {
 			System.out.println("Kreiram!");
-			Administrator k = new Administrator();
-			k.setIme("Korisnik");
-			k.setPrezime("Korisnicki");
+			Radnik k = new Radnik();
+			k.setIme("Radnik");
+			k.setPrezime("Radnicki");
 			k.setJmbg("1234567891234");
 			k.setAdresa("Adresa bb");
-			k.setEmail("admin");
+			k.setEmail("radnik");
 			k.setTelefon("012353451");
 			k.setDatum_polaska_rada(new Date());
-			k.setRadno_mjesto("radnik");
+			k.setRadno_mjesto("Radnik");
 			k.setLozinka("password");
-			kreirajKorisnikaAdmin(session, k);
+			kreirajKorisnikaRadnik(session, k);
 			System.out.println("Korisnik kreiran!");
 		} catch (Exception ex) {
 			System.out.println(ex);
@@ -45,7 +47,18 @@ public class App {
 		//dajSveKorisnike(session);
 	}
 
+	private static void kreirajKorisnikaRadnik(Session session, Radnik a) {
+		Transaction t = session.beginTransaction();
+		session.save(a);
+		t.commit();
+	}
+	
 	private static void kreirajKorisnikaAdmin(Session session, Administrator a) {
+		Transaction t = session.beginTransaction();
+		session.save(a);
+		t.commit();
+	}
+	private static void kreirajKorisnikaMenadzer(Session session, Menadzer a) {
 		Transaction t = session.beginTransaction();
 		session.save(a);
 		t.commit();
