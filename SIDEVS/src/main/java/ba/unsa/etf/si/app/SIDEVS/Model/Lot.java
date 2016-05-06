@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -21,7 +22,8 @@ public class Lot implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private int broj_lota;
+	@Column(length=6)
+	private String broj_lota;
 	@ManyToOne
     @JoinColumn(name="lijek_id")
 	private Lijek lijek;
@@ -36,10 +38,10 @@ public class Lot implements Serializable{
 	private Set<Faktura> fakture = new HashSet<Faktura>(0);
 	
 	
-	public int getBroj_lota() {
+	public String getBroj_lota() {
 		return broj_lota;
 	}
-	public void setBroj_lota(int broj_lota) {
+	public void setBroj_lota(String broj_lota) {
 		this.broj_lota = broj_lota;
 	}
 	public Lijek getLijek() {

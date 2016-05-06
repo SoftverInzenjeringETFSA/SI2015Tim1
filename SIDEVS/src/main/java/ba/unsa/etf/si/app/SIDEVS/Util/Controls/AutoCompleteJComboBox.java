@@ -24,6 +24,7 @@ import org.hibernate.transform.Transformers;
 import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 
+
 public class AutoCompleteJComboBox extends JComboBox<Object> {
 
 	private static final long serialVersionUID = 1L;
@@ -99,8 +100,12 @@ public class AutoCompleteJComboBox extends JComboBox<Object> {
 									tc.requestFocus();
 								}
 							} catch (Exception e) {
+<<<<<<< HEAD
 								System.out.println("Greška pri pristupu bazi");
 								System.out.println(e.toString());
+=======
+								System.out.println("Greska u AutoCompleteJComboBox");
+>>>>>>> branch 'master' of https://github.com/SoftverInzenjeringETFSA/SI2015Tim1.git
 							}
 						}
 					});
