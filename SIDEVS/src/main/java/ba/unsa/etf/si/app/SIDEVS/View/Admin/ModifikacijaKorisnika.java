@@ -1,11 +1,18 @@
 package ba.unsa.etf.si.app.SIDEVS.View.Admin;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+import org.hibernate.Criteria;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.Iterator;
 import java.util.List;
@@ -15,7 +22,9 @@ import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
@@ -62,6 +71,17 @@ public class ModifikacijaKorisnika {
 		if(!s.daLiPostoji()){
 			throw new Exception("Sesija nije kreirana!");
 		}
+	}
+	
+	public void resetContent(){
+		imeModifikacija.setText("");
+		prezimeModifikacija.setText("");
+		maticniBrojModifikacija.setText("");
+		brojTelefonaModifikacija.setText("");
+		emailModifikacija.setText("");
+		radnoMjestoModifikacija.setText("");
+		datumPocetkaRadaModifikacija.setText("");
+		adresa.setText("");
 	}
 
 	/**
@@ -141,32 +161,60 @@ public class ModifikacijaKorisnika {
 		label_6.setBounds(153, 392, 119, 14);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(label_6);
 		
-		JRadioButton radnikModifikacija = new JRadioButton("Radnik");
+		final JRadioButton radnikModifikacija = new JRadioButton("Radnik");
 		radnikModifikacija.setBounds(122, 438, 73, 23);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(radnikModifikacija);
 		
-		JRadioButton menadzerModifikacija = new JRadioButton("Menadzer");
+		final JRadioButton menadzerModifikacija = new JRadioButton("Menadzer");
 		menadzerModifikacija.setBounds(205, 438, 94, 23);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(menadzerModifikacija);
 		
-		JButton btnModifikacija = new JButton("Azuriraj");
-		btnModifikacija.setBounds(153, 480, 86, 23);
-		frmAdministratormodifikacijaKorisnika.getContentPane().add(btnModifikacija);
+		ButtonGroup bg = new ButtonGroup();
+		bg.add(radnikModifikacija);
+		bg.add(menadzerModifikacija);
 		
-		//JComboBox listaKorisnikaModifikacija = new JComboBox();
-		//AutoCompleteJComboBox  listaKorisnikaModifikacija = new AutoCompleteJComboBox(s.getSession(), Korisnik.class);
-		List<Korisnik> listKorisnika = s.getSession().createCriteria(Korisnik.class).list();
-		AutoCompleteJComboBox  listaKorisnikaModifikacija = new AutoCompleteJComboBox(s.getSession(), Korisnik.class);
-		listaKorisnikaModifikacija.setBounds(129, 34, 159, 20);
-		for (Iterator iterator = listKorisnika.iterator(); iterator.hasNext();) {
-			Korisnik korisnik = (Korisnik) iterator.next();
-			listaKorisnikaModifikacija.addItem(korisnik.getIme() + " " + korisnik.getPrezime());
-			System.out.println(korisnik.getIme() + " " + korisnik.getPrezime());
-		}
+		final AutoCompleteJComboBox  listaKorisnikaModifikacija = new AutoCompleteJComboBox(s, Korisnik.class, "ime");
+		listaKorisnikaModifikacija.setBounds(58, 33, 159, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(listaKorisnikaModifikacija);
 		
+	    JButton btnModifikacija = new JButton("Azuriraj");
+		btnModifikacija.setBounds(153, 480, 86, 23);
+		btnModifikacija.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{				
+					//Ubaciti validaciju, bacanje exceptiona ukoliko je unos prazan
+					
+					//Baca izuzetak ukoliko ništa nije checkirano
+					String tipKorisnika;
+					if(menadzerModifikacija.isSelected()) tipKorisnika = "Menadzer";
+					else if (radnikModifikacija.isSelected()) tipKorisnika = "Radnik";
+					else throw new Exception();
+					
+					String txt = listaKorisnikaModifikacija.getSelectedItem().toString();	
+					String[] parts = txt.split(" ");
+					String part1 = parts[0];
+					String part2 = parts[1];
+					
+					//Ukoliko kreiranje nije prošlo, baca exception
+					boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.ModifikacijaKorisnikaVM.ModifikujKorisnika(_sesija, imeModifikacija.getText(), prezimeModifikacija.getText(), maticniBrojModifikacija.getText(), brojTelefonaModifikacija.getText(), emailModifikacija.getText(), radnoMjestoModifikacija.getText(), datumPocetkaRadaModifikacija.getText(), adresa.getText(), tipKorisnika, part1, part2);
+					if(!state) throw new Exception();
+					
+					JOptionPane.showMessageDialog(null, "Korisnik uspješno ažuriran", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);
+				}
+				catch(Exception ex){
+					System.out.println(ex.toString());
+					JOptionPane.showMessageDialog(null, "Došlo je do greške u dodavanju", "InfoBox: " + "Error", JOptionPane.INFORMATION_MESSAGE);		
+				}
+				resetContent();
+				listaKorisnikaModifikacija.setSelectedItem("");
+				radnikModifikacija.setSelected(false);
+				menadzerModifikacija.setSelected(false);
+			}
+		});
+		frmAdministratormodifikacijaKorisnika.getContentPane().add(btnModifikacija);
+	
 		JLabel lblOdaberiKorisnika = new JLabel("Odaberi korisnika");
-		lblOdaberiKorisnika.setBounds(153, 13, 169, 14);
+		lblOdaberiKorisnika.setBounds(58, 13, 169, 14);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(lblOdaberiKorisnika);
 		
 		JLabel lblAdresa = new JLabel("Adresa");
@@ -174,8 +222,48 @@ public class ModifikacijaKorisnika {
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(lblAdresa);
 		
 		adresa = new JTextField();
-		adresa.setBounds(156, 264, 83, 22);
+		adresa.setBounds(153, 264, 83, 22);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(adresa);
 		adresa.setColumns(10);
+		
+		JButton btnUcitaj = new JButton("Ucitaj");
+		btnUcitaj.setBounds(229, 31, 97, 23);
+		frmAdministratormodifikacijaKorisnika.getContentPane().add(btnUcitaj);
+		btnUcitaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{					
+					String txt = listaKorisnikaModifikacija.getSelectedItem().toString();	
+					String[] parts = txt.split(" ");
+					String part1 = parts[0];
+					String part2 = parts[1];
+					
+					Criteria criteria = _sesija.getSession().createCriteria(Korisnik.class).add(Restrictions.like("ime", part1).ignoreCase()).add(Restrictions.like("prezime", part2).ignoreCase());
+					List<Korisnik> k = criteria.list();
+					
+					String ime2 = k.get(0).getIme();
+					String prezime2 = k.get(0).getPrezime();
+					String maticniBroj2 = k.get(0).getJmbg();
+					String adresa2 = k.get(0).getAdresa();
+					String email2 = k.get(0).getEmail();
+					String brojTelefona2 = k.get(0).getTelefon();
+					String radnoMjesto2 = k.get(0).getRadno_mjesto();
+					//String datumPocetkaRada2 = datumPocetkaRada1.get(0);				
+					//Dodati checkiranje menadzer/radnik radio buttona, preko DTYPE(?!)
+					
+					imeModifikacija.setText(ime2);
+					prezimeModifikacija.setText(prezime2);
+					maticniBrojModifikacija.setText(maticniBroj2);
+					brojTelefonaModifikacija.setText(brojTelefona2);
+					emailModifikacija.setText(email2);
+					radnoMjestoModifikacija.setText(radnoMjesto2);
+					//datumPocetkaRadaModifikacija.setText(datumPocetkaRada2);
+					adresa.setText(adresa2);
+				}
+				catch(Exception ex){
+					System.out.println("Greška pri pristupu bazi");
+					System.out.println(ex.toString());
+				}
+			}
+		});
 	}
 }

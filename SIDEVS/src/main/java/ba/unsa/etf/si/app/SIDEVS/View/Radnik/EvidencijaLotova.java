@@ -5,6 +5,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
+import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
@@ -18,6 +23,7 @@ public class EvidencijaLotova {
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField_6;
+	private Sessions s;
 
 	/**
 	 * Launch the application.
@@ -56,7 +62,7 @@ public class EvidencijaLotova {
 		lblBrojLota.setBounds(10, 11, 99, 14);
 		frmEvidencijaLota.getContentPane().add(lblBrojLota);
 		
-		JLabel lblLijek = new JLabel("LijekVM:");
+		JLabel lblLijek = new JLabel("Lijek:");
 		lblLijek.setBounds(10, 36, 99, 14);
 		frmEvidencijaLota.getContentPane().add(lblLijek);
 		
@@ -81,7 +87,7 @@ public class EvidencijaLotova {
 		frmEvidencijaLota.getContentPane().add(textField);
 		textField.setColumns(10);
 		
-		JComboBox comboBox = new JComboBox();
+		AutoCompleteJComboBox comboBox = new AutoCompleteJComboBox(s, Lijek.class, "naziv");
 		comboBox.setBounds(119, 33, 170, 20);
 		frmEvidencijaLota.getContentPane().add(comboBox);
 		

@@ -97,6 +97,19 @@ public class PocetniEkran {
 		
 		JButton btnObrisiKorisnika = new JButton("Obrisi korisnika");
 		btnObrisiKorisnika.setBounds(86, 121, 174, 23);
+		btnObrisiKorisnika.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{				
+					ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika ok = new ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika(_sesija);
+								
+					frmAdministratorPocetniEkran.setVisible(false);
+					frmAdministratorPocetniEkran.dispose();
+				}
+				catch(Exception ex){
+					//EXCEPTION
+				}
+			}
+		});
 		frmAdministratorPocetniEkran.getContentPane().add(btnObrisiKorisnika);
 		
 		JButton btnOdjava = new JButton("Odjava");

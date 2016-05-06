@@ -69,7 +69,8 @@ public class DodavanjeKorisnika {
 		brojTelefona.setText("");
 		email.setText("");
 		radnoMjesto.setText("");
-		datumPocetkaRada.setText(""); 	
+		datumPocetkaRada.setText(""); 
+		adresa.setText("");
 	}
 
 	/**
@@ -177,7 +178,7 @@ public class DodavanjeKorisnika {
 					else if (radnik.isSelected()) tipKorisnika = "Radnik";
 					else throw new Exception();
 					
-					// Ukoliko kreiranje nije prošlo, baca exception
+					//Ukoliko kreiranje nije prošlo, baca exception
 					boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.DodavanjeKorisnikaVM.KreirajKorisnika(_sesija, ime.getText(), prezime.getText(), maticniBroj.getText(), brojTelefona.getText(), email.getText(), radnoMjesto.getText(), datumPocetkaRada.getText(), adresa.getText(), tipKorisnika);
 					if(!state) throw new Exception();
 					
