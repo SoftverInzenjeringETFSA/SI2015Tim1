@@ -100,12 +100,12 @@ public class AutoCompleteJComboBox extends JComboBox<Object> {
 									tc.requestFocus();
 								}
 							} catch (Exception e) {
-<<<<<<< HEAD
+
 								System.out.println("Greška pri pristupu bazi");
 								System.out.println(e.toString());
-=======
+
 								System.out.println("Greska u AutoCompleteJComboBox");
->>>>>>> branch 'master' of https://github.com/SoftverInzenjeringETFSA/SI2015Tim1.git
+
 							}
 						}
 					});

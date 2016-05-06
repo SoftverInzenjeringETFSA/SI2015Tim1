@@ -68,8 +68,8 @@ public class PocetniEkran {
 				try{				
 					ba.unsa.etf.si.app.SIDEVS.View.Admin.DodavanjeKorisnika dk = new ba.unsa.etf.si.app.SIDEVS.View.Admin.DodavanjeKorisnika(_sesija);
 								
-					frmAdministratorPocetniEkran.setVisible(false);
-					frmAdministratorPocetniEkran.dispose();
+					//frmAdministratorPocetniEkran.setVisible(false);
+					//frmAdministratorPocetniEkran.dispose();
 				}
 				catch(Exception ex){
 					//EXCEPTION
@@ -85,8 +85,8 @@ public class PocetniEkran {
 				try{				
 					ba.unsa.etf.si.app.SIDEVS.View.Admin.ModifikacijaKorisnika mk = new ba.unsa.etf.si.app.SIDEVS.View.Admin.ModifikacijaKorisnika(_sesija);
 								
-					frmAdministratorPocetniEkran.setVisible(false);
-					frmAdministratorPocetniEkran.dispose();
+					//frmAdministratorPocetniEkran.setVisible(false);
+					//frmAdministratorPocetniEkran.dispose();
 				}
 				catch(Exception ex){
 					//EXCEPTION
@@ -102,8 +102,8 @@ public class PocetniEkran {
 				try{				
 					ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika ok = new ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika(_sesija);
 								
-					frmAdministratorPocetniEkran.setVisible(false);
-					frmAdministratorPocetniEkran.dispose();
+					//frmAdministratorPocetniEkran.setVisible(false);
+					//frmAdministratorPocetniEkran.dispose();
 				}
 				catch(Exception ex){
 					//EXCEPTION

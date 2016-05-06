@@ -24,12 +24,12 @@ public class App {
 	
 	public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-<<<<<<< HEAD
+
 		Login l = new Login();
 		l.main(args);
-=======
+
 	 	//kreirajSkladiste(session, 3);
-		try {
+		/*try {
 			System.out.println("Kreiram!");
 			Radnik k = new Radnik();
 			k.setIme("Radnik");
@@ -45,12 +45,11 @@ public class App {
 			System.out.println("Korisnik kreiran!");
 		} catch (Exception ex) {
 			System.out.println(ex);
-		}
+		}*/
 		//dajSveKorisnike(session);
->>>>>>> branch 'master' of https://github.com/SoftverInzenjeringETFSA/SI2015Tim1.git
 	}
 
-<<<<<<< HEAD
+
 	/*private static void kreirajKorisnikaAdmin(Session session, Administrator a) {
 =======
 	private static void kreirajKorisnikaRadnik(Session session, Radnik a) {
