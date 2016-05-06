@@ -172,6 +172,8 @@ public class ModifikacijaKorisnika {
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(radnikModifikacija);
 		bg.add(menadzerModifikacija);
+		radnikModifikacija.setEnabled(false);
+		menadzerModifikacija.setEnabled(false);
 		
 		final AutoCompleteJComboBox  listaKorisnikaModifikacija = new AutoCompleteJComboBox(s, Korisnik.class, "ime");
 		listaKorisnikaModifikacija.setBounds(50, 40, 159, 20);
@@ -185,10 +187,10 @@ public class ModifikacijaKorisnika {
 					//Ubaciti validaciju, bacanje exceptiona ukoliko je unos prazan
 					
 					//Baca izuzetak ukoliko ništa nije checkirano
-					String tipKorisnika;
-					if(menadzerModifikacija.isSelected()) tipKorisnika = "Menadzer";
+					String tipKorisnika=null;
+					/*if(menadzerModifikacija.isSelected()) tipKorisnika = "Menadzer";
 					else if (radnikModifikacija.isSelected()) tipKorisnika = "Radnik";
-					else throw new Exception();
+					else throw new Exception();*/
 					
 					String txt = listaKorisnikaModifikacija.getSelectedItem().toString();	
 					String[] parts = txt.split(" ");
