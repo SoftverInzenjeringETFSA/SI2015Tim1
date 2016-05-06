@@ -78,86 +78,86 @@ public class DodavanjeKorisnika {
 	 */
 	private void initialize() {
 		frmAdministratorDodavanjeKorisnika = new JFrame();
-		frmAdministratorDodavanjeKorisnika.setTitle("Administrator- Dodavanje korisnika");
-		frmAdministratorDodavanjeKorisnika.setBounds(100, 100, 383, 530);
+		frmAdministratorDodavanjeKorisnika.setTitle("Dodavanje korisnika");
+		frmAdministratorDodavanjeKorisnika.setBounds(100, 100, 255, 581);
 		frmAdministratorDodavanjeKorisnika.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmAdministratorDodavanjeKorisnika.getContentPane().setLayout(null);
 		frmAdministratorDodavanjeKorisnika.setLocationRelativeTo(null);
 		
 		ime = new JTextField();
-		ime.setBounds(129, 26, 86, 20);
+		ime.setBounds(45, 41, 140, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(ime);
 		ime.setColumns(10);
 		
 		prezime = new JTextField();
-		prezime.setBounds(129, 68, 86, 20);
+		prezime.setBounds(45, 89, 140, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(prezime);
 		prezime.setColumns(10);
 		
 		maticniBroj = new JTextField();
-		maticniBroj.setBounds(129, 114, 86, 20);
+		maticniBroj.setBounds(45, 137, 140, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(maticniBroj);
 		maticniBroj.setColumns(10);
 		
 		brojTelefona = new JTextField();
-		brojTelefona.setBounds(129, 163, 86, 20);
+		brojTelefona.setBounds(45, 186, 140, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(brojTelefona);
 		brojTelefona.setColumns(10);
 		
 		email = new JTextField();
-		email.setBounds(129, 261, 86, 20);
+		email.setBounds(45, 292, 140, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(email);
 		email.setColumns(10);
 		
 		radnoMjesto = new JTextField();
-		radnoMjesto.setBounds(129, 310, 86, 20);
+		radnoMjesto.setBounds(45, 339, 140, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(radnoMjesto);
 		radnoMjesto.setColumns(10);
 		
 		datumPocetkaRada = new JTextField();
-		datumPocetkaRada.setBounds(129, 361, 86, 20);
+		datumPocetkaRada.setBounds(45, 388, 140, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(datumPocetkaRada);
 		datumPocetkaRada.setColumns(10);
 		
 		adresa = new JTextField();
-		adresa.setBounds(129, 213, 86, 20);
+		adresa.setBounds(45, 236, 140, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(adresa);
 		adresa.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Ime");
-		lblNewLabel.setBounds(129, 11, 119, 14);
+		lblNewLabel.setBounds(45, 23, 119, 14);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Prezime");
-		lblNewLabel_1.setBounds(129, 51, 119, 14);
+		lblNewLabel_1.setBounds(45, 74, 119, 14);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Maticni broj");
-		lblNewLabel_2.setBounds(129, 93, 119, 14);
+		lblNewLabel_2.setBounds(45, 122, 119, 14);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Broj telefona");
-		lblNewLabel_3.setBounds(129, 147, 119, 14);
+		lblNewLabel_3.setBounds(45, 170, 119, 14);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Email");
-		lblNewLabel_4.setBounds(129, 246, 119, 14);
+		lblNewLabel_4.setBounds(45, 276, 119, 14);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("Radno mjesto");
-		lblNewLabel_5.setBounds(129, 294, 119, 14);
+		lblNewLabel_5.setBounds(45, 325, 119, 14);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(lblNewLabel_5);
 		
 		JLabel lblNewLabel_6 = new JLabel("Datum pocetka rada");
-		lblNewLabel_6.setBounds(129, 343, 119, 14);
+		lblNewLabel_6.setBounds(45, 372, 119, 14);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(lblNewLabel_6);
 		
 		final JRadioButton radnik = new JRadioButton("Radnik");
-		radnik.setBounds(96, 400, 72, 23);
+		radnik.setBounds(29, 417, 72, 23);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(radnik);
 		
 		final JRadioButton menadzer = new JRadioButton("Menadzer");
-		menadzer.setBounds(181, 400, 86, 23);
+		menadzer.setBounds(105, 417, 86, 23);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(menadzer);
 		
 		ButtonGroup bg = new ButtonGroup();
@@ -165,7 +165,7 @@ public class DodavanjeKorisnika {
 		bg.add(menadzer);
 		
 		JButton btnDodaj = new JButton("Dodaj");
-		btnDodaj.setBounds(129, 445, 86, 23);
+		btnDodaj.setBounds(45, 461, 140, 23);
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
@@ -195,7 +195,7 @@ public class DodavanjeKorisnika {
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(btnDodaj);
 		
 		JLabel lblAdresa = new JLabel("Adresa");
-		lblAdresa.setBounds(129, 196, 56, 16);
+		lblAdresa.setBounds(45, 219, 56, 14);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(lblAdresa);
 		
 	}

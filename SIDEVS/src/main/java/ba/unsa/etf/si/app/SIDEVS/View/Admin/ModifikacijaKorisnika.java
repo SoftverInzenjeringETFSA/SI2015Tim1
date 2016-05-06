@@ -93,80 +93,80 @@ public class ModifikacijaKorisnika {
 		
 		frmAdministratormodifikacijaKorisnika = new JFrame();
 		frmAdministratormodifikacijaKorisnika.setTitle("Administrator-Modifikacija korisnika");
-		frmAdministratormodifikacijaKorisnika.setBounds(100, 100, 425, 579);
+		frmAdministratormodifikacijaKorisnika.setBounds(100, 100, 385, 585);
 		frmAdministratormodifikacijaKorisnika.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmAdministratormodifikacijaKorisnika.getContentPane().setLayout(null);
 		frmAdministratormodifikacijaKorisnika.setLocationRelativeTo(null);
 		
 		imeModifikacija = new JTextField();
 		imeModifikacija.setColumns(10);
-		imeModifikacija.setBounds(153, 84, 86, 20);
+		imeModifikacija.setBounds(51, 88, 260, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(imeModifikacija);
 		
 		prezimeModifikacija = new JTextField();
 		prezimeModifikacija.setColumns(10);
-		prezimeModifikacija.setBounds(153, 130, 86, 20);
+		prezimeModifikacija.setBounds(51, 139, 260, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(prezimeModifikacija);
 		
 		maticniBrojModifikacija = new JTextField();
 		maticniBrojModifikacija.setColumns(10);
-		maticniBrojModifikacija.setBounds(153, 173, 86, 20);
+		maticniBrojModifikacija.setBounds(51, 189, 260, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(maticniBrojModifikacija);
 		
 		brojTelefonaModifikacija = new JTextField();
 		brojTelefonaModifikacija.setColumns(10);
-		brojTelefonaModifikacija.setBounds(153, 214, 86, 20);
+		brojTelefonaModifikacija.setBounds(51, 239, 260, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(brojTelefonaModifikacija);
 		
 		emailModifikacija = new JTextField();
 		emailModifikacija.setColumns(10);
-		emailModifikacija.setBounds(153, 309, 86, 20);
+		emailModifikacija.setBounds(51, 339, 260, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(emailModifikacija);
 		
 		radnoMjestoModifikacija = new JTextField();
 		radnoMjestoModifikacija.setColumns(10);
-		radnoMjestoModifikacija.setBounds(153, 359, 86, 20);
+		radnoMjestoModifikacija.setBounds(51, 389, 260, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(radnoMjestoModifikacija);
 		
 		datumPocetkaRadaModifikacija = new JTextField();
 		datumPocetkaRadaModifikacija.setColumns(10);
-		datumPocetkaRadaModifikacija.setBounds(153, 409, 86, 20);
+		datumPocetkaRadaModifikacija.setBounds(51, 438, 260, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(datumPocetkaRadaModifikacija);
 		
 		JLabel label = new JLabel("Ime");
-		label.setBounds(153, 67, 119, 14);
+		label.setBounds(51, 73, 119, 14);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(label);
 		
 		JLabel label_1 = new JLabel("Prezime");
-		label_1.setBounds(153, 114, 119, 14);
+		label_1.setBounds(51, 121, 119, 14);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(label_1);
 		
 		JLabel label_2 = new JLabel("Maticni broj");
-		label_2.setBounds(153, 157, 119, 14);
+		label_2.setBounds(51, 172, 119, 14);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(label_2);
 		
 		JLabel label_3 = new JLabel("Broj telefona");
-		label_3.setBounds(153, 197, 119, 14);
+		label_3.setBounds(51, 222, 119, 14);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(label_3);
 		
 		JLabel label_4 = new JLabel("Email");
-		label_4.setBounds(153, 292, 119, 14);
+		label_4.setBounds(51, 324, 119, 14);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(label_4);
 		
 		JLabel label_5 = new JLabel("Radno mjesto");
-		label_5.setBounds(153, 342, 119, 14);
+		label_5.setBounds(51, 372, 119, 14);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(label_5);
 		
 		JLabel label_6 = new JLabel("Datum pocetka rada");
-		label_6.setBounds(153, 392, 119, 14);
+		label_6.setBounds(51, 422, 119, 14);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(label_6);
 		
 		final JRadioButton radnikModifikacija = new JRadioButton("Radnik");
-		radnikModifikacija.setBounds(122, 438, 73, 23);
+		radnikModifikacija.setBounds(51, 479, 73, 23);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(radnikModifikacija);
 		
 		final JRadioButton menadzerModifikacija = new JRadioButton("Menadzer");
-		menadzerModifikacija.setBounds(205, 438, 94, 23);
+		menadzerModifikacija.setBounds(128, 479, 86, 23);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(menadzerModifikacija);
 		
 		ButtonGroup bg = new ButtonGroup();
@@ -174,11 +174,11 @@ public class ModifikacijaKorisnika {
 		bg.add(menadzerModifikacija);
 		
 		final AutoCompleteJComboBox  listaKorisnikaModifikacija = new AutoCompleteJComboBox(s, Korisnik.class, "ime");
-		listaKorisnikaModifikacija.setBounds(58, 33, 159, 20);
+		listaKorisnikaModifikacija.setBounds(50, 40, 159, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(listaKorisnikaModifikacija);
 		
 	    JButton btnModifikacija = new JButton("Azuriraj");
-		btnModifikacija.setBounds(153, 480, 86, 23);
+		btnModifikacija.setBounds(222, 479, 86, 23);
 		btnModifikacija.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{				
@@ -214,20 +214,20 @@ public class ModifikacijaKorisnika {
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(btnModifikacija);
 	
 		JLabel lblOdaberiKorisnika = new JLabel("Odaberi korisnika");
-		lblOdaberiKorisnika.setBounds(58, 13, 169, 14);
+		lblOdaberiKorisnika.setBounds(50, 23, 169, 14);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(lblOdaberiKorisnika);
 		
 		JLabel lblAdresa = new JLabel("Adresa");
-		lblAdresa.setBounds(153, 247, 56, 16);
+		lblAdresa.setBounds(51, 270, 56, 16);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(lblAdresa);
 		
 		adresa = new JTextField();
-		adresa.setBounds(153, 264, 83, 22);
+		adresa.setBounds(51, 289, 260, 22);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(adresa);
 		adresa.setColumns(10);
 		
 		JButton btnUcitaj = new JButton("Ucitaj");
-		btnUcitaj.setBounds(229, 31, 97, 23);
+		btnUcitaj.setBounds(214, 39, 97, 23);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(btnUcitaj);
 		btnUcitaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
