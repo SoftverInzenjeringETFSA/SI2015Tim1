@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.View.Radnik.KreiranjeFakture;
 
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
@@ -16,6 +17,7 @@ public class PocetniEkran {
 	private JFrame frmMenadzerPocetniEkran;
 	private Sessions s;
 	private EvidencijaLijeka el;
+	private KreiranjeFakture kf;
 
 	/**
 	 * Launch the application.
@@ -103,6 +105,17 @@ public class PocetniEkran {
 		frmMenadzerPocetniEkran.getContentPane().add(btnPretragaLijekova);
 		
 		JButton btnKreiranjeFakture = new JButton("Kreiranje fakture");
+		btnKreiranjeFakture.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					if(kf == null) kf = new KreiranjeFakture(s);
+					kf.prikazi();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
 		btnKreiranjeFakture.setBounds(373, 62, 145, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnKreiranjeFakture);
 		

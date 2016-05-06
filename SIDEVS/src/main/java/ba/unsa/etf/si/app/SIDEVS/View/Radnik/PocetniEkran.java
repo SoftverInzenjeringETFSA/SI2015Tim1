@@ -16,6 +16,7 @@ public class PocetniEkran {
 	private JFrame frmPoetniEkran;
 	private Sessions s;
 	private EvidencijaLotova el;
+	private KreiranjeFakture kf;
 
 	/**
 	 * Create the application.
@@ -66,6 +67,17 @@ public class PocetniEkran {
 		panel.add(btnPretragaLijekova);
 		
 		JButton btnKreiranjeFaktura = new JButton("Kreiranje faktura");
+		btnKreiranjeFaktura.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					if(kf == null) kf = new KreiranjeFakture(s);
+					kf.prikazi();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		btnKreiranjeFaktura.setBounds(10, 55, 195, 23);
 		panel.add(btnKreiranjeFaktura);
 		

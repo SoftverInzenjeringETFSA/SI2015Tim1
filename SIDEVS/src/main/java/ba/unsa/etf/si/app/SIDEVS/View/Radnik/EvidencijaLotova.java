@@ -39,28 +39,6 @@ public class EvidencijaLotova {
 	private JComboBox comboBox_Skladiste;
 	private Sessions s;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EvidencijaLotova window = new EvidencijaLotova();
-					window.frmEvidencijaLota.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public EvidencijaLotova() {
-		initialize();
-	}
 	public EvidencijaLotova(Sessions s) throws Exception {
 		this.s = s;
 		initialize();
