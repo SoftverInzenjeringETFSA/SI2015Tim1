@@ -2,6 +2,7 @@ package ba.unsa.etf.si.app.SIDEVS.Model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,8 +15,8 @@ public class Kupac implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
+	@Column(unique = true)
 	private String naziv;
-	private String jmbg;
 	private String adresa;
 	public Long getId() {
 		return id;
@@ -28,12 +29,6 @@ public class Kupac implements Serializable {
 	}
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
-	}
-	public String getJmbg() {
-		return jmbg;
-	}
-	public void setJmbg(String jmbg) {
-		this.jmbg = jmbg;
 	}
 	public String getAdresa() {
 		return adresa;

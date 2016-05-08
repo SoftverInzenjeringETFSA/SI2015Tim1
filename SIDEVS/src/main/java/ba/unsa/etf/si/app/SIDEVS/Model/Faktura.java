@@ -23,7 +23,6 @@ public class Faktura implements Serializable{
 	@GeneratedValue
 	private Long id;
 	private double izlazna_cijena;
-	private int kolicina;
 	@ManyToOne
 	@JoinColumn(name="kupac_id")
 	private Kupac kupac;
@@ -48,12 +47,6 @@ public class Faktura implements Serializable{
 	}
 	public void setIzlazna_cijena(double izlazna_cijena) {
 		this.izlazna_cijena = izlazna_cijena;
-	}
-	public int getKolicina() {
-		return kolicina;
-	}
-	public void setKolicina(int kolicina) {
-		this.kolicina = kolicina;
 	}
 	public Kupac getKupac() {
 		return kupac;
