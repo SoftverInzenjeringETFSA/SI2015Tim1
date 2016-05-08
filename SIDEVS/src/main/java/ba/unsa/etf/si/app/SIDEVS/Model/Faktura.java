@@ -2,15 +2,13 @@ package ba.unsa.etf.si.app.SIDEVS.Model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,11 +27,8 @@ public class Faktura implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="korisnik_id")
 	private Korisnik korisnik;
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "fakture_lot", 
-			joinColumns = { @JoinColumn(name = "faktura_id")}, 
-			inverseJoinColumns = { @JoinColumn(name = "lot_id")})
-	private Set<Lot> lotovi = new HashSet<Lot>(0);
+	@OneToMany(mappedBy = "faktura")
+	private Set<FakturaLot> fakture_lotovi = new HashSet<FakturaLot>(0);
 	
 	
 	public Long getId() {
@@ -60,10 +55,10 @@ public class Faktura implements Serializable{
 	public void setKorisnik(Korisnik korisnik) {
 		this.korisnik = korisnik;
 	}
-	public Set<Lot> getLotovi() {
-		return lotovi;
+	public Set<FakturaLot> getFaktureLotovi() {
+		return fakture_lotovi;
 	}
-	public void setLotovi(Set<Lot> lotovi) {
-		this.lotovi = lotovi;
+	public void setFaktureLotovi(Set<FakturaLot> fakture_lotovi) {
+		this.fakture_lotovi = fakture_lotovi;
 	}
 }

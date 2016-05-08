@@ -21,6 +21,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Kupac;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.FakturaVM;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.SkladisteVM;
@@ -43,7 +44,7 @@ public class KreiranjeFakture {
 	private Kupac k;
 	private Set<Lot> lotovi = new HashSet<Lot>();
 	private List<Integer> kolicine = new ArrayList<Integer>();
-	private List<Integer> skladista = new ArrayList<Integer>();
+	private List<Skladiste> skladista = new ArrayList<Skladiste>();
 
 	public KreiranjeFakture(Sessions s) throws Exception {
 		this.s = s;
@@ -142,32 +143,35 @@ public class KreiranjeFakture {
 
 			private void dodajStavkuUTabelu() {
 				try {
-					int skladiste = Integer.parseInt(comboBox_skladista.getSelectedItem().toString());
+					Skladiste skladiste = s.getSession().get(Skladiste.class,
+							Integer.parseInt(comboBox_skladista.getSelectedItem().toString()));
 					Lot lot = s.getSession().get(Lot.class, comboBox_lot.getSelectedItem().toString());
 					int kolicina = Integer.parseInt(textField_kolicina.getText());
 
 					if (k == null) {
-						k = (Kupac) s.getSession().createCriteria(Kupac.class).add(Restrictions.eq("naziv", comboBox_kupac.getSelectedItem().toString())).uniqueResult();
+						k = (Kupac) s.getSession().createCriteria(Kupac.class)
+								.add(Restrictions.eq("naziv", comboBox_kupac.getSelectedItem().toString()))
+								.uniqueResult();
 					}
 					String msg = "";
 					if (k == null)
 						msg = "Kupac ne postoji";
 					else if (lot == null)
 						msg = "Lot ne postoji";
-					else if (lot.getSkladiste().getBroj_skladista() != skladiste)
-						msg = "Lot " + lot.getBroj_lota() + " ne postoji u skladištu " + skladiste;
+					else if (lot.getSkladiste().getBroj_skladista() != skladiste.getBroj_skladista())
+						msg = "Lot " + lot.getBroj_lota() + " ne postoji u skladištu " + skladiste.getBroj_skladista();
 
 					if (msg == "") {
 						Lijek lijek = lot.getLijek();
-						
+
 						lotovi.add(lot);
 						kolicine.add(kolicina);
 						skladista.add(skladiste);
-						
-						table_model.addRow(new Object[] { redni_broj, skladiste, lijek.getNaziv(), lot.getBroj_lota(),
+
+						table_model.addRow(new Object[] { redni_broj, skladiste.getBroj_skladista(), lijek.getNaziv(), lot.getBroj_lota(),
 								kolicina, lot.getUlazna_cijena(), kolicina * lot.getUlazna_cijena() });
 						redni_broj += 1;
-						
+
 						refreshPolja();
 						label_obavijest.setForeground(Color.green);
 						label_obavijest.setText("Uspješno ste dodali stavku");
@@ -223,6 +227,15 @@ public class KreiranjeFakture {
 				} else {
 					FakturaVM f = new FakturaVM(s);
 					f.dodajFakturu(lotovi, kolicine, skladista, k);
+					comboBox_skladista.setSelectedIndex(0);
+					comboBox_lot.setSelectedIndex(-1);
+					textField_kolicina.setText("");
+					for (int i = 0; i < table_model.getRowCount(); i++)
+						table_model.removeRow(i);
+					for (Component c : panel_kupac.getComponents()) {
+						c.setEnabled(true);
+					}
+					comboBox_kupac.setSelectedItem("");
 				}
 			}
 		});
