@@ -7,13 +7,12 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -34,8 +33,8 @@ public class Lot implements Serializable{
 	@ManyToOne
     @JoinColumn(name="skladiste_id")
 	private Skladiste skladiste;
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "lotovi")
-	private Set<Faktura> fakture = new HashSet<Faktura>(0);
+	@OneToMany(mappedBy = "lot")
+	private Set<FakturaLot> fakture_lotovi = new HashSet<FakturaLot>(0);
 	
 	
 	public String getBroj_lota() {
@@ -80,10 +79,10 @@ public class Lot implements Serializable{
 	public void setSkladiste(Skladiste skladiste) {
 		this.skladiste = skladiste;
 	}
-	public Set<Faktura> getFakture() {
-		return fakture;
+	public Set<FakturaLot> getFaktureLotovi() {
+		return fakture_lotovi;
 	}
-	public void setFakture(Set<Faktura> fakture) {
-		this.fakture = fakture;
+	public void setFaktureLotovi(Set<FakturaLot> fakture_lotovi) {
+		this.fakture_lotovi = fakture_lotovi;
 	}
 }

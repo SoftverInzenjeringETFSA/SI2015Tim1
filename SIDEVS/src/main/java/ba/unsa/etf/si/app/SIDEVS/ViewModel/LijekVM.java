@@ -31,6 +31,7 @@ public final class LijekVM {
 				l.setNaziv(naziv);
 				l.setProizvodjac(proizvodjac);
 				if (s.getSession().get(Lijek.class, id) == null && s.getSession().createCriteria(Lijek.class).add(Restrictions.eq("naziv", naziv)) .setProjection(Projections.property("naziv")).uniqueResult() == null) {
+					s.getSession().beginTransaction();
 					s.getSession().save(l);
 					s.getTrasaction().commit();
 				} else

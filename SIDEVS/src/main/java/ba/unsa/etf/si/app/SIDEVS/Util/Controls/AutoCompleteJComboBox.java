@@ -24,7 +24,6 @@ import org.hibernate.transform.Transformers;
 import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 
-
 public class AutoCompleteJComboBox extends JComboBox<Object> {
 
 	private static final long serialVersionUID = 1L;
@@ -57,51 +56,53 @@ public class AutoCompleteJComboBox extends JComboBox<Object> {
 						public void run() {
 							try {
 								if (!tc.getText().isEmpty()) {
-									
-									List<String> foundx = null;					
-									Criteria criteria = session.getSession().createCriteria(klasa).add(Restrictions.like(naziv_kolone, tc.getText() + "%").ignoreCase()).setProjection(Projections.property(naziv_kolone));						
+									Criteria criteria = session.getSession().createCriteria(klasa)
+												.add(Restrictions.like(naziv_kolone, tc.getText() + "%").ignoreCase())
+												.setProjection(Projections.property(naziv_kolone));
+									List<String> foundx = null;
 									List<String> founds = criteria.list();
 									Set<String> foundSet = new HashSet<String>();
-									if(naziv_kolone=="ime"){
-										Criteria criteriax = session.getSession().createCriteria(klasa).add(Restrictions.like(naziv_kolone, tc.getText() + "%").ignoreCase()).setProjection(Projections.property("prezime"));
+									if (naziv_kolone == "ime") {
+										Criteria criteriax = session.getSession().createCriteria(klasa)
+												.add(Restrictions.like(naziv_kolone, tc.getText() + "%").ignoreCase())
+												.setProjection(Projections.property("prezime"));
 										foundx = criteriax.list();
 									}
-									
-									for(int i=0; i<founds.size(); i++){
+
+									for (int i = 0; i < founds.size(); i++) {
 										String s = founds.get(i);
-										if(naziv_kolone=="ime"){
-											s = s + " " + foundx.get(i);								
+										if (naziv_kolone == "ime") {
+											s = s + " " + foundx.get(i);
 										}
 										foundSet.add(s.toString().toLowerCase());
 									}
-									
-									Collections.sort(founds);//sortiranje
+
+									Collections.sort(founds);// sortiranje
 									setEditable(false);
 									removeAllItems();
-									// izbjegavanje dodavanja kopija 
+									// izbjegavanje dodavanja kopija
 									if (!foundSet.contains(tc.getText().toLowerCase())) {
 										addItem(tc.getText());
 									}
-								
-									for(int i=0; i<founds.size(); i++){
+
+									for (int i = 0; i < founds.size(); i++) {
 										String s = founds.get(i);
-										if(naziv_kolone=="ime"){
+										if (naziv_kolone == "ime") {
 											s = s + " " + foundx.get(i);
 										}
 										addItem(s);
 									}
-									
-									/*for (String s : founds) {
-										addItem(s);
-									}*/
+
+									/*
+									 * for (String s : founds) { addItem(s); }
+									 */
 									setEditable(true);
 									setPopupVisible(true);
-									
+
 									tc.requestFocus();
 								}
 
-							}
-							catch (Exception e) {
+							} catch (Exception e) {
 
 								System.out.println("Greška pri pristupu bazi");
 								System.out.println(e.toString());

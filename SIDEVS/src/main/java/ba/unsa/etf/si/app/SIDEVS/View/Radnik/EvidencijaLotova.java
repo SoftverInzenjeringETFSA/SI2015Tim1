@@ -39,28 +39,6 @@ public class EvidencijaLotova {
 	private JComboBox comboBox_Skladiste;
 	private Sessions s;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EvidencijaLotova window = new EvidencijaLotova();
-					window.frmEvidencijaLota.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public EvidencijaLotova() {
-		initialize();
-	}
 	public EvidencijaLotova(Sessions s) throws Exception {
 		this.s = s;
 		initialize();
@@ -210,6 +188,7 @@ public class EvidencijaLotova {
 		String msg = "";
 		label_obavijest.setForeground(Color.RED);
 		if(!Validator.validirajString(textFieldBroj_lota.getText())) msg = "Popunite broj lota(samo slova i brojevi)";
+		else if(textFieldBroj_lota.getText().length() != 6) msg = "Broj lota mora biti dužine 6";
 		else if(comboBox.getSelectedIndex() == -1) msg = "Odaberite lijek";
 		else if(!Validator.validirajBrojPozitivan(textField_tezina.getText())) msg= "Unesite težinu lijeka(veću od 0)";
 		else if(!Validator.validirajBrojPozitivan(textField_cijena.getText())) msg= "Unesite cijenu lijeka(veću od 0)";

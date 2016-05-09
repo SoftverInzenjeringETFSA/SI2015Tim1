@@ -20,5 +20,6 @@
   <mapping class="ba.unsa.etf.si.app.SIDEVS.Model.ObrisanLot"/>
   <mapping class="ba.unsa.etf.si.app.SIDEVS.Model.Pakovanje"/>
   <mapping class="ba.unsa.etf.si.app.SIDEVS.Model.Faktura"/>
+  <mapping class="ba.unsa.etf.si.app.SIDEVS.Model.FakturaLot"/>
  </session-factory>
 </hibernate-configuration>
