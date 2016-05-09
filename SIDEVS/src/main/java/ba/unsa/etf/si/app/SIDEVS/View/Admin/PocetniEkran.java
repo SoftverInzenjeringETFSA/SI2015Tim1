@@ -3,6 +3,8 @@ package ba.unsa.etf.si.app.SIDEVS.View.Admin;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 
@@ -10,12 +12,16 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Administrator;
 import ba.unsa.etf.si.app.SIDEVS.Model.Menadzer;
 import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.View.Menadzer.EvidencijaLijeka;
 
 import javax.swing.JButton;
 
 public class PocetniEkran {
 	private Sessions _sesija;
 	private JFrame frmAdministratorPocetniEkran;
+	private DodavanjeKorisnika dk;
+	private ModifikacijaKorisnika mk;
+	private BrisanjeKorisnika bk;
 
 	/**
 	 * Launch the application.
@@ -63,16 +69,14 @@ public class PocetniEkran {
 		
 		JButton btnDodajNovogKorisnika = new JButton("Dodaj novog korisnika");
 		btnDodajNovogKorisnika.setBounds(86, 53, 174, 23);
-		btnDodajNovogKorisnika.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try{				
-					ba.unsa.etf.si.app.SIDEVS.View.Admin.DodavanjeKorisnika dk = new ba.unsa.etf.si.app.SIDEVS.View.Admin.DodavanjeKorisnika(_sesija);
-								
-					//frmAdministratorPocetniEkran.setVisible(false);
-					//frmAdministratorPocetniEkran.dispose();
-				}
-				catch(Exception ex){
-					//EXCEPTION
+		btnDodajNovogKorisnika.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					if(dk == null) dk = new DodavanjeKorisnika(_sesija);
+					dk.prikazi();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		});
@@ -80,16 +84,14 @@ public class PocetniEkran {
 		
 		JButton btnModifikujKorisnika = new JButton("Modifikuj korisnika");
 		btnModifikujKorisnika.setBounds(86, 87, 174, 23);
-		btnModifikujKorisnika.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try{				
-					ba.unsa.etf.si.app.SIDEVS.View.Admin.ModifikacijaKorisnika mk = new ba.unsa.etf.si.app.SIDEVS.View.Admin.ModifikacijaKorisnika(_sesija);
-								
-					//frmAdministratorPocetniEkran.setVisible(false);
-					//frmAdministratorPocetniEkran.dispose();
-				}
-				catch(Exception ex){
-					//EXCEPTION
+		btnModifikujKorisnika.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					if(mk == null) mk = new ModifikacijaKorisnika(_sesija);
+					mk.prikazi();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		});
@@ -97,16 +99,14 @@ public class PocetniEkran {
 		
 		JButton btnObrisiKorisnika = new JButton("Obrisi korisnika");
 		btnObrisiKorisnika.setBounds(86, 121, 174, 23);
-		btnObrisiKorisnika.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try{				
-					ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika ok = new ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika(_sesija);
-								
-					//frmAdministratorPocetniEkran.setVisible(false);
-					//frmAdministratorPocetniEkran.dispose();
-				}
-				catch(Exception ex){
-					//EXCEPTION
+		btnObrisiKorisnika.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					if(bk == null) bk = new BrisanjeKorisnika(_sesija);
+					bk.prikazi();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		});

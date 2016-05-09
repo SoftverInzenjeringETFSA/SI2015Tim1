@@ -66,7 +66,7 @@ public class BrisanjeKorisnika {
 		frmAdministratorBrisanjeKorisnika = new JFrame();
 		frmAdministratorBrisanjeKorisnika.setTitle("Administrator- Brisanje korisnika");
 		frmAdministratorBrisanjeKorisnika.setBounds(100, 100, 385, 195);
-		frmAdministratorBrisanjeKorisnika.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmAdministratorBrisanjeKorisnika.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmAdministratorBrisanjeKorisnika.getContentPane().setLayout(null);
 		frmAdministratorBrisanjeKorisnika.setLocationRelativeTo(null);
 		
@@ -105,6 +105,10 @@ public class BrisanjeKorisnika {
 			}
 		});
 		frmAdministratorBrisanjeKorisnika.getContentPane().add(btnObrisi);
+	}
+	
+	public void prikazi() {
+		frmAdministratorBrisanjeKorisnika.setVisible(true);
 	}
 
 }
