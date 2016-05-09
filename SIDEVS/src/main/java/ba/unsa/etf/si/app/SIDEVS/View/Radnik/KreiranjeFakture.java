@@ -117,7 +117,7 @@ public class KreiranjeFakture {
 		frmKreiranjeFakture.getContentPane().add(label_obavijest);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(221, 20, 508, 367);
+		scrollPane.setBounds(221, 20, 508, 333);
 		frmKreiranjeFakture.getContentPane().add(scrollPane);
 
 		final DefaultTableModel table_model = new DefaultTableModel();
@@ -163,13 +163,14 @@ public class KreiranjeFakture {
 
 					if (msg == "") {
 						Lijek lijek = lot.getLijek();
-
+						
 						lotovi.add(lot);
 						kolicine.add(kolicina);
 						skladista.add(skladiste);
 
-						table_model.addRow(new Object[] { redni_broj, skladiste.getBroj_skladista(), lijek.getNaziv(), lot.getBroj_lota(),
-								kolicina, lot.getUlazna_cijena(), kolicina * lot.getUlazna_cijena() });
+						table_model.addRow(new Object[] { redni_broj, skladiste.getBroj_skladista(), lijek.getNaziv(),
+								lot.getBroj_lota(), kolicina, lot.getUlazna_cijena(),
+								kolicina * lot.getUlazna_cijena() });
 						redni_broj += 1;
 
 						refreshPolja();
@@ -261,9 +262,37 @@ public class KreiranjeFakture {
 		});
 		btnNewButton.setBounds(10, 364, 201, 23);
 		frmKreiranjeFakture.getContentPane().add(btnNewButton);
+		
+		JButton btnNewButton_brisi_redove = new JButton("Obriši odabrane redove");
+		btnNewButton_brisi_redove.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				removeSelectedRows(table);
+			}
+		});
+		btnNewButton_brisi_redove.setBounds(546, 364, 183, 23);
+		frmKreiranjeFakture.getContentPane().add(btnNewButton_brisi_redove);
 	}
 
 	public void prikazi() {
 		frmKreiranjeFakture.setVisible(true);
+	}
+
+	public void removeSelectedRows(JTable table) {
+		DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+		int[] rows = table.getSelectedRows();
+		for (int i = 0; i < rows.length; i++) {
+			model.removeRow(rows[i] - i);
+		}
+		int brojac = 0;
+		int k = 0;
+		for (Lot lot : lotovi) {
+			if(rows[k] == brojac){
+				lotovi.remove(lot);
+				kolicine.remove(brojac);
+				skladista.remove(brojac);
+			}
+			brojac++;
+		}
 	}
 }
