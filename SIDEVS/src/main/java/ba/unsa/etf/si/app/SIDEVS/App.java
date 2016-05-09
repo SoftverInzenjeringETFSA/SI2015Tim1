@@ -27,6 +27,7 @@ public class App {
 		Login l = new Login();
 		l.prikazi();
 
+		
 	 	//kreirajSkladiste(session, 3);
 		/*try {
 			System.out.println("Kreiram!");
