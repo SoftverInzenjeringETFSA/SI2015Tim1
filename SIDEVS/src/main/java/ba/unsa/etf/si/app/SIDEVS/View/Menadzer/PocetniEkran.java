@@ -6,16 +6,24 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.View.Radnik.BrisanjeKupca;
+import ba.unsa.etf.si.app.SIDEVS.View.Radnik.OtpisLijeka;
+import ba.unsa.etf.si.app.SIDEVS.View.Radnik.PretragaLijeka;
 
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PocetniEkran {
 
 	private JFrame frmMenadzerPocetniEkran;
 	private Sessions s;
 	private EvidencijaLijeka el;
+	private BrisanjeKupca bk;
+	private PretragaLijeka pl;
+	private OtpisLijeka ol;
 
 	/**
 	 * Launch the application.
@@ -99,6 +107,17 @@ public class PocetniEkran {
 		frmMenadzerPocetniEkran.getContentPane().add(btnEvidencijaLijekova);
 		
 		JButton btnPretragaLijekova = new JButton("Pretraga lijekova");
+		btnPretragaLijekova.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					if(pl == null) pl = new PretragaLijeka(s);
+					pl.frmPretragaLijeka.setVisible(true);
+				} catch (Exception c) {
+					c.printStackTrace();
+				}
+			}
+		});
 		btnPretragaLijekova.setBounds(528, 28, 141, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnPretragaLijekova);
 		
@@ -107,6 +126,17 @@ public class PocetniEkran {
 		frmMenadzerPocetniEkran.getContentPane().add(btnKreiranjeFakture);
 		
 		JButton btnOtpisLijekova = new JButton("Otpis lijekova");
+		btnOtpisLijekova.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					if(ol == null) ol = new OtpisLijeka(s);
+					ol.frmOtpisLijeka.setVisible(true);
+				} catch (Exception c) {
+					c.printStackTrace();
+				}
+			}
+		});
 		btnOtpisLijekova.setBounds(528, 62, 141, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnOtpisLijekova);
 		
@@ -122,7 +152,19 @@ public class PocetniEkran {
 		btnIzvjestajOUlazima_1.setBounds(10, 228, 309, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnIzvjestajOUlazima_1);
 		
-		JButton btnObrisi = new JButton("Obriši");
+		JButton btnObrisi = new JButton("Obriši");	
+		btnObrisi.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					if(bk == null) bk = new BrisanjeKupca(s);
+					bk.frmBrisanjeKupca.setVisible(true);
+				} catch (Exception c) {
+					c.printStackTrace();
+				}
+			}
+		});
+
 		btnObrisi.setBounds(373, 160, 296, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnObrisi);
 		
