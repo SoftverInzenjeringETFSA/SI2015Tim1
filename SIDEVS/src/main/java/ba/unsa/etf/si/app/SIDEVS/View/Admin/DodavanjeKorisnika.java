@@ -80,7 +80,7 @@ public class DodavanjeKorisnika {
 		frmAdministratorDodavanjeKorisnika = new JFrame();
 		frmAdministratorDodavanjeKorisnika.setTitle("Dodavanje korisnika");
 		frmAdministratorDodavanjeKorisnika.setBounds(100, 100, 255, 581);
-		frmAdministratorDodavanjeKorisnika.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmAdministratorDodavanjeKorisnika.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmAdministratorDodavanjeKorisnika.getContentPane().setLayout(null);
 		frmAdministratorDodavanjeKorisnika.setLocationRelativeTo(null);
 		
@@ -199,4 +199,9 @@ public class DodavanjeKorisnika {
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(lblAdresa);
 		
 	}
+	
+	public void prikazi() {
+		frmAdministratorDodavanjeKorisnika.setVisible(true);
+	}
+	
 }

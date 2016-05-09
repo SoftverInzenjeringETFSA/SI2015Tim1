@@ -94,7 +94,7 @@ public class ModifikacijaKorisnika {
 		frmAdministratormodifikacijaKorisnika = new JFrame();
 		frmAdministratormodifikacijaKorisnika.setTitle("Administrator-Modifikacija korisnika");
 		frmAdministratormodifikacijaKorisnika.setBounds(100, 100, 385, 585);
-		frmAdministratormodifikacijaKorisnika.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmAdministratormodifikacijaKorisnika.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmAdministratormodifikacijaKorisnika.getContentPane().setLayout(null);
 		frmAdministratormodifikacijaKorisnika.setLocationRelativeTo(null);
 		
@@ -267,5 +267,9 @@ public class ModifikacijaKorisnika {
 				}
 			}
 		});
+	}
+	
+	public void prikazi() {
+		frmAdministratormodifikacijaKorisnika.setVisible(true);
 	}
 }
