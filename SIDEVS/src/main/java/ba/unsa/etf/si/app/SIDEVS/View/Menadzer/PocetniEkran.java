@@ -20,6 +20,7 @@ public class PocetniEkran {
 	private EvidencijaLijeka el;
 	private KreiranjeFakture kf;
 
+	
 	/**
 	 * Launch the application.
 	 */
