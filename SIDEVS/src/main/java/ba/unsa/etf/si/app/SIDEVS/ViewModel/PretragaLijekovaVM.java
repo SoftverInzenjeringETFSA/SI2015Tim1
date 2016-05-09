@@ -36,7 +36,6 @@ public class PretragaLijekovaVM {
 			Criteria criteria2 = ses.getSession().createCriteria(Lot.class).setProjection(Projections.property("kolicina_tableta"));
 			List<Integer> listaKolicine = criteria2.list();
 			
-			JOptionPane.showMessageDialog(null,listaKolicine, "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);
 			//lista skladista
 			Criteria criteria3 = ses.getSession().createCriteria(Lot.class).setProjection(Projections.property("skladiste"));
 			List<Skladiste> listaSkladista = criteria3.list();
@@ -45,7 +44,6 @@ public class PretragaLijekovaVM {
 			
 			for(int i=0;i<listaLijekova.size();i++)
 			{   
-				JOptionPane.showMessageDialog(null,listaLijekova.get(i).getId()+" skladiste "+listaSkladista.get(i).getBroj_skladista()+" kolicina"+listaKolicine.get(i), "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);
 				
 				if(listaLijekova.get(i).getId()==id && Integer.toString(listaSkladista.get(i).getBroj_skladista()).equals(broj_skladista))
 				{	
