@@ -1,17 +1,30 @@
 package ba.unsa.etf.si.app.SIDEVS.View.Radnik;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import org.hibernate.Transaction;
+
+import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
+import ba.unsa.etf.si.app.SIDEVS.Model.Kupac;
+import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
 public class BrisanjeKupca {
-
-	private JFrame frmBrisanjeKupca;
-
+    
+	private Sessions _sesija;
+	public JFrame frmBrisanjeKupca;
+    private JLabel noticeLabel;
 	/**
 	 * Launch the application.
 	 */
@@ -32,31 +45,75 @@ public class BrisanjeKupca {
 	 * Create the application.
 	 */
 	public BrisanjeKupca() {
-		initialize();
+		initialize(_sesija);
+	}
+	
+	public BrisanjeKupca(Sessions s) throws Exception {
+		_sesija = s;
+		initialize(_sesija);
+		frmBrisanjeKupca.setVisible(true);
+		if(!s.daLiPostoji()){
+			throw new Exception("Sesija nije kreirana!");
+		}	
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(Sessions s) {
+		
+		Transaction t = s.getSession().beginTransaction();
+		
 		frmBrisanjeKupca = new JFrame();
 		frmBrisanjeKupca.setTitle("Brisanje kupca");
-		frmBrisanjeKupca.setBounds(100, 100, 291, 123);
-		frmBrisanjeKupca.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmBrisanjeKupca.setBounds(100, 100, 310, 139);
+		frmBrisanjeKupca.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmBrisanjeKupca.getContentPane().setLayout(null);
+		frmBrisanjeKupca.setLocationRelativeTo(null);
 		
 		JLabel lblKupac = new JLabel("Kupac:");
 		lblKupac.setBounds(10, 11, 69, 14);
 		frmBrisanjeKupca.getContentPane().add(lblKupac);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Izaberite kupca"}));
-		comboBox.setBounds(89, 8, 112, 20);
-		frmBrisanjeKupca.getContentPane().add(comboBox);
+		/*JComboBox listaKupaca = new JComboBox();
+		listaKupaca.setModel(new DefaultComboBoxModel(new String[] {"Izaberite kupca"}));
+		listaKupaca.setBounds(89, 8, 112, 20);
+		frmBrisanjeKupca.getContentPane().add(listaKupaca);*/
 		
-		JButton btnIzbrii = new JButton("Izbriši");
-		btnIzbrii.setBounds(89, 39, 112, 23);
-		frmBrisanjeKupca.getContentPane().add(btnIzbrii);
-	}
+		final AutoCompleteJComboBox  listaKupaca = new AutoCompleteJComboBox(s, Kupac.class, "naziv");
+		listaKupaca.setBounds(89, 8, 112, 20);
+		frmBrisanjeKupca.getContentPane().add(listaKupaca);
+		
+	   
+		
+		JButton btnIzbriši = new JButton("Izbriši");
+		btnIzbriši.setBounds(89, 39, 112, 23);
+		btnIzbriši.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{					
+					String txt = listaKupaca.getSelectedItem().toString();	
+					
+					boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.BrisanjeKupcaVM.BrisiKupca(_sesija, txt);		
+					if(!state) throw new Exception();
 
+					//JOptionPane.showMessageDialog(null, "Kupac uspješno obrisan", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);
+					noticeLabel.setForeground(Color.GREEN);
+					noticeLabel.setText("Kupac je uspješno obrisan");
+				}
+				catch(Exception ex){
+					
+					noticeLabel.setForeground(Color.RED);
+					noticeLabel.setText(ex.getMessage());
+					
+				}
+				listaKupaca.setSelectedItem("");
+			}
+		});
+		frmBrisanjeKupca.getContentPane().add(btnIzbriši);
+		
+		 noticeLabel = new JLabel("");
+			noticeLabel.setBounds(10, 75, 274, 14);
+			frmBrisanjeKupca.getContentPane().add(noticeLabel);
+		
+	}
 }
