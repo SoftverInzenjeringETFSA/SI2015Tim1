@@ -53,7 +53,6 @@ public final class FakturaVM {
 			}
 			f.setIzlazna_cijena(izlazna_cijena);
 			f.setKupac(k);
-
 			// Dodavanje u fakture lotovi i skladiste
 			i = 0;
 			for (Lot l : lotovi) {
