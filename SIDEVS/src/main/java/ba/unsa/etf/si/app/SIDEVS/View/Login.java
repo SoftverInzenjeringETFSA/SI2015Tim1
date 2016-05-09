@@ -9,16 +9,19 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import org.hibernate.Session;
+
 import ba.unsa.etf.si.app.SIDEVS.Model.Administrator;
 import ba.unsa.etf.si.app.SIDEVS.Model.Menadzer;
 import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
+import ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran;
 
 import javax.swing.JButton;
 import java.awt.Color;
 
 public class Login {
-
 	private JFrame frmLogin;
 	private JTextField korisnickoIme;
 	private JTextField password;
@@ -42,6 +45,10 @@ public class Login {
 	/**
 	 * Create the application.
 	 */
+	public void prikazi(){
+		frmLogin.setVisible(true);
+	}
+	
 	public Login() {
 		initialize();
 	}

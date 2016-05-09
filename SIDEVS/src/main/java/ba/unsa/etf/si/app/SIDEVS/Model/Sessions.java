@@ -53,5 +53,13 @@ public final class Sessions {
 	public Boolean daLiPostoji(){
 		return (instance != null);
 	}
+	
+	public void ubijSesiju(){
+		trasaction.commit();
+		session.close();
+		korisnik = null;
+		instance = null;
+	}
+	
 
 }

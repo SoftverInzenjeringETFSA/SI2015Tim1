@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.View.Login;
 
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
@@ -55,7 +56,7 @@ public class PocetniEkran {
 		frmMenadzerPocetniEkran.setResizable(false);
 		frmMenadzerPocetniEkran.setTitle("Početni ekran");
 		frmMenadzerPocetniEkran.setBounds(100, 100, 695, 300);
-		frmMenadzerPocetniEkran.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmMenadzerPocetniEkran.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmMenadzerPocetniEkran.getContentPane().setLayout(null);
 		frmMenadzerPocetniEkran.setLocationRelativeTo(null);
 		
@@ -128,6 +129,19 @@ public class PocetniEkran {
 		
 		JButton btnOdjava = new JButton("Odjava");
 		btnOdjava.setBounds(373, 228, 145, 23);
+		btnOdjava.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					s.ubijSesiju();
+					frmMenadzerPocetniEkran.dispose();
+					new Login().prikazi();
+				} catch (Exception e) {
+					s.getTrasaction().rollback();
+					e.printStackTrace();
+				}
+			}
+		});
 		frmMenadzerPocetniEkran.getContentPane().add(btnOdjava);
 		
 		JButton btnPomoc = new JButton("Pomoć");

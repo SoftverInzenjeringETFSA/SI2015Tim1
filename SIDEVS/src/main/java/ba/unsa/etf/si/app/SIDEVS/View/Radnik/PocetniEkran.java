@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.View.Login;
 import ba.unsa.etf.si.app.SIDEVS.View.Radnik.EvidencijaLotova;
 
 import javax.swing.JButton;
@@ -36,7 +37,7 @@ public class PocetniEkran {
 		frmPoetniEkran.setResizable(false);
 		frmPoetniEkran.setTitle("Početni ekran");
 		frmPoetniEkran.setBounds(100, 100, 450, 300);
-		frmPoetniEkran.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmPoetniEkran.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmPoetniEkran.getContentPane().setLayout(null);
 		frmPoetniEkran.setLocationRelativeTo(null);
 		
@@ -85,6 +86,19 @@ public class PocetniEkran {
 		
 		JButton btnOdjava = new JButton("Odjava");
 		btnOdjava.setBounds(20, 211, 195, 23);
+		btnOdjava.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					s.ubijSesiju();
+					frmPoetniEkran.dispose();
+					new Login().prikazi();
+				} catch (Exception e) {
+					s.getTrasaction().rollback();
+					e.printStackTrace();
+				}
+			}
+		});
 		frmPoetniEkran.getContentPane().add(btnOdjava);
 		
 		JButton btnPomo = new JButton("Pomoć");
