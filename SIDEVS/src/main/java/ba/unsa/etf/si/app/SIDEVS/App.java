@@ -24,10 +24,23 @@ public class App {
 	
 	public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+	
 		Login l = new Login();
-		l.prikazi();
+	
+		
+	
 
 		
+	
+		//l.main(args);
+		/*
+		private static void kreirajKorisnikaAdmin(Session session, Administrator a){
+		//	>>>>>>> branch 'master' of https://github.com/SoftverInzenjeringETFSA/SI2015Tim1.git
+					Transaction t = session.beginTransaction();
+					session.save(a);
+					t.commit();
+				}
+
 	 	//kreirajSkladiste(session, 3);
 		/*try {
 			System.out.println("Kreiram!");
@@ -47,7 +60,7 @@ public class App {
 			System.out.println(ex);
 		}*/
 		//dajSveKorisnike(session);
-	}
+	
 
 
 	/*private static void kreirajKorisnikaAdmin(Session session, Administrator a) {
@@ -93,5 +106,9 @@ public class App {
 			System.out.println("Skladište sa ovim brojem već postoji!");
 		}
 	}*/
-
+		
+	}
+	
 }
+
+
