@@ -23,6 +23,7 @@ import java.awt.event.MouseEvent;
 import java.sql.Date;
 
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class EvidencijaLotova {
 

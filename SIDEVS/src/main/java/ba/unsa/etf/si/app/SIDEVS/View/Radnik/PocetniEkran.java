@@ -18,6 +18,10 @@ public class PocetniEkran {
 	private Sessions s;
 	private EvidencijaLotova el;
 	private KreiranjeFakture kf;
+	private BrisanjeKupca bk;
+	private PretragaLijeka pl;
+    private OtpisLijeka ol;
+
 
 	/**
 	 * Create the application.
@@ -64,6 +68,17 @@ public class PocetniEkran {
 		panel.add(btnEvidencijaLotova);
 		
 		JButton btnPretragaLijekova = new JButton("Pretraga lijekova");
+		btnPretragaLijekova.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					if(pl == null) pl = new PretragaLijeka(s);
+					pl.frmPretragaLijeka.setVisible(true);
+				} catch (Exception c) {
+					c.printStackTrace();
+				}
+			}
+		});
 		btnPretragaLijekova.setBounds(209, 21, 195, 23);
 		panel.add(btnPretragaLijekova);
 		
@@ -83,6 +98,17 @@ public class PocetniEkran {
 		panel.add(btnKreiranjeFaktura);
 		
 		JButton btnOtpisLijekova = new JButton("Otpis lijekova");
+		btnOtpisLijekova.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					if(ol == null) ol = new OtpisLijeka(s);
+					ol.frmOtpisLijeka.setVisible(true);
+				} catch (Exception c) {
+					c.printStackTrace();
+				}
+			}
+		});
 		btnOtpisLijekova.setBounds(209, 55, 195, 23);
 		panel.add(btnOtpisLijekova);
 		
@@ -92,9 +118,20 @@ public class PocetniEkran {
 		frmPoetniEkran.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
-		JButton btnObrii = new JButton("Obriši");
-		btnObrii.setBounds(10, 28, 394, 23);
-		panel_1.add(btnObrii);
+		JButton btnObrisi = new JButton("Obriši");
+		btnObrisi.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					if(bk == null) bk = new BrisanjeKupca(s);
+					bk.frmBrisanjeKupca.setVisible(true);
+				} catch (Exception c) {
+					c.printStackTrace();
+				}
+			}
+		});
+		btnObrisi.setBounds(10, 28, 394, 23);
+		panel_1.add(btnObrisi);
 		
 		JButton btnOdjava = new JButton("Odjava");
 		btnOdjava.setBounds(20, 211, 195, 23);
