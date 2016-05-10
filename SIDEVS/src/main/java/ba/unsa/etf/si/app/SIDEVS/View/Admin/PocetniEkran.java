@@ -126,7 +126,7 @@ public class PocetniEkran {
 					frmAdministratorPocetniEkran.dispose();
 					new Login().prikazi();
 				} catch (Exception e) {
-					_sesija.getTrasaction().rollback();
+					//_sesija.getTrasaction().rollback();
 					e.printStackTrace();
 				}
 			}

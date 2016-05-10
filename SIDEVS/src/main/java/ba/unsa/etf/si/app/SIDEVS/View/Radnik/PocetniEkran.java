@@ -106,7 +106,7 @@ public class PocetniEkran {
 					frmPoetniEkran.dispose();
 					new Login().prikazi();
 				} catch (Exception e) {
-					s.getTrasaction().rollback();
+					//s.getTrasaction().rollback();
 					e.printStackTrace();
 				}
 			}
