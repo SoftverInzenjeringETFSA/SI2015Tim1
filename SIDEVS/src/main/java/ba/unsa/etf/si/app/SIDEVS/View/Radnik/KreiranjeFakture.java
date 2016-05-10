@@ -44,7 +44,7 @@ public class KreiranjeFakture {
 
 	// Za PDF
 	private Kupac k;
-	private Set<Lot> lotovi = new HashSet<Lot>();
+	private List<Lot> lotovi = new ArrayList<Lot>();
 	private List<Integer> kolicine = new ArrayList<Integer>();
 	private List<Skladiste> skladista = new ArrayList<Skladiste>();
 
@@ -80,6 +80,18 @@ public class KreiranjeFakture {
 		panel_kupac.add(comboBox_kupac);
 
 		JButton btnDodajNovogKorisnika = new JButton("Dodaj novog kupca");
+		btnDodajNovogKorisnika.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					DodajKupca dk = new DodajKupca(s);
+					dk.prikazi();	
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnDodajNovogKorisnika.setBounds(10, 75, 181, 23);
 		panel_kupac.add(btnDodajNovogKorisnika);
 
@@ -241,12 +253,12 @@ public class KreiranjeFakture {
 					comboBox_skladista.setSelectedIndex(0);
 					comboBox_lot.setSelectedIndex(-1);
 					textField_kolicina.setText("");
-					for (int i = 0; i < table_model.getRowCount(); i++)
-						table_model.removeRow(i);
+					table_model.setRowCount(0);
 					for (Component c : panel_kupac.getComponents()) {
 						c.setEnabled(true);
 					}
 					comboBox_kupac.setSelectedItem("");
+					frmKreiranjeFakture.dispose();
 				}
 			}
 		});

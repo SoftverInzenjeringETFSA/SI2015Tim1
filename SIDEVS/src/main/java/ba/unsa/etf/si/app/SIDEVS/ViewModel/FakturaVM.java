@@ -41,7 +41,7 @@ public final class FakturaVM {
 		this.s = s;
 	}
 
-	public void dodajFakturu(Set<Lot> lotovi, List<Integer> kolicine, List<Skladiste> skladista, Kupac k) {
+	public void dodajFakturu(List<Lot> lotovi, List<Integer> kolicine, List<Skladiste> skladista, Kupac k) {
 		try {
 			Faktura f = new Faktura();
 			f.setKorisnik(s.getKorisnik());

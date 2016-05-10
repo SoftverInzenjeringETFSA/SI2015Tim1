@@ -28,7 +28,6 @@ public class PocetniEkran {
 	private JFrame frmMenadzerPocetniEkran;
 	private Sessions s;
 	private EvidencijaLijeka el;
-	private KreiranjeFakture kf;
 	private BrisanjeKupca bk;
 	private PretragaLijeka pl;
 	private OtpisLijeka ol;
@@ -136,7 +135,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					if(kf == null) kf = new KreiranjeFakture(s);
+					KreiranjeFakture kf = new KreiranjeFakture(s);
 					kf.prikazi();
 				} catch (Exception ex) {
 					ex.printStackTrace();

@@ -4,7 +4,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Kupac;
-import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 
 public final class EvidencijaKupca {
@@ -12,6 +11,7 @@ public final class EvidencijaKupca {
 
 	
 	private Sessions s;
+	private Kupac noviKupac;
 	
 	public Sessions getSessions(){
 		return this.s;
@@ -35,7 +35,7 @@ public final class EvidencijaKupca {
 				
 
 				System.out.println("Pocinjem!");
-				Kupac noviKupac = new Kupac();
+				noviKupac = new Kupac();
 				noviKupac.setNaziv(naziv);
 				noviKupac.setAdresa(adresa);
 				//provjera da li postoji u bazi

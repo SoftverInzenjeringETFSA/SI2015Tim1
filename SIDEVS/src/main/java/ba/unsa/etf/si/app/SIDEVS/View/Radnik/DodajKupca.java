@@ -1,7 +1,5 @@
 package ba.unsa.etf.si.app.SIDEVS.View.Radnik;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -19,23 +17,9 @@ public class DodajKupca {
 	private JTextField ime_txt;
 	private JTextField adresa_txt;
 	private JLabel obavijest_lbl;
+
 	
 	private Sessions s;
-
-	/*
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DodajKupca window = new DodajKupca();
-					window.frmDodajKupca.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
 
 	public DodajKupca(Sessions s) throws Exception{
 		this.s = s;
@@ -109,6 +93,10 @@ public class DodajKupca {
 		
 		btnDodaj.setBounds(111, 103, 141, 23);
 		frmDodajKupca.getContentPane().add(btnDodaj);
+	}
+	
+	public void prikazi(){
+		frmDodajKupca.setVisible(true);
 	}
 	
 	
