@@ -158,9 +158,9 @@ public class KreiranjeFakture {
 						msg = "Kupac ne postoji";
 					else if (lot == null)
 						msg = "Lot ne postoji";
-					else if (lot.getSkladiste().getBroj_skladista() != skladiste.getBroj_skladista())
+					/*else if (lot.getSkladiste().getBroj_skladista() != skladiste.getBroj_skladista())
 						msg = "Lot " + lot.getBroj_lota() + " ne postoji u skladištu " + skladiste.getBroj_skladista();
-
+					*/
 					if (msg == "") {
 						Lijek lijek = lot.getLijek();
 						

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -31,12 +32,8 @@ public class Lot implements Serializable{
 	private double ulazna_cijena;
 	private int kolicina_tableta;
 	private Date datum_ulaza;
-	@ManyToOne
-    @JoinColumn(name="skladiste_id")
-	private Skladiste skladiste;
 	@OneToMany(mappedBy = "lot")
 	private Set<FakturaLot> fakture_lotovi = new HashSet<FakturaLot>(0);
-	
 	
 	public String getBroj_lota() {
 		return broj_lota;
@@ -79,12 +76,6 @@ public class Lot implements Serializable{
 	}
 	public void setDatum_ulaza(Date date) {
 		this.datum_ulaza = date;
-	}
-	public Skladiste getSkladiste() {
-		return skladiste;
-	}
-	public void setSkladiste(Skladiste skladiste) {
-		this.skladiste = skladiste;
 	}
 	public Set<FakturaLot> getFaktureLotovi() {
 		return fakture_lotovi;

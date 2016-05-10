@@ -23,6 +23,7 @@ public class PocetniEkran {
 	private PretragaLijeka pl;
     private OtpisLijeka ol;
     private DodajKupca dk;
+    private DodajLotUSkladiste dlus;
 
 
 	/**
@@ -50,7 +51,7 @@ public class PocetniEkran {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Lijek", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 11, 414, 98);
+		panel.setBounds(10, 11, 414, 127);
 		frmPoetniEkran.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -96,7 +97,7 @@ public class PocetniEkran {
 				}
 			}
 		});
-		btnKreiranjeFaktura.setBounds(10, 55, 195, 23);
+		btnKreiranjeFaktura.setBounds(96, 93, 195, 23);
 		panel.add(btnKreiranjeFaktura);
 		
 		JButton btnOtpisLijekova = new JButton("Otpis lijekova");
@@ -114,9 +115,25 @@ public class PocetniEkran {
 		btnOtpisLijekova.setBounds(209, 55, 195, 23);
 		panel.add(btnOtpisLijekova);
 		
+		JButton btnDodajLotU = new JButton("Dodaj/ažuriraj lot u skladištu");
+		btnDodajLotU.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try{
+				if(dlus == null) dlus = new DodajLotUSkladiste(s);
+				dlus.prikazi();
+				}
+				catch(Exception ex){
+					ex.printStackTrace();
+				}
+			}
+		});
+		btnDodajLotU.setBounds(10, 55, 195, 23);
+		panel.add(btnDodajLotU);
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Kupac", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(10, 114, 414, 77);
+		panel_1.setBounds(10, 149, 414, 77);
 		frmPoetniEkran.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -151,7 +168,7 @@ public class PocetniEkran {
 		panel_1.add(btnDodajKupca);
 		
 		JButton btnOdjava = new JButton("Odjava");
-		btnOdjava.setBounds(20, 211, 195, 23);
+		btnOdjava.setBounds(22, 237, 195, 23);
 		btnOdjava.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -168,7 +185,7 @@ public class PocetniEkran {
 		frmPoetniEkran.getContentPane().add(btnOdjava);
 		
 		JButton btnPomo = new JButton("Pomoć");
-		btnPomo.setBounds(218, 211, 195, 23);
+		btnPomo.setBounds(220, 237, 195, 23);
 		frmPoetniEkran.getContentPane().add(btnPomo);
 	}
 }
