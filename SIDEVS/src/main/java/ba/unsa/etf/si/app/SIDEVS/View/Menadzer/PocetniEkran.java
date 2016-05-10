@@ -12,9 +12,10 @@ import ba.unsa.etf.si.app.SIDEVS.View.Radnik.KreiranjeFakture;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.View.Radnik.BrisanjeKupca;
+import ba.unsa.etf.si.app.SIDEVS.View.Radnik.DodajKupca;
 import ba.unsa.etf.si.app.SIDEVS.View.Radnik.OtpisLijeka;
 import ba.unsa.etf.si.app.SIDEVS.View.Radnik.PretragaLijeka;
-
+import ba.unsa.etf.si.app.SIDEVS.View.Radnik.DodajKupca;
 
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
@@ -31,6 +32,7 @@ public class PocetniEkran {
 	private BrisanjeKupca bk;
 	private PretragaLijeka pl;
 	private OtpisLijeka ol;
+	private DodajKupca dk;
 
 	
 	/**
@@ -184,7 +186,7 @@ public class PocetniEkran {
 			}
 		});
 
-		btnObrisi.setBounds(373, 160, 296, 23);
+		btnObrisi.setBounds(528, 160, 141, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnObrisi);
 		
 		JButton btnOdjava = new JButton("Odjava");
@@ -207,5 +209,20 @@ public class PocetniEkran {
 		JButton btnPomoc = new JButton("Pomoć");
 		btnPomoc.setBounds(528, 228, 141, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnPomoc);
+		
+		JButton btnDodaj = new JButton("Dodaj");
+		btnDodaj.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					if (dk==null) dk = new DodajKupca(s);				
+					dk.frmDodajKupca.setVisible(true);
+				} catch (Exception c) {
+					c.printStackTrace();
+				}
+			}
+		});
+		btnDodaj.setBounds(373, 160, 141, 23);
+		frmMenadzerPocetniEkran.getContentPane().add(btnDodaj);
 	}
 }
