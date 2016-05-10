@@ -25,8 +25,9 @@ public class App {
 	public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Login l = new Login();
-		l.prikazi();
-
+		l.prikazi(); 
+		
+		//Test
 		
 	 	//kreirajSkladiste(session, 3);
 		/*try {
