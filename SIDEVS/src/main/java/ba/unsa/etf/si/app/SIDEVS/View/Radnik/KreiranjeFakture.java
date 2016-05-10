@@ -15,11 +15,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Kupac;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
+import ba.unsa.etf.si.app.SIDEVS.Model.Pakovanje;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
@@ -158,9 +160,17 @@ public class KreiranjeFakture {
 						msg = "Kupac ne postoji";
 					else if (lot == null)
 						msg = "Lot ne postoji";
-					/*else if (lot.getSkladiste().getBroj_skladista() != skladiste.getBroj_skladista())
-						msg = "Lot " + lot.getBroj_lota() + " ne postoji u skladištu " + skladiste.getBroj_skladista();
-					*/
+					else {
+						Boolean postoji = false;
+						Criteria criteria = s.getSession().createCriteria(Pakovanje.class).add(Restrictions.eq("lot", lot));
+						List<Pakovanje> pakovanja = criteria.list();
+						for (Pakovanje pakovanje : pakovanja) {
+							if(pakovanje.getSkladiste() == skladiste) {
+								postoji = true;
+							}
+						}
+						if(!postoji) msg = "Lot " + lot.getBroj_lota() + " ne postoji u skladištu " + skladiste.getBroj_skladista();
+					}
 					if (msg == "") {
 						Lijek lijek = lot.getLijek();
 						

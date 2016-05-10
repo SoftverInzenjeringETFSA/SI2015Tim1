@@ -7,7 +7,6 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -34,6 +33,8 @@ public class Lot implements Serializable{
 	private Date datum_ulaza;
 	@OneToMany(mappedBy = "lot")
 	private Set<FakturaLot> fakture_lotovi = new HashSet<FakturaLot>(0);
+	@OneToMany(mappedBy = "lot")
+	private Set<Pakovanje> pakovanja = new HashSet<Pakovanje>(0);
 	
 	public String getBroj_lota() {
 		return broj_lota;
@@ -82,5 +83,11 @@ public class Lot implements Serializable{
 	}
 	public void setFaktureLotovi(Set<FakturaLot> fakture_lotovi) {
 		this.fakture_lotovi = fakture_lotovi;
+	}
+	public Set<Pakovanje> getPakovanja() {
+		return pakovanja;
+	}
+	public void setPakovanja(Set<Pakovanje> pakovanja) {
+		this.pakovanja = pakovanja;
 	}
 }
