@@ -7,6 +7,7 @@ import javax.swing.border.TitledBorder;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.View.Login;
 import ba.unsa.etf.si.app.SIDEVS.View.Radnik.EvidencijaLotova;
+import ba.unsa.etf.si.app.SIDEVS.View.Radnik.DodajKupca;
 
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
@@ -21,6 +22,7 @@ public class PocetniEkran {
 	private BrisanjeKupca bk;
 	private PretragaLijeka pl;
     private OtpisLijeka ol;
+    private DodajKupca dk;
 
 
 	/**
@@ -130,8 +132,23 @@ public class PocetniEkran {
 				}
 			}
 		});
-		btnObrisi.setBounds(10, 28, 394, 23);
+		btnObrisi.setBounds(210, 28, 194, 23);
 		panel_1.add(btnObrisi);
+		
+		JButton btnDodajKupca = new JButton("Dodaj");
+		btnDodajKupca.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					if (dk==null) dk = new DodajKupca(s);				
+					dk.frmDodajKupca.setVisible(true);
+				} catch (Exception c) {
+					c.printStackTrace();
+				}
+			}
+		});
+		btnDodajKupca.setBounds(10, 28, 194, 23);
+		panel_1.add(btnDodajKupca);
 		
 		JButton btnOdjava = new JButton("Odjava");
 		btnOdjava.setBounds(20, 211, 195, 23);
@@ -154,5 +171,4 @@ public class PocetniEkran {
 		btnPomo.setBounds(218, 211, 195, 23);
 		frmPoetniEkran.getContentPane().add(btnPomo);
 	}
-
 }
