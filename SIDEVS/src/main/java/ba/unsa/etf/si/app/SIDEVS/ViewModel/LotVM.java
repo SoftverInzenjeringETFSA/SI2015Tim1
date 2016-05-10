@@ -41,7 +41,7 @@ public class LotVM {
 				if(s.getSession().get(Lot.class, broj_lota) == null){
 					s.getSession().beginTransaction();
 					s.getSession().save(l);
-					s.getTrasaction().commit();
+					//s.getTrasaction().commit();
 				}
 				else throw new Exception("Lot sa ovim brojem već postoji");
 			} catch (Exception e) {

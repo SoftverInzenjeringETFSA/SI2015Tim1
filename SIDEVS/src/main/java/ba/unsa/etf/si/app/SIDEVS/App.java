@@ -31,33 +31,38 @@ public class App {
 	 	//kreirajSkladiste(session, 3);
 		/*try {
 			System.out.println("Kreiram!");
-			Radnik k = new Radnik();
-			k.setIme("Radnik");
-			k.setPrezime("Radnicki");
+			Administrator k = new Administrator();
+			k.setIme("Admin");
+			k.setPrezime("ADminovic");
 			k.setJmbg("1234567891234");
 			k.setAdresa("Adresa bb");
-			k.setEmail("radnik");
+			k.setEmail("admin");
 			k.setTelefon("012353451");
 			k.setDatum_polaska_rada(new Date());
-			k.setRadno_mjesto("Radnik");
+			k.setRadno_mjesto("Admin");
 			k.setLozinka("password");
-			kreirajKorisnikaRadnik(session, k);
+			kreirajKorisnikaAdmin(session, k);
 			System.out.println("Korisnik kreiran!");
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}*/
 		//dajSveKorisnike(session);
+		
 	}
 
 
-	/*private static void kreirajKorisnikaAdmin(Session session, Administrator a) {
-=======
+	/*private static void kreirajKorisnikaAdmin(Session session, Administrator a) {	
+		Transaction t = session.beginTransaction();
+		session.save(a);
+		t.commit();
+	}*/
+/*
 	private static void kreirajKorisnikaRadnik(Session session, Radnik a) {
 		Transaction t = session.beginTransaction();
 		session.save(a);
 		t.commit();
-	}
-	
+	}*/
+	/*
 	private static void kreirajKorisnikaAdmin(Session session, Administrator a) {
 >>>>>>> branch 'master' of https://github.com/SoftverInzenjeringETFSA/SI2015Tim1.git
 		Transaction t = session.beginTransaction();
