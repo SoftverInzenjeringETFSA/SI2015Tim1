@@ -43,7 +43,6 @@ public class DodavanjeKorisnikaVM {
 			k.setRadno_mjesto(radnoMjesto);
 			k.setLozinka("password");
 			ses.getSession().save(k);
-			t.commit();		
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

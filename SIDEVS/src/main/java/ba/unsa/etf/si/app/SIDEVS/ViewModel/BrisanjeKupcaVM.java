@@ -23,7 +23,7 @@ public class BrisanjeKupcaVM {
 			Kupac k = lista.get(0);
 			
 			ses.getSession().delete(k);
-			t.commit();
+			//t.commit();
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -48,8 +48,7 @@ public class ModifikacijaKorisnikaVM {
 			k.setDatum_polaska_rada(new Date()); //POTREBNO PODESITI NA datumPocetkaRada
 			k.setRadno_mjesto(radnoMjesto);
 			
-			ses.getSession().update(k);
-			t.commit();		
+			ses.getSession().update(k);		
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

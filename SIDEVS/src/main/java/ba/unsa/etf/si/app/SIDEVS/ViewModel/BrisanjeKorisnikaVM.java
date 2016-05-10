@@ -35,7 +35,6 @@ public class BrisanjeKorisnikaVM {
 			Korisnik k = lista.get(0);
 			
 			ses.getSession().delete(k);
-			t.commit();
 			
 		} catch (Exception e) {
 			e.printStackTrace();

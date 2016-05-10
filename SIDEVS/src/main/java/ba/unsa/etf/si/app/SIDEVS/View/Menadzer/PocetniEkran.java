@@ -197,7 +197,7 @@ public class PocetniEkran {
 					frmMenadzerPocetniEkran.dispose();
 					new Login().prikazi();
 				} catch (Exception e) {
-					s.getTrasaction().rollback();
+					//s.getTrasaction().rollback();
 					e.printStackTrace();
 				}
 			}
