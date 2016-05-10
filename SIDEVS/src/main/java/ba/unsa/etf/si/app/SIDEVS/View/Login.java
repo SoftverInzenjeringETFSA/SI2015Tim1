@@ -17,14 +17,22 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran;
+import ba.unsa.etf.si.app.SIDEVS.View.Radnik.EvidencijaLotova;
 
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
 
 public class Login {
 	private JFrame frmLogin;
+	private ChangePassword cp;
 	private JTextField korisnickoIme;
 	private JTextField password;
+	
 
 	/**
 	 * Launch the application.
@@ -69,7 +77,7 @@ public class Login {
 		lblKorisnikoIme.setBounds(64, 32, 131, 14);
 		frmLogin.getContentPane().add(lblKorisnikoIme);
 		
-		JLabel lblPassword = new JLabel("Password:");
+		JLabel lblPassword = new JLabel("Lozinka:");
 		lblPassword.setBounds(64, 90, 131, 14);
 		frmLogin.getContentPane().add(lblPassword);
 		
@@ -83,17 +91,31 @@ public class Login {
 		frmLogin.getContentPane().add(password);
 		password.setColumns(10);
 		
-		JLabel lblPromijeniPassword = new JLabel("Promijeni password");
-		lblPromijeniPassword.setBounds(74, 186, 131, 14);
-		frmLogin.getContentPane().add(lblPromijeniPassword);
+		
+		
 		
 		final JLabel labelError = new JLabel("");
 		labelError.setForeground(Color.RED);
 		labelError.setBounds(10, 216, 253, 14);
 		frmLogin.getContentPane().add(labelError);
 		
+		
+		JLabel lblPromijeniPassword = new JLabel("Promijeni lozinku");
+		lblPromijeniPassword.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblPromijeniPassword.setForeground(Color.BLUE);
+		lblPromijeniPassword.setBounds(73, 205, 103, 14);
+		frmLogin.getContentPane().add(lblPromijeniPassword);
+		lblPromijeniPassword.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(cp == null) cp = new ChangePassword();
+				cp.prikazi();
+				
+			}
+		});
+		
 		JButton btnLogin = new JButton("Login");
-		btnLogin.setBounds(64, 152, 131, 23);
+		btnLogin.setBounds(64, 152, 131, 28);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
@@ -116,5 +138,6 @@ public class Login {
 			}
 		});
 		frmLogin.getContentPane().add(btnLogin);
+		frmLogin.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{korisnickoIme, lblKorisnikoIme, password, btnLogin, lblPromijeniPassword, lblPassword, labelError}));
 	}
 }
