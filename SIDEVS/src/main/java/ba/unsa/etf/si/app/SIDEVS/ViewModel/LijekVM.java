@@ -33,7 +33,7 @@ public final class LijekVM {
 				if (s.getSession().get(Lijek.class, id) == null && s.getSession().createCriteria(Lijek.class).add(Restrictions.eq("naziv", naziv)) .setProjection(Projections.property("naziv")).uniqueResult() == null) {
 					s.getSession().beginTransaction();
 					s.getSession().save(l);
-					//s.getTrasaction().commit();
+					s.getTrasaction().commit();
 				} else
 					throw new Exception("Lijek sa ovim ID ili nazivom već postoji");
 			} catch (Exception ex) {

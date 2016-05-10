@@ -1,7 +1,7 @@
 package ba.unsa.etf.si.app.SIDEVS.Model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,6 +30,7 @@ public class Lot implements Serializable{
 	private double tezina;
 	private double ulazna_cijena;
 	private int kolicina_tableta;
+	private Date datum_ulaza;
 	@ManyToOne
     @JoinColumn(name="skladiste_id")
 	private Skladiste skladiste;
@@ -72,6 +73,12 @@ public class Lot implements Serializable{
 	}
 	public void setKolicina_tableta(int kolicina_tableta) {
 		this.kolicina_tableta = kolicina_tableta;
+	}
+	public Date getDatum_ulaza() {
+		return datum_ulaza;
+	}
+	public void setDatum_ulaza(Date date) {
+		this.datum_ulaza = date;
 	}
 	public Skladiste getSkladiste() {
 		return skladiste;

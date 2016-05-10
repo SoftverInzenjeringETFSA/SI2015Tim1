@@ -55,7 +55,7 @@ public final class Sessions {
 	}
 	
 	public void ubijSesiju(){
-		trasaction.commit();
+		//trasaction.commit();
 		session.close();
 		korisnik = null;
 		instance = null;

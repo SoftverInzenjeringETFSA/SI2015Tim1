@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ public class Faktura implements Serializable{
 	@GeneratedValue
 	private Long id;
 	private double izlazna_cijena;
+	private Date datum_kreiranja;
 	@ManyToOne
 	@JoinColumn(name="kupac_id")
 	private Kupac kupac;
@@ -42,6 +44,12 @@ public class Faktura implements Serializable{
 	}
 	public void setIzlazna_cijena(double izlazna_cijena) {
 		this.izlazna_cijena = izlazna_cijena;
+	}
+	public Date getDatum_kreiranja() {
+		return datum_kreiranja;
+	}
+	public void setDatum_kreiranja(Date datum_kreiranja) {
+		this.datum_kreiranja = datum_kreiranja;
 	}
 	public Kupac getKupac() {
 		return kupac;

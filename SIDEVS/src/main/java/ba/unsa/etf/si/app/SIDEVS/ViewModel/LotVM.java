@@ -1,6 +1,7 @@
 package ba.unsa.etf.si.app.SIDEVS.ViewModel;
 
 import java.sql.Date;
+import java.text.DateFormat;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
@@ -33,6 +34,8 @@ public class LotVM {
 				l.setBroj_lota(broj_lota);
 				l.setTezina(tezina);
 				l.setUlazna_cijena(ulazna_cijena);
+				l.setDatum_ulaza(new java.util.Date());
+				
 				if (kolicina != 0)
 					l.setKolicina_tableta(kolicina);
 				l.setRok_trajanja(rok_trajanja);
@@ -41,7 +44,7 @@ public class LotVM {
 				if(s.getSession().get(Lot.class, broj_lota) == null){
 					s.getSession().beginTransaction();
 					s.getSession().save(l);
-					//s.getTrasaction().commit();
+					s.getTrasaction().commit();
 				}
 				else throw new Exception("Lot sa ovim brojem već postoji");
 			} catch (Exception e) {

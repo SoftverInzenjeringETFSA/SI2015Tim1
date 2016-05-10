@@ -45,6 +45,7 @@ public final class FakturaVM {
 		try {
 			Faktura f = new Faktura();
 			f.setKorisnik(s.getKorisnik());
+			f.setDatum_kreiranja(new Date());
 			double izlazna_cijena = 0;
 			int i = 0;
 			for (Lot l : lotovi) {
