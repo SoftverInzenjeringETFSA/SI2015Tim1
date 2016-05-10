@@ -17,7 +17,6 @@ public class DodajKupca {
 
 	public JFrame frmDodajKupca;
 	private JTextField ime_txt;
-	private JTextField textField_1;
 	private JTextField adresa_txt;
 	private JLabel obavijest_lbl;
 	
@@ -57,10 +56,6 @@ public class DodajKupca {
 		frmDodajKupca.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmDodajKupca.getContentPane().setLayout(null);
 		
-		JLabel lblId = new JLabel("ID:");
-		lblId.setBounds(10, 11, 67, 14);
-		frmDodajKupca.getContentPane().add(lblId);
-		
 		JLabel lblImeIPrezime = new JLabel("Ime i prezime:");
 		lblImeIPrezime.setBounds(10, 36, 91, 14);
 		frmDodajKupca.getContentPane().add(lblImeIPrezime);
@@ -73,11 +68,6 @@ public class DodajKupca {
 		ime_txt.setBounds(111, 33, 141, 20);
 		frmDodajKupca.getContentPane().add(ime_txt);
 		ime_txt.setColumns(10);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(111, 8, 141, 20);
-		frmDodajKupca.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
 		
 		adresa_txt = new JTextField();
 		adresa_txt.setBounds(111, 58, 141, 20);
