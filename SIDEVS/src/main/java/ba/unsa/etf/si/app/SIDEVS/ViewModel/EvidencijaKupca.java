@@ -32,15 +32,15 @@ public final class EvidencijaKupca {
 	public void dodajKupca(String naziv, String adresa) throws Exception{
 		if (daLiPostojiSesija()){
 			try{
+				
+
+				System.out.println("Pocinjem!");
 				Kupac noviKupac = new Kupac();
 				noviKupac.setNaziv(naziv);
 				noviKupac.setAdresa(adresa);
-				//provjera da li postoji u bazi?
-				if (true)
-						/*s.getSession().get(Kupac.class, naziv) == null &&
-					s.getSession().get(Kupac.class, adresa) == null)*/
-						{
-						
+				//provjera da li postoji u bazi
+				if (s.getSession().createCriteria(Kupac.class).add(Restrictions.eq("naziv", naziv)).setProjection(Projections.property("naziv")).uniqueResult() == null){
+					System.out.println("Ovdje!");
 					s.getSession().beginTransaction();
 					s.getSession().save(noviKupac);
 					s.getTrasaction().commit();

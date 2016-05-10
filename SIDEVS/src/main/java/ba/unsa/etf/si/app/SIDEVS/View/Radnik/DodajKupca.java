@@ -96,14 +96,12 @@ public class DodajKupca {
 			public void mouseClicked(MouseEvent arg0) {
 				try{
 					if (validirajPolja()){
-						System.out.println("Ovdje!");
+						
 						String nazivKupca = ime_txt.getText();
 						String adresaKupca = adresa_txt.getText();
 						
 						EvidencijaKupca k = new EvidencijaKupca(s);
-						System.out.println("Kreiram!");
 						k.dodajKupca(nazivKupca, adresaKupca);
-						System.out.println("Kreiram!");
 						refreshFields();
 						obavijest_lbl.setForeground(Color.decode("#008000"));
 						obavijest_lbl.setText("Novi kupac je uspješno unesen u bazu");
@@ -132,7 +130,6 @@ public class DodajKupca {
 
 	private boolean validirajPolja() {
 		
-		//String msg="";
 		
 		
 		
