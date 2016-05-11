@@ -80,7 +80,7 @@ public class KreiranjeFakture {
 		final AutoCompleteJComboBox comboBox_kupac = new AutoCompleteJComboBox(s, Kupac.class, "naziv");
 		comboBox_kupac.setBounds(10, 28, 181, 20);
 		panel_kupac.add(comboBox_kupac);
-
+/*
 		JButton btnDodajNovogKorisnika = new JButton("Dodaj novog kupca");
 		btnDodajNovogKorisnika.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -92,7 +92,9 @@ public class KreiranjeFakture {
 					e1.printStackTrace();
 				}
 			}
-		});
+		});*/
+		
+		JButton btnDodajNovogKorisnika = new JButton("Dodaj novog kupca");
 		btnDodajNovogKorisnika.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

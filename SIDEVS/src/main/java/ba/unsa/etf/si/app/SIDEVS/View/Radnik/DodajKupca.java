@@ -37,7 +37,7 @@ public class DodajKupca {
 		frmDodajKupca = new JFrame();
 		frmDodajKupca.setTitle("Dodaj kupca");
 		frmDodajKupca.setBounds(100, 100, 302, 196);
-		frmDodajKupca.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmDodajKupca.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmDodajKupca.getContentPane().setLayout(null);
 		
 		JLabel lblImeIPrezime = new JLabel("Ime i prezime:");
