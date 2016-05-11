@@ -28,12 +28,12 @@ public class DodavanjeKorisnika {
 	private JFrame frmAdministratorDodavanjeKorisnika;
 	private JTextField ime;
 	private JTextField prezime;
-	private JTextField maticniBroj;
 	private JTextField brojTelefona;
 	private JTextField email;
 	private JTextField radnoMjesto;
 	private JTextField adresa;
 	private JFormattedTextField datumPocetkaRada;
+	private JFormattedTextField maticniBroj;
 	/**
 	 * Launch the application.
 	 */
@@ -97,11 +97,6 @@ public class DodavanjeKorisnika {
 		prezime.setBounds(45, 89, 140, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(prezime);
 		prezime.setColumns(10);
-		
-		maticniBroj = new JTextField();
-		maticniBroj.setBounds(45, 137, 140, 20);
-		frmAdministratorDodavanjeKorisnika.getContentPane().add(maticniBroj);
-		maticniBroj.setColumns(10);
 		
 		brojTelefona = new JTextField();
 		brojTelefona.setBounds(45, 186, 140, 20);
@@ -224,6 +219,19 @@ public class DodavanjeKorisnika {
 		
 		datumPocetkaRada.setBounds(45, 390, 140, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(datumPocetkaRada);
+		
+		MaskFormatter maskaJMBG = new MaskFormatter();
+		try {
+			maskaJMBG = new MaskFormatter("#############");
+			maskaJMBG.setPlaceholderCharacter('_');
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		maticniBroj = new JFormattedTextField(maskaJMBG);
+		maticniBroj.setBounds(45, 139, 140, 20);
+		frmAdministratorDodavanjeKorisnika.getContentPane().add(maticniBroj);
 		
 	}
 	

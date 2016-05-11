@@ -1,6 +1,7 @@
 package ba.unsa.etf.si.app.SIDEVS.View.Menadzer;
 
 import java.awt.EventQueue;
+import java.text.ParseException;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -10,13 +11,15 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
+import javax.swing.JFormattedTextField;
 
 public class IzvjestajUlaziIzlazi {
 
 	private JFrame frmMenadzerIzvjestaO;
-	private JTextField datumOd;
-	private JTextField datumDo;
 	private JTable table;
+	private JFormattedTextField datumOd;
+	private JFormattedTextField datumDo;
 
 	/**
 	 * Launch the application.
@@ -68,23 +71,13 @@ public class IzvjestajUlaziIzlazi {
 		));
 		scrollPane.setViewportView(table);
 		
-		datumOd = new JTextField();
-		datumOd.setColumns(10);
-		datumOd.setBounds(44, 57, 157, 20);
-		frmMenadzerIzvjestaO.getContentPane().add(datumOd);
-		
 		JLabel label = new JLabel("Od");
-		label.setBounds(10, 60, 46, 14);
+		label.setBounds(32, 60, 27, 14);
 		frmMenadzerIzvjestaO.getContentPane().add(label);
 		
 		JLabel label_1 = new JLabel("Do");
-		label_1.setBounds(234, 60, 46, 14);
+		label_1.setBounds(241, 60, 19, 14);
 		frmMenadzerIzvjestaO.getContentPane().add(label_1);
-		
-		datumDo = new JTextField();
-		datumDo.setColumns(10);
-		datumDo.setBounds(267, 57, 157, 20);
-		frmMenadzerIzvjestaO.getContentPane().add(datumDo);
 		
 		JLabel lblOdaberiLijek = new JLabel("Odaberi lijek");
 		lblOdaberiLijek.setBounds(10, 88, 89, 14);
@@ -106,9 +99,25 @@ public class IzvjestajUlaziIzlazi {
 		lisaSkladista.setBounds(10, 26, 414, 20);
 		frmMenadzerIzvjestaO.getContentPane().add(lisaSkladista);
 		
-		JLabel lblOdaberiSkladiste = new JLabel("Odaberi skladiste");
-		lblOdaberiSkladiste.setBounds(10, 0, 191, 14);
+		JLabel lblOdaberiSkladiste = new JLabel("Odaberi skladište");
+		lblOdaberiSkladiste.setBounds(10, 11, 191, 14);
 		frmMenadzerIzvjestaO.getContentPane().add(lblOdaberiSkladiste);
+		
+		MaskFormatter maska=new MaskFormatter();
+		try {
+			maska = new MaskFormatter("##.##.####");
+			maska.setPlaceholderCharacter('_');
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		datumOd = new JFormattedTextField(maska);
+		datumOd.setBounds(59, 56, 119, 23);
+		frmMenadzerIzvjestaO.getContentPane().add(datumOd);
+		
+		datumDo = new JFormattedTextField(maska);
+		datumDo.setBounds(266, 57, 131, 23);
+		frmMenadzerIzvjestaO.getContentPane().add(datumDo);
 	}
-
 }

@@ -25,6 +25,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Pakovanje;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
+import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.FakturaVM;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.SkladisteVM;
 import java.awt.event.MouseAdapter;
@@ -35,6 +36,8 @@ import java.util.List;
 import java.util.Set;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class KreiranjeFakture {
 
@@ -137,6 +140,14 @@ public class KreiranjeFakture {
 		panel_2.add(lblKoliina);
 
 		textField_kolicina = new JTextField();
+		textField_kolicina.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				if (Validator.daLiJeBroj(evt.getKeyChar())) {
+					evt.consume();
+				}
+			}
+		});
 		textField_kolicina.setBounds(96, 58, 95, 20);
 		panel_2.add(textField_kolicina);
 		textField_kolicina.setColumns(10);

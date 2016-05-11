@@ -35,6 +35,7 @@ public class DodajKupca {
 	 */
 	private void initialize() {
 		frmDodajKupca = new JFrame();
+		frmDodajKupca.getContentPane().setLayout(null);
 		frmDodajKupca.setTitle("Dodaj kupca");
 		frmDodajKupca.setBounds(100, 100, 302, 196);
 		frmDodajKupca.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -1,5 +1,6 @@
 package ba.unsa.etf.si.app.SIDEVS.Validation;
 
+import java.awt.event.KeyEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,6 +35,12 @@ public final class Validator {
 		}
 		
 		return true;
+	}
+	
+	public static Boolean daLiJeBroj(char c){
+		if (!(Character.isDigit(c)) || c==KeyEvent.VK_BACK_SPACE || c==KeyEvent.VK_DELETE) 
+			return true;
+		return false;
 	}
 
 }

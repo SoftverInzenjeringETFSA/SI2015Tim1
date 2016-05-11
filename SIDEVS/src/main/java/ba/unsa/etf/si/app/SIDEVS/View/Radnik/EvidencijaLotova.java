@@ -5,6 +5,7 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 import org.hibernate.criterion.Restrictions;
 
@@ -15,21 +16,22 @@ import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.LotVM;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.SkladisteVM;
+import ba.unsa.etf.si.app.SIDEVS.Validation.*;
 
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
 import java.util.Date;
 
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class EvidencijaLotova {
 
 	private JFrame frmEvidencijaLota;
-	private JTextField textFieldBroj_lota;
-	private JTextField textField_datum_dan;
-	private JTextField textField_datum_mjesec;
-	private JTextField textField_datum_godina;
 	private JTextField textField_tezina;
 	private JTextField textField_cijena;
 	private JTextField textField_kolicina;
@@ -38,6 +40,9 @@ public class EvidencijaLotova {
 	private JComboBox comboBox_Skladiste;
 	private Sessions s;
 	private JTextField textField_kolicina_pakovanje;
+	private JFormattedTextField textFieldBroj_lota;
+	private JFormattedTextField txtRokTrajanja;
+	
 
 	public EvidencijaLotova(Sessions s) throws Exception {
 		this.s = s;
@@ -83,37 +88,9 @@ public class EvidencijaLotova {
 		lblKoliinatableta.setBounds(10, 167, 99, 14);
 		frmEvidencijaLota.getContentPane().add(lblKoliinatableta);
 		
-		textFieldBroj_lota = new JTextField();
-		textFieldBroj_lota.setBounds(150, 8, 170, 20);
-		frmEvidencijaLota.getContentPane().add(textFieldBroj_lota);
-		textFieldBroj_lota.setColumns(10);
-		
 		comboBox = new AutoCompleteJComboBox(s, Lijek.class, "naziv");
 		comboBox.setBounds(150, 33, 170, 20);
 		frmEvidencijaLota.getContentPane().add(comboBox);
-		
-		textField_datum_dan = new JTextField();
-		textField_datum_dan.setBounds(150, 83, 32, 20);
-		frmEvidencijaLota.getContentPane().add(textField_datum_dan);
-		textField_datum_dan.setColumns(10);
-		
-		JLabel label = new JLabel(".");
-		label.setBounds(156, 89, 14, 14);
-		frmEvidencijaLota.getContentPane().add(label);
-		
-		textField_datum_mjesec = new JTextField();
-		textField_datum_mjesec.setColumns(10);
-		textField_datum_mjesec.setBounds(194, 83, 32, 20);
-		frmEvidencijaLota.getContentPane().add(textField_datum_mjesec);
-		
-		JLabel label_1 = new JLabel(".");
-		label_1.setBounds(199, 89, 14, 14);
-		frmEvidencijaLota.getContentPane().add(label_1);
-		
-		textField_datum_godina = new JTextField();
-		textField_datum_godina.setBounds(234, 83, 86, 20);
-		frmEvidencijaLota.getContentPane().add(textField_datum_godina);
-		textField_datum_godina.setColumns(10);
 		
 		textField_tezina = new JTextField();
 		textField_tezina.setBounds(150, 108, 170, 20);
@@ -121,11 +98,27 @@ public class EvidencijaLotova {
 		textField_tezina.setColumns(10);
 		
 		textField_cijena = new JTextField();
+		textField_cijena.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				if (Validator.daLiJeBroj(evt.getKeyChar())) {
+					evt.consume();
+				}
+			}
+		});
 		textField_cijena.setBounds(150, 133, 170, 20);
 		frmEvidencijaLota.getContentPane().add(textField_cijena);
 		textField_cijena.setColumns(10);
 		
 		textField_kolicina = new JTextField();
+		textField_kolicina.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				if (Validator.daLiJeBroj(evt.getKeyChar())) {
+					evt.consume();
+				}
+			}
+		});
 		textField_kolicina.setBounds(150, 164, 170, 20);
 		frmEvidencijaLota.getContentPane().add(textField_kolicina);
 		textField_kolicina.setColumns(10);
@@ -152,11 +145,14 @@ public class EvidencijaLotova {
 						if(!textField_kolicina.getText().isEmpty()){
 							kolicina = Integer.parseInt(textField_kolicina.getText());
 						}
-						int godina = Integer.parseInt(textField_datum_godina.getText());
-						int mjesec = Integer.parseInt(textField_datum_mjesec.getText());
-						int dan = Integer.parseInt(textField_datum_dan.getText());
+						//int godina = Integer.parseInt(textField_datum_godina.getText());
+						//int mjesec = Integer.parseInt(textField_datum_mjesec.getText());
+						//int dan = Integer.parseInt(textField_datum_dan.getText());
 						@SuppressWarnings("deprecation")
-						Date datum = new Date(godina, mjesec, dan);
+						
+						java.text.SimpleDateFormat sdf1 = new java.text.SimpleDateFormat("dd.mm.yyyy");			
+				        java.util.Date datum = sdf1.parse(txtRokTrajanja.getText());
+					
 						
 						l.dodajLot(textFieldBroj_lota.getText(), Double.parseDouble(textField_tezina.getText()), Double.parseDouble(textField_cijena.getText()), datum, kolicina, lijek, skladiste, Integer.parseInt(textField_kolicina_pakovanje.getText()));
 						
@@ -182,6 +178,14 @@ public class EvidencijaLotova {
 		frmEvidencijaLota.getContentPane().add(lblSkladite);
 		
 		textField_kolicina_pakovanje = new JTextField();
+		textField_kolicina_pakovanje.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				if (Validator.daLiJeBroj(evt.getKeyChar())) {
+					evt.consume();
+				}
+			}
+		});
 		textField_kolicina_pakovanje.setBounds(150, 191, 170, 20);
 		frmEvidencijaLota.getContentPane().add(textField_kolicina_pakovanje);
 		textField_kolicina_pakovanje.setColumns(10);
@@ -189,6 +193,32 @@ public class EvidencijaLotova {
 		JLabel lblKoliinapakovanje = new JLabel("Količina (pakovanje):");
 		lblKoliinapakovanje.setBounds(10, 194, 109, 14);
 		frmEvidencijaLota.getContentPane().add(lblKoliinapakovanje);
+		
+		MaskFormatter maskaLot=new MaskFormatter();
+		try {
+			maskaLot = new MaskFormatter("######");
+			maskaLot.setPlaceholderCharacter('_');
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		MaskFormatter maskaDatum=new MaskFormatter();
+		try {
+			maskaDatum = new MaskFormatter("##.##.####");
+			maskaDatum.setPlaceholderCharacter('_');
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		textFieldBroj_lota = new JFormattedTextField(maskaLot);
+		
+		textFieldBroj_lota.setBounds(148, 8, 86, 17);
+		frmEvidencijaLota.getContentPane().add(textFieldBroj_lota);
+		
+		txtRokTrajanja = new JFormattedTextField(maskaDatum);
+		txtRokTrajanja.setBounds(150, 83, 170, 20);
+		frmEvidencijaLota.getContentPane().add(txtRokTrajanja);
 	}
 
 	public void prikazi() {
@@ -200,9 +230,7 @@ public class EvidencijaLotova {
 		if(!Validator.validirajString(textFieldBroj_lota.getText())) msg = "Popunite broj lota(samo slova i brojevi)";
 		else if(textFieldBroj_lota.getText().length() != 6) msg = "Broj lota mora biti dužine 6";
 		else if(comboBox.getSelectedIndex() == -1) msg = "Odaberite lijek";
-		else if(!Validator.validirajBrojPozitivan(textField_tezina.getText())) msg= "Unesite težinu lijeka(veću od 0)";
-		else if(!Validator.validirajBrojPozitivan(textField_cijena.getText())) msg= "Unesite cijenu lijeka(veću od 0)";
-		else if(!Validator.validirajDatum(textField_datum_dan.getText(), textField_datum_mjesec.getText(), textField_datum_godina.getText())) msg = "Pogrešan format datuma";
+		
 		if(msg != ""){
 			label_obavijest.setText(msg);
 			return false;
@@ -212,11 +240,11 @@ public class EvidencijaLotova {
 	private void refreshPolja() {
 		textFieldBroj_lota.setText("");
 		comboBox.setSelectedIndex(-1);
-		textField_datum_dan.setText("");
-		textField_datum_mjesec.setText("");
-		textField_datum_godina.setText("");
+		
 		textField_tezina.setText("");
 		textField_cijena.setText("");
 		textField_kolicina.setText("");
 	}
+	
+	
 }

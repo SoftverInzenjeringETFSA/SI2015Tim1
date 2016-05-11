@@ -5,6 +5,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
+import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.LotVM;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.SkladisteVM;
 
@@ -16,6 +17,8 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class DodajLotUSkladiste {
 
@@ -69,6 +72,14 @@ public class DodajLotUSkladiste {
 		frmDodajLotUSkladiste.getContentPane().add(comboBox_skladiste);
 
 		textField_kolicina = new JTextField();
+		textField_kolicina.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				if (Validator.daLiJeBroj(evt.getKeyChar())) {
+					evt.consume();
+				}
+			}
+		});
 		textField_kolicina.setBounds(89, 59, 166, 20);
 		frmDodajLotUSkladiste.getContentPane().add(textField_kolicina);
 		textField_kolicina.setColumns(10);
