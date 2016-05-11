@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -16,6 +18,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
@@ -193,10 +196,19 @@ public class ModifikacijaKorisnika {
 					String txt = listaKorisnikaModifikacija.getSelectedItem().toString();	
 					String[] parts = txt.split(" ");
 					String part1 = parts[0];
-					String part2 = parts[1];
+					String part2 = parts[1];				
 					
 					//Ukoliko kreiranje nije prošlo, baca exception
-					boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.ModifikacijaKorisnikaVM.ModifikujKorisnika(_sesija, imeModifikacija.getText(), prezimeModifikacija.getText(), maticniBrojModifikacija.getText(), brojTelefonaModifikacija.getText(), emailModifikacija.getText(), radnoMjestoModifikacija.getText(), datumPocetkaRadaModifikacija.getText(), adresa.getText(), tipKorisnika, part1, part2);
+					boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.ModifikacijaKorisnikaVM.ModifikujKorisnika(
+							_sesija, 
+							imeModifikacija.getText(), 
+							prezimeModifikacija.getText(), 
+							maticniBrojModifikacija.getText(), 
+							brojTelefonaModifikacija.getText(), 
+							emailModifikacija.getText(), 
+							radnoMjestoModifikacija.getText(), 
+							datumPocetkaRadaModifikacija.getText(), 
+							adresa.getText(), tipKorisnika, part1, part2);
 					if(!state) throw new Exception();
 					
 					JOptionPane.showMessageDialog(null, "Korisnik uspješno ažuriran", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -263,7 +275,8 @@ public class ModifikacijaKorisnika {
 					String email2 = k.get(0).getEmail();
 					String brojTelefona2 = k.get(0).getTelefon();
 					String radnoMjesto2 = k.get(0).getRadno_mjesto();
-					//String datumPocetkaRada2 = datumPocetkaRada1.get(0);				
+					String datumPocetkaRada2 = k.get(0).getDatum_polaska_rada().toString();
+					
 					//Dodati checkiranje menadzer/radnik radio buttona, preko DTYPE(?!)
 					
 					imeModifikacija.setText(ime2);
@@ -272,7 +285,13 @@ public class ModifikacijaKorisnika {
 					brojTelefonaModifikacija.setText(brojTelefona2);
 					emailModifikacija.setText(email2);
 					radnoMjestoModifikacija.setText(radnoMjesto2);
-					//datumPocetkaRadaModifikacija.setText(datumPocetkaRada2);
+					
+					datumPocetkaRada2 = datumPocetkaRada2.substring(0,datumPocetkaRada2.length()-11);
+					DateFormat originalFormat = new SimpleDateFormat("yyyy-mm-dd");
+					DateFormat targetFormat = new SimpleDateFormat("dd.mm.yyyy");
+					Date date = originalFormat.parse(datumPocetkaRada2);
+					String formattedDate = targetFormat.format(date);  	
+					datumPocetkaRadaModifikacija.setText(formattedDate.toString());
 					adresa.setText(adresa2);
 				}
 				catch(Exception ex){

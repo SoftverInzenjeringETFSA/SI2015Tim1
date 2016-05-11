@@ -2,7 +2,9 @@ package ba.unsa.etf.si.app.SIDEVS.ViewModel;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -39,14 +41,31 @@ public class DodavanjeKorisnikaVM {
 			k.setAdresa(adresa);
 			k.setEmail(email);
 			k.setTelefon(brojTelefona);
-			k.setDatum_polaska_rada(new Date()); //POTREBNO PODESITI NA datumPocetkaRada
+			k.setDatum_polaska_rada(new Date()); 
 			k.setRadno_mjesto(radnoMjesto);
 			k.setLozinka("password");
 			ses.getSession().save(k);
+			t.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;		
+	}
+	
+	public static Timestamp convertDate(String datum){
+		DateFormat originalFormat = new SimpleDateFormat("dd.mm.yyyy");
+		DateFormat targetFormat = new SimpleDateFormat("dd.mm.yyyy");
+		Date date = new Date();
+		try {
+			date = originalFormat.parse(datum);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String formattedDate = targetFormat.format(date); 
+		java.sql.Timestamp timeStampDate = new Timestamp(date.getTime());
+		return timeStampDate;
 	}
 }

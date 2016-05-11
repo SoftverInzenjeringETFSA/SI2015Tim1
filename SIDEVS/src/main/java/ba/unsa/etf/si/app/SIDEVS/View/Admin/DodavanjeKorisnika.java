@@ -178,16 +178,7 @@ public class DodavanjeKorisnika {
 					if(menadzer.isSelected()) tipKorisnika = "Menadzer";
 					else if (radnik.isSelected()) tipKorisnika = "Radnik";
 					else throw new Exception();
-					
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-					Date datum=new Date();
-					try {
-						datum = sdf.parse(datumPocetkaRada.getText());
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
+										
 					//Ukoliko kreiranje nije prošlo, baca exception
 					boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.DodavanjeKorisnikaVM.KreirajKorisnika(
 							_sesija, 
@@ -197,7 +188,8 @@ public class DodavanjeKorisnika {
 							brojTelefona.getText(), 
 							email.getText(), 
 							radnoMjesto.getText(), 
-							datum.toString(), 
+							//datumPocetkaRada.getText(), 
+							"",
 							adresa.getText(), 
 							tipKorisnika);
 					if(!state) throw new Exception();
