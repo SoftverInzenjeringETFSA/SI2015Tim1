@@ -15,12 +15,17 @@ import org.hibernate.Transaction;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.Validation.*;
+
+
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSplitPane;
 import javax.swing.JButton;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class OtpisLijeka {
 
@@ -108,6 +113,13 @@ public class OtpisLijeka {
 		frmOtpisLijeka.getContentPane().add(lblKoliina);
 		
 		kolicinaTextField = new JTextField();
+		kolicinaTextField.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent evt) {
+				if (Validator.daLiJeBroj(evt.getKeyChar()))
+					evt.consume();
+					
+			}
+		});
 		kolicinaTextField.setBounds(138, 153, 110, 20);
 		frmOtpisLijeka.getContentPane().add(kolicinaTextField);
 		kolicinaTextField.setColumns(10);
