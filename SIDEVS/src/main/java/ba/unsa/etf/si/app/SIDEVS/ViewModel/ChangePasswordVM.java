@@ -2,7 +2,9 @@ package ba.unsa.etf.si.app.SIDEVS.ViewModel;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -10,10 +12,8 @@ import java.util.List;
 
 import javax.swing.JTextField;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Administrator;
 import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
@@ -24,23 +24,33 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SIDEVS.View.Login;
 
-public class BrisanjeKorisnikaVM {
+public class ChangePasswordVM {
 
-	public static boolean BrisiKorisnika(Sessions ses, String ime, String prezime) throws NoSuchAlgorithmException,InvalidKeySpecException {
+	public static boolean ChangePassword(String username, char[] password, char[] newPassword, char[] repeatPassword) throws NoSuchAlgorithmException,InvalidKeySpecException {
 		try{
-			Transaction t = ses.getSession().beginTransaction();
-			Criteria criteria = ses.getSession().createCriteria(Korisnik.class).add(Restrictions.like("ime", ime).ignoreCase()).add(Restrictions.like("prezime", prezime).ignoreCase());
-			
-			List<Korisnik> lista = criteria.list();
-			Korisnik k = lista.get(0);
-			
-			ses.getSession().delete(k);
+			String p = String.valueOf(password);
+			Sessions s = null;
+			try{
+				s = Sessions.getInstance(username, p);
+			}catch(Exception e){
+				e.printStackTrace();
+				return false;
+			}
+			Transaction t = s.getSession().beginTransaction();
+			Korisnik k = s.getKorisnik();
+			if(String.valueOf(newPassword).equals(String.valueOf(repeatPassword)))k.setLozinka(String.valueOf(newPassword));
+			else return false;
+			s.getSession().save(k);
 			t.commit();
+			s.ubijSesiju();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;		
 	}
-}
+	
 
+	
+
+}

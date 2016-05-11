@@ -120,14 +120,15 @@ public class Login {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					Sessions s = Sessions.getInstance(korisnickoIme.getText(), password.getText());
+					//Dodano na dejanovu preporuku !!!
 					if(s.getKorisnik().getClass() == Administrator.class){
-						new ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran(s);
+						ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran a = new ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran(s);
 					}
 					else if(s.getKorisnik().getClass() == Menadzer.class){
-						new ba.unsa.etf.si.app.SIDEVS.View.Menadzer.PocetniEkran(s);
+						ba.unsa.etf.si.app.SIDEVS.View.Menadzer.PocetniEkran m = new ba.unsa.etf.si.app.SIDEVS.View.Menadzer.PocetniEkran(s);
 					}
 					else if(s.getKorisnik().getClass() == Radnik.class){
-						new ba.unsa.etf.si.app.SIDEVS.View.Radnik.PocetniEkran(s);
+						ba.unsa.etf.si.app.SIDEVS.View.Radnik.PocetniEkran r = new ba.unsa.etf.si.app.SIDEVS.View.Radnik.PocetniEkran(s);
 					}
 					frmLogin.setVisible(false);
 					frmLogin.dispose();

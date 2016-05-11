@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -13,6 +14,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTextField;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
+import ba.unsa.etf.si.app.SIDEVS.ViewModel.*;
 
 public class ChangePassword {
 
@@ -53,8 +55,9 @@ public class ChangePassword {
 	private void initialize() {
 		frmChangePassword = new JFrame();
 		frmChangePassword.setBounds(100, 100, 350, 262);
-		frmChangePassword.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmChangePassword.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmChangePassword.getContentPane().setLayout(null);
+		frmChangePassword.setLocationRelativeTo(null);
 		
 		JLabel lblStariPassword = new JLabel("Stara lozinka:");
 		lblStariPassword.setBounds(26, 72, 99, 14);
@@ -88,6 +91,16 @@ public class ChangePassword {
 		btnPotvrdi.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				try {
+					boolean b = ba.unsa.etf.si.app.SIDEVS.ViewModel.ChangePasswordVM.ChangePassword(txt_ime.getText(), txtstaripass.getPassword(), txtnovipass.getPassword(), txtponovljenipass.getPassword());
+					if(!b) throw new Exception();
+					JOptionPane.showMessageDialog(null, "Operacija uspješno završena", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);	
+				} catch (Exception e){
+					JOptionPane.showMessageDialog(null, "Došlo je do greške", "InfoBox: " + "Error", JOptionPane.INFORMATION_MESSAGE);		
+					//_sesija.getTrasaction().rollback();
+					e.printStackTrace();
+				}
+				resetContent();
 			}
 		});
 		btnPotvrdi.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -102,10 +115,17 @@ public class ChangePassword {
 		txt_ime.setBounds(146, 36, 155, 20);
 		frmChangePassword.getContentPane().add(txt_ime);
 		txt_ime.setColumns(10);
+
 		frmChangePassword.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txt_ime, txtstaripass, txtnovipass, txtponovljenipass, btnPotvrdi, lblStariPassword, lblNovaLozinka, lblPonovljenaLozinka, lblObavijest, lblKorisnikoIme}));
 	}
 	
 	public void prikazi() {
 		frmChangePassword.setVisible(true);
+	}
+	public void resetContent(){
+		txt_ime.setText(null);
+		txtstaripass.setText(null);
+		txtnovipass.setText(null);
+		txtponovljenipass.setText(null);
 	}
 }
