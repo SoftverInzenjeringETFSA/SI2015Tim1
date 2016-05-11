@@ -32,6 +32,7 @@ public class PocetniEkran {
 	private PretragaLijeka pl;
 	private OtpisLijeka ol;
 	private DodajKupca dk;
+	private TransakcijeKupca tk;
 
 	
 	/**
@@ -97,6 +98,17 @@ public class PocetniEkran {
 		frmMenadzerPocetniEkran.getContentPane().add(btnTrenutnoStanjeNa);
 		
 		JButton btnTransakcijeKupaca = new JButton("Transakcije kupaca");
+		btnTransakcijeKupaca.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					if(tk == null) tk = new TransakcijeKupca(s);
+					tk.prikazi();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
 		btnTransakcijeKupaca.setBounds(10, 62, 299, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnTransakcijeKupaca);
 		

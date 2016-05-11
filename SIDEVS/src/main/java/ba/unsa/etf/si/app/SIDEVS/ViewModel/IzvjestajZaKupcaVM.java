@@ -44,9 +44,11 @@ public final class IzvjestajZaKupcaVM {
 		sesija = s;
 	}
 	
-	public void vratiLijekoveKupca(Kupac k, String datumOd, String datumDo){
+	public List<FakturaLot> vratiFaktureKupca(Kupac k, String datumOd, String datumDo){
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+		List<FakturaLot> faktureKupca = new ArrayList<FakturaLot>();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.mm.yyyy");
 		Date datum_od=new Date();
 		try {
 			datum_od = sdf.parse(datumOd);
@@ -67,20 +69,55 @@ public final class IzvjestajZaKupcaVM {
 		List<Faktura> fakture_tmp = sesija.getSession().createCriteria(Faktura.class).add(Restrictions.eq("kupac", k)).
 				add(Restrictions.between("datum_kreiranja", datum_od, datum_do)).list();
 		
-		
-		
-		
-		//sa fakture izdvajamo lot i dodajemo u listu lijekova lijek koji odgovara tom lotu
-		
-		List<Lijek> lijekovi = new ArrayList<Lijek>();
-		
 		for (Faktura f: fakture_tmp){
 			Set<FakturaLot> fl = f.getFaktureLotovi();
 			for (FakturaLot fl1: fl){
-				Lot lot = fl1.getLot();
-				lijekovi.add(lot.getLijek());		
+				faktureKupca.add(fl1);
 			}
-		}
-				
+		}		
+		return faktureKupca;
 	}
+	
+	public List<Lijek>  vratiLijekoveKupca(List<FakturaLot> fakture){
+		
+		List<Lijek> lijekovi = new ArrayList<Lijek>();
+		
+		Set<Lijek> setLijekova = new HashSet<Lijek>();
+		
+		
+		for (FakturaLot f: fakture){
+			setLijekova.add(f.getLot().getLijek());
+		}	
+		
+		lijekovi.addAll(setLijekova);
+		
+		return lijekovi;
+	}
+	
+	public List<Integer> vratiKolicineLijekova(List<FakturaLot> fakture, List<Lijek> lijekovi){
+		List<Integer> kolicine=new ArrayList<Integer>();
+		
+		for (Lijek lijek: lijekovi){
+			int suma = 0;
+			for (FakturaLot fl: fakture){
+				if (fl.getLot().getLijek() == lijek){
+					suma += fl.getKolicina();
+				}
+			}
+			kolicine.add(suma);
+		}
+		
+		return kolicine;
+	}
+	
+	public List<Integer> vratiCijene(List<FakturaLot> fakture, List<Integer> kolicine){
+		List<Integer> cijene = new ArrayList<Integer>();
+		
+		cijene.add(0);cijene.add(0);cijene.add(0);
+		
+		return cijene;
+	}
+	
+	
+	
 }
