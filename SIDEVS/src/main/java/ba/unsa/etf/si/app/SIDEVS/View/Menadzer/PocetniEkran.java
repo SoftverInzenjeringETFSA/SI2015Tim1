@@ -32,7 +32,7 @@ public class PocetniEkran {
 	private PretragaLijeka pl;
 	private OtpisLijeka ol;
 	private DodajKupca dk;
-	private TransakcijeKupca tk;
+	private IzvjestajNaOsnovuLota inol;
 
 	
 	/**
@@ -98,17 +98,6 @@ public class PocetniEkran {
 		frmMenadzerPocetniEkran.getContentPane().add(btnTrenutnoStanjeNa);
 		
 		JButton btnTransakcijeKupaca = new JButton("Transakcije kupaca");
-		btnTransakcijeKupaca.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-					if(tk == null) tk = new TransakcijeKupca(s);
-					tk.prikazi();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
 		btnTransakcijeKupaca.setBounds(10, 62, 299, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnTransakcijeKupaca);
 		
@@ -181,6 +170,17 @@ public class PocetniEkran {
 		frmMenadzerPocetniEkran.getContentPane().add(btnIzvjestajOUlazima);
 		
 		JButton btnIzvjestajOUlazima_1 = new JButton("Izvještaj o ulazima i izlazima na osnovu lota");
+		btnIzvjestajOUlazima_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					if(inol == null) inol = new IzvjestajNaOsnovuLota(s);
+					inol.frmMenadzerIzvjestajNa.setVisible(true);
+				} catch (Exception c) {
+					c.printStackTrace();
+				}
+			}
+		});
 		btnIzvjestajOUlazima_1.setBounds(10, 228, 309, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnIzvjestajOUlazima_1);
 		
