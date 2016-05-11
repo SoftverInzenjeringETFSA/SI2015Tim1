@@ -103,7 +103,7 @@ public class Login {
 		JLabel lblPromijeniPassword = new JLabel("Promijeni lozinku");
 		lblPromijeniPassword.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblPromijeniPassword.setForeground(Color.BLUE);
-		lblPromijeniPassword.setBounds(73, 205, 103, 14);
+		lblPromijeniPassword.setBounds(74, 191, 103, 14);
 		frmLogin.getContentPane().add(lblPromijeniPassword);
 		lblPromijeniPassword.addMouseListener(new MouseAdapter() {
 			@Override

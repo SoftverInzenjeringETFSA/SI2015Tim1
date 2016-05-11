@@ -1,10 +1,13 @@
 package ba.unsa.etf.si.app.SIDEVS.ViewModel;
 
+import java.util.List;
+
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Kupac;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.ViewModel.*;
 
 public final class EvidencijaKupca {
 	
@@ -40,11 +43,14 @@ public final class EvidencijaKupca {
 				noviKupac.setAdresa(adresa);
 				//provjera da li postoji u bazi
 				if (s.getSession().createCriteria(Kupac.class).add(Restrictions.eq("naziv", naziv)).setProjection(Projections.property("naziv")).uniqueResult() == null){
-					System.out.println("Ovdje!");
+
 					s.getSession().beginTransaction();
 					s.getSession().save(noviKupac);
 					s.getTrasaction().commit();
+					
 				}
+				
+				
 				else throw new Exception("Kupac kojeg ste unijeli već postoji");
 			}
 			catch(Exception e){
