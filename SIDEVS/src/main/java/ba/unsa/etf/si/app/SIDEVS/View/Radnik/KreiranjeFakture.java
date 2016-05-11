@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class KreiranjeFakture {
 
@@ -80,6 +82,17 @@ public class KreiranjeFakture {
 		panel_kupac.add(comboBox_kupac);
 
 		JButton btnDodajNovogKorisnika = new JButton("Dodaj novog kupca");
+		btnDodajNovogKorisnika.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					DodajKupca dk = new DodajKupca(s);
+					dk.prikazi();	
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnDodajNovogKorisnika.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
