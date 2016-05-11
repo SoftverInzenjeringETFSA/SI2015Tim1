@@ -3,6 +3,7 @@ package ba.unsa.etf.si.app.SIDEVS.ViewModel;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -45,14 +46,30 @@ public class ModifikacijaKorisnikaVM {
 			k.setAdresa(adresa);
 			k.setEmail(email);
 			k.setTelefon(brojTelefona);
-			k.setDatum_polaska_rada(new Date()); //POTREBNO PODESITI NA datumPocetkaRada
+			k.setDatum_polaska_rada(convertDates(datumPocetkaRada));
 			k.setRadno_mjesto(radnoMjesto);
 			
 			ses.getSession().update(k);		
+			t.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;		
+	}
+	
+	
+	public static java.util.Date convertDates(String input) throws ParseException{
+		java.text.SimpleDateFormat sdf1 = 
+			     new java.text.SimpleDateFormat("dd.mm.yyyy");
+		
+		java.util.Date date = sdf1.parse(input);
+		
+		java.text.SimpleDateFormat sdf2 = 
+		     new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		String s = sdf2.format(date);
+		return sdf2.parse(s);
+		
 	}
 }

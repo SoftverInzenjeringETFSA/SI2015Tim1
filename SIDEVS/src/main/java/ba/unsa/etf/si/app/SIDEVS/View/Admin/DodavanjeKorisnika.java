@@ -188,8 +188,7 @@ public class DodavanjeKorisnika {
 							brojTelefona.getText(), 
 							email.getText(), 
 							radnoMjesto.getText(), 
-							//datumPocetkaRada.getText(), 
-							"",
+							datumPocetkaRada.getText(), 
 							adresa.getText(), 
 							tipKorisnika);
 					if(!state) throw new Exception();

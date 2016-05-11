@@ -30,6 +30,9 @@ public class DodavanjeKorisnikaVM {
 		try{
 			Transaction t = ses.getSession().beginTransaction();
 			Korisnik k;
+			
+			
+	
 			if(tipKorisnika == "Menadzer"){
 				k = new Menadzer();
 			} else if (tipKorisnika == "Radnik"){
@@ -41,7 +44,7 @@ public class DodavanjeKorisnikaVM {
 			k.setAdresa(adresa);
 			k.setEmail(email);
 			k.setTelefon(brojTelefona);
-			k.setDatum_polaska_rada(new Date()); 
+			k.setDatum_polaska_rada(convertDates(datumPocetkaRada)); 
 			k.setRadno_mjesto(radnoMjesto);
 			k.setLozinka("password");
 			ses.getSession().save(k);
@@ -53,19 +56,19 @@ public class DodavanjeKorisnikaVM {
 		return true;		
 	}
 	
-	public static Timestamp convertDate(String datum){
-		DateFormat originalFormat = new SimpleDateFormat("dd.mm.yyyy");
-		DateFormat targetFormat = new SimpleDateFormat("dd.mm.yyyy");
-		Date date = new Date();
-		try {
-			date = originalFormat.parse(datum);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public static java.util.Date convertDates(String input) throws ParseException{
+		java.text.SimpleDateFormat sdf1 = 
+			     new java.text.SimpleDateFormat("dd.mm.yyyy");
 		
-		String formattedDate = targetFormat.format(date); 
-		java.sql.Timestamp timeStampDate = new Timestamp(date.getTime());
-		return timeStampDate;
+		java.util.Date date = sdf1.parse(input);
+		
+		java.text.SimpleDateFormat sdf2 = 
+		     new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		String s = sdf2.format(date);
+		return sdf2.parse(s);
+		
 	}
+	
+
 }
