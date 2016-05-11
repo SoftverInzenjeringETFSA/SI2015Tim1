@@ -5,9 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.ParseException;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 import org.hibernate.Criteria;
 import org.hibernate.Transaction;
@@ -27,6 +29,7 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 
 public class ModifikacijaKorisnika {
 	
@@ -38,8 +41,8 @@ public class ModifikacijaKorisnika {
 	private JTextField brojTelefonaModifikacija;
 	private JTextField emailModifikacija;
 	private JTextField radnoMjestoModifikacija;
-	private JTextField datumPocetkaRadaModifikacija;
 	private JTextField adresa;
+	private JFormattedTextField datumPocetkaRadaModifikacija;
 
 	/**
 	 * Launch the application.
@@ -127,11 +130,6 @@ public class ModifikacijaKorisnika {
 		radnoMjestoModifikacija.setColumns(10);
 		radnoMjestoModifikacija.setBounds(51, 389, 260, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(radnoMjestoModifikacija);
-		
-		datumPocetkaRadaModifikacija = new JTextField();
-		datumPocetkaRadaModifikacija.setColumns(10);
-		datumPocetkaRadaModifikacija.setBounds(51, 438, 260, 20);
-		frmAdministratormodifikacijaKorisnika.getContentPane().add(datumPocetkaRadaModifikacija);
 		
 		JLabel label = new JLabel("Ime");
 		label.setBounds(51, 73, 119, 14);
@@ -231,6 +229,22 @@ public class ModifikacijaKorisnika {
 		JButton btnUcitaj = new JButton("Ucitaj");
 		btnUcitaj.setBounds(214, 39, 97, 23);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(btnUcitaj);
+		
+		
+		
+		MaskFormatter maska=new MaskFormatter();
+		try {
+			maska = new MaskFormatter("##.##.####");
+			maska.setPlaceholderCharacter('_');
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		datumPocetkaRadaModifikacija = new JFormattedTextField(maska);
+		datumPocetkaRadaModifikacija.setBounds(50, 440, 102, 20);
+		frmAdministratormodifikacijaKorisnika.getContentPane().add(datumPocetkaRadaModifikacija);
+		
+		
 		btnUcitaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{					

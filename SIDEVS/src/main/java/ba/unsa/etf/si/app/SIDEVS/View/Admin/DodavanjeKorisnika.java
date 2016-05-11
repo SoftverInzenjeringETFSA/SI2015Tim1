@@ -3,9 +3,13 @@ package ba.unsa.etf.si.app.SIDEVS.View.Admin;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 import com.mysql.cj.api.Session;
 
@@ -16,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 
 public class DodavanjeKorisnika {
 	
@@ -27,9 +32,8 @@ public class DodavanjeKorisnika {
 	private JTextField brojTelefona;
 	private JTextField email;
 	private JTextField radnoMjesto;
-	private JTextField datumPocetkaRada; 
 	private JTextField adresa;
-
+	private JFormattedTextField datumPocetkaRada;
 	/**
 	 * Launch the application.
 	 */
@@ -114,11 +118,6 @@ public class DodavanjeKorisnika {
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(radnoMjesto);
 		radnoMjesto.setColumns(10);
 		
-		datumPocetkaRada = new JTextField();
-		datumPocetkaRada.setBounds(45, 388, 140, 20);
-		frmAdministratorDodavanjeKorisnika.getContentPane().add(datumPocetkaRada);
-		datumPocetkaRada.setColumns(10);
-		
 		adresa = new JTextField();
 		adresa.setBounds(45, 236, 140, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(adresa);
@@ -152,6 +151,8 @@ public class DodavanjeKorisnika {
 		lblNewLabel_6.setBounds(45, 372, 119, 14);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(lblNewLabel_6);
 		
+		
+		
 		final JRadioButton radnik = new JRadioButton("Radnik");
 		radnik.setBounds(29, 417, 72, 23);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(radnik);
@@ -178,8 +179,27 @@ public class DodavanjeKorisnika {
 					else if (radnik.isSelected()) tipKorisnika = "Radnik";
 					else throw new Exception();
 					
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+					Date datum=new Date();
+					try {
+						datum = sdf.parse(datumPocetkaRada.getText());
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 					//Ukoliko kreiranje nije prošlo, baca exception
-					boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.DodavanjeKorisnikaVM.KreirajKorisnika(_sesija, ime.getText(), prezime.getText(), maticniBroj.getText(), brojTelefona.getText(), email.getText(), radnoMjesto.getText(), datumPocetkaRada.getText(), adresa.getText(), tipKorisnika);
+					boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.DodavanjeKorisnikaVM.KreirajKorisnika(
+							_sesija, 
+							ime.getText(), 
+							prezime.getText(), 
+							maticniBroj.getText(), 
+							brojTelefona.getText(), 
+							email.getText(), 
+							radnoMjesto.getText(), 
+							datum.toString(), 
+							adresa.getText(), 
+							tipKorisnika);
 					if(!state) throw new Exception();
 					
 					//Javlja da je korisnik kreiran ukoliko je sve prošlo ok
@@ -197,6 +217,22 @@ public class DodavanjeKorisnika {
 		JLabel lblAdresa = new JLabel("Adresa");
 		lblAdresa.setBounds(45, 219, 56, 14);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(lblAdresa);
+		
+		
+		MaskFormatter maska=new MaskFormatter();
+		try {
+			maska = new MaskFormatter("##.##.####");
+			maska.setPlaceholderCharacter('_');
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		datumPocetkaRada = new JFormattedTextField(maska);
+		
+		
+		datumPocetkaRada.setBounds(45, 390, 140, 20);
+		frmAdministratorDodavanjeKorisnika.getContentPane().add(datumPocetkaRada);
 		
 	}
 	
