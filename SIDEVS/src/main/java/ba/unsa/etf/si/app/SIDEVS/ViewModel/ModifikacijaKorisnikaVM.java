@@ -24,6 +24,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
+import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 import ba.unsa.etf.si.app.SIDEVS.View.Login;
 
 public class ModifikacijaKorisnikaVM {
@@ -46,7 +47,7 @@ public class ModifikacijaKorisnikaVM {
 			k.setAdresa(adresa);
 			k.setEmail(email);
 			k.setTelefon(brojTelefona);
-			k.setDatum_polaska_rada(convertDates(datumPocetkaRada));
+			k.setDatum_polaska_rada(Conversions.dajDatumZaBazu(datumPocetkaRada));
 			k.setRadno_mjesto(radnoMjesto);
 			
 			ses.getSession().update(k);		
@@ -59,17 +60,5 @@ public class ModifikacijaKorisnikaVM {
 	}
 	
 	
-	public static java.util.Date convertDates(String input) throws ParseException{
-		java.text.SimpleDateFormat sdf1 = 
-			     new java.text.SimpleDateFormat("dd.mm.yyyy");
-		
-		java.util.Date date = sdf1.parse(input);
-		
-		java.text.SimpleDateFormat sdf2 = 
-		     new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		
-		String s = sdf2.format(date);
-		return sdf2.parse(s);
-		
-	}
+	
 }
