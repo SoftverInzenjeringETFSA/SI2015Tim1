@@ -27,7 +27,7 @@ import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 
 public class DodavanjeKorisnikaVM {
 
-	public static boolean KreirajKorisnika(Sessions ses, String ime, String prezime, String maticniBroj, String brojTelefona, String email, String radnoMjesto, String datumPocetkaRada, String adresa, String tipKorisnika) throws NoSuchAlgorithmException,InvalidKeySpecException {
+	public static  boolean KreirajKorisnika(Sessions ses, String ime, String prezime, String maticniBroj, String brojTelefona, String email, String radnoMjesto, String datumPocetkaRada, String adresa, String tipKorisnika) throws NoSuchAlgorithmException,InvalidKeySpecException {
 		try{
 			Transaction t = ses.getSession().beginTransaction();
 			Korisnik k;

@@ -46,7 +46,7 @@ public class App {
 				}
 
 	 	//kreirajSkladiste(session, 3);
-		/*try {
+		try {
 			System.out.println("Kreiram!");
 			Administrator k = new Administrator();
 			k.setIme("Admin");
@@ -62,15 +62,15 @@ public class App {
 			System.out.println("Korisnik kreiran!");
 		} catch (Exception ex) {
 			System.out.println(ex);
-		}*/
+		}
+	}
 
 
-
-	/*private static void kreirajKorisnikaAdmin(Session session, Administrator a) {	
+	private static void kreirajKorisnikaAdmin(Session session, Administrator a) {	
 		Transaction t = session.beginTransaction();
 		session.save(a);
 		t.commit();
-	}*/
+	}
 /*
 	private static void kreirajKorisnikaRadnik(Session session, Radnik a) {
 		Transaction t = session.beginTransaction();
@@ -116,6 +116,7 @@ public class App {
 		
 	}
 	
+
+
+
 }
-
-

@@ -8,7 +8,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 
 public final class LijekVM {
 
-	private Sessions s;
+	private static Sessions s;
 
 	public Sessions getSessions() {
 		return this.s;
@@ -17,13 +17,13 @@ public final class LijekVM {
 		this.s = s;
 	}
 
-	public Boolean daLiPostojiSesija() {
+	public static Boolean daLiPostojiSesija() {
 		if (s == null)
 			return false;
 		return true;
 	}
 
-	public void dodajLijek(Long id, String naziv, String proizvodjac) throws Exception {
+	public static void dodajLijek(Long id, String naziv, String proizvodjac) throws Exception {
 		if (daLiPostojiSesija()) {
 			try {
 				Lijek l = new Lijek();

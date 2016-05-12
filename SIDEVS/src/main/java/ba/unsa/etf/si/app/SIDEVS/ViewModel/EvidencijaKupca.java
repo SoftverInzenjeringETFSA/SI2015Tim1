@@ -13,8 +13,8 @@ public final class EvidencijaKupca {
 	
 
 	
-	private Sessions s;
-	private Kupac noviKupac;
+	private static Sessions s;
+	private static Kupac noviKupac;
 	
 	public Sessions getSessions(){
 		return this.s;
@@ -24,7 +24,7 @@ public final class EvidencijaKupca {
 		this.s = s;
 	}
 	
-	public Boolean daLiPostojiSesija(){
+	public static Boolean daLiPostojiSesija(){
 		if (s == null){
 			return false;
 		}
@@ -32,7 +32,7 @@ public final class EvidencijaKupca {
 	}
 	
 	
-	public void dodajKupca(String naziv, String adresa) throws Exception{
+	public static void dodajKupca(String naziv, String adresa) throws Exception{
 		if (daLiPostojiSesija()){
 			try{
 				

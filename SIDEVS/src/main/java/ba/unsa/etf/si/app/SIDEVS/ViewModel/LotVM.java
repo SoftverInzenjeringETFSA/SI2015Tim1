@@ -17,7 +17,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 
 public class LotVM {
 
-	private Sessions s;
+	private static Sessions s;
 
 	public Sessions getSessions() {
 		return this.s;
@@ -27,13 +27,13 @@ public class LotVM {
 		this.s = s;
 	}
 
-	public Boolean daLiPostojiSesija() {
+	public static Boolean daLiPostojiSesija() {
 		if (s == null)
 			return false;
 		return true;
 	}
 
-	public void dodajLot(String broj_lota, Double tezina, Double ulazna_cijena, Date rok_trajanja, int kolicina,
+	public static void dodajLot(String broj_lota, Double tezina, Double ulazna_cijena, Date rok_trajanja, int kolicina,
 			Lijek lijek, Skladiste skladiste, int kolicina_pakovanja) throws Exception {
 		if (daLiPostojiSesija()) {
 			try {
@@ -95,7 +95,7 @@ public class LotVM {
 		return "Uspješni ste dodali lot u skladište";
 	}
 	
-	private void kreirajPakovanje(Lot l, Skladiste skladiste, int kolicina){
+	private static void kreirajPakovanje(Lot l, Skladiste skladiste, int kolicina){
 		Pakovanje p = new Pakovanje();
 		p.setLot(l);
 		p.setSkladiste(skladiste);
