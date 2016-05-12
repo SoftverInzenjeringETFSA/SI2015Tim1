@@ -122,15 +122,21 @@ public class IzvjestajZaOdredjeniPeriod {
 		frmMenadzerIzvjestajZa.getContentPane().add(btnPretraga);
 		
 		JButton btnGenerisiIzvjestaj = new JButton("Generisi izvjestaj");
+		btnGenerisiIzvjestaj.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				IzvjestajZaOdredjeniPeriodVM iz = new IzvjestajZaOdredjeniPeriodVM(sesija);
+				List<Lot> lotovi = iz.vratiUlazneLotove(datumOd.getText(), datumDo.getText());
+				iz.createPDF(lotovi, datumOd.getText(), datumDo.getText());
+				frmMenadzerIzvjestajZa.dispose();
+			}
+		});
 		btnGenerisiIzvjestaj.setBounds(144, 195, 282, 23);
-		frmMenadzerIzvjestajZa.getContentPane().add(btnGenerisiIzvjestaj);
-		
-		
+		frmMenadzerIzvjestajZa.getContentPane().add(btnGenerisiIzvjestaj);	
 	}
 
 	public void prikazi() {
 		frmMenadzerIzvjestajZa.setVisible(true);
-		
 	}
 
 }
