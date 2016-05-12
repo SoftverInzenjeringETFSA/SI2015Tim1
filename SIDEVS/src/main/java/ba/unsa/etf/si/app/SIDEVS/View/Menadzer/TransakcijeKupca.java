@@ -25,6 +25,7 @@ import java.util.List;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
+import ba.unsa.etf.si.app.SIDEVS.View.Masks;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajZaKupcaVM;
 import javax.swing.JFormattedTextField;
 
@@ -121,33 +122,16 @@ public class TransakcijeKupca {
 		listaKupaca.setBounds(10, 72, 191, 20);
 		frmMenadzerTransakcijeKupca.getContentPane().add(listaKupaca);
 		
-		MaskFormatter m1=new MaskFormatter();
-		try {
-			m1 = new MaskFormatter("##.##.####");
-			m1.setPlaceholderCharacter('_');
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		datumOd = new JFormattedTextField(m1);
+
+		datumOd = new JFormattedTextField(Masks.vratiMaskuZaDatum());
 		
 		datumOd.setBounds(66, 11, 131, 23);
 		frmMenadzerTransakcijeKupca.getContentPane().add(datumOd);
 		
-		MaskFormatter m2 = new MaskFormatter();
-		try {
-			m2 = new MaskFormatter("##.##.####");
-			m2.setPlaceholderCharacter('_');
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		datumDo = new JFormattedTextField(m2);
+		datumDo = new JFormattedTextField(Masks.vratiMaskuZaDatum());
 		datumDo.setBounds(263, 11, 131, 23);
 		frmMenadzerTransakcijeKupca.getContentPane().add(datumDo);
-		
-		
+
 		table = new JTable(model);
 		
 		scrollPane.setViewportView(table);
@@ -156,7 +140,7 @@ public class TransakcijeKupca {
 		btnPretraga.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				/*
+				
 				String kupac = listaKupaca.getSelectedItem().toString();
 				
 				String datum_od = datumOd.getText();
@@ -182,7 +166,7 @@ public class TransakcijeKupca {
 					model.addRow(row);
 					i++;
 				}
-				*/
+				
 				
 			}
 		});
@@ -198,8 +182,6 @@ public class TransakcijeKupca {
 		JButton btnGenerisiIzvjestaj = new JButton("Generisi izvjestaj");
 		btnGenerisiIzvjestaj.setBounds(10, 218, 414, 23);
 		frmMenadzerTransakcijeKupca.getContentPane().add(btnGenerisiIzvjestaj);
-		
-		
 	}
 	
 

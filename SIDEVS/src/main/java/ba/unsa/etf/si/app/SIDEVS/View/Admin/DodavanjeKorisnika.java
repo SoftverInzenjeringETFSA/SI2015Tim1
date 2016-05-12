@@ -3,17 +3,10 @@ package ba.unsa.etf.si.app.SIDEVS.View.Admin;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-import javax.swing.text.MaskFormatter;
-
-import com.mysql.cj.api.Session;
-
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.View.Masks;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -205,31 +198,13 @@ public class DodavanjeKorisnika {
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(lblAdresa);
 		
 		
-		MaskFormatter maska=new MaskFormatter();
-		try {
-			maska = new MaskFormatter("##.##.####");
-			maska.setPlaceholderCharacter('_');
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		datumPocetkaRada = new JFormattedTextField(maska);
+		datumPocetkaRada = new JFormattedTextField(Masks.vratiMaskuZaDatum());
 		
 		
 		datumPocetkaRada.setBounds(45, 390, 140, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(datumPocetkaRada);
 		
-		MaskFormatter maskaJMBG = new MaskFormatter();
-		try {
-			maskaJMBG = new MaskFormatter("#############");
-			maskaJMBG.setPlaceholderCharacter('_');
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		maticniBroj = new JFormattedTextField(maskaJMBG);
+		maticniBroj = new JFormattedTextField(Masks.vratiMaskuZaJMBG());
 		maticniBroj.setBounds(45, 139, 140, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(maticniBroj);
 		

@@ -3,35 +3,24 @@ package ba.unsa.etf.si.app.SIDEVS.View.Admin;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-import javax.swing.text.MaskFormatter;
-
 import org.hibernate.Criteria;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
-import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
-
+import ba.unsa.etf.si.app.SIDEVS.View.Masks;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 
 public class ModifikacijaKorisnika {
@@ -244,15 +233,8 @@ public class ModifikacijaKorisnika {
 		
 		
 		
-		MaskFormatter maska=new MaskFormatter();
-		try {
-			maska = new MaskFormatter("##.##.####");
-			maska.setPlaceholderCharacter('_');
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		datumPocetkaRadaModifikacija = new JFormattedTextField(maska);
+
+		datumPocetkaRadaModifikacija = new JFormattedTextField(Masks.vratiMaskuZaDatum());
 		datumPocetkaRadaModifikacija.setBounds(50, 440, 102, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(datumPocetkaRadaModifikacija);
 		

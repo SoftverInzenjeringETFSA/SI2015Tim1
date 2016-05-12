@@ -5,7 +5,6 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.text.MaskFormatter;
 
 import org.hibernate.criterion.Restrictions;
 
@@ -14,15 +13,14 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
+import ba.unsa.etf.si.app.SIDEVS.View.Masks;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.LotVM;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.SkladisteVM;
-import ba.unsa.etf.si.app.SIDEVS.Validation.*;
 
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.ParseException;
-import java.util.Date;
+
 
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -194,29 +192,12 @@ public class EvidencijaLotova {
 		lblKoliinapakovanje.setBounds(10, 194, 109, 14);
 		frmEvidencijaLota.getContentPane().add(lblKoliinapakovanje);
 		
-		MaskFormatter maskaLot=new MaskFormatter();
-		try {
-			maskaLot = new MaskFormatter("######");
-			maskaLot.setPlaceholderCharacter('_');
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		MaskFormatter maskaDatum=new MaskFormatter();
-		try {
-			maskaDatum = new MaskFormatter("##.##.####");
-			maskaDatum.setPlaceholderCharacter('_');
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		textFieldBroj_lota = new JFormattedTextField(maskaLot);
+		textFieldBroj_lota = new JFormattedTextField(Masks.vratiMaskuZaLot());
 		
 		textFieldBroj_lota.setBounds(148, 8, 86, 17);
 		frmEvidencijaLota.getContentPane().add(textFieldBroj_lota);
 		
-		txtRokTrajanja = new JFormattedTextField(maskaDatum);
+		txtRokTrajanja = new JFormattedTextField(Masks.vratiMaskuZaDatum());
 		txtRokTrajanja.setBounds(150, 83, 170, 20);
 		frmEvidencijaLota.getContentPane().add(txtRokTrajanja);
 	}

@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.View.Masks;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajZaOdredjeniPeriodVM;
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
 
@@ -82,20 +83,12 @@ public class IzvjestajZaOdredjeniPeriod {
 		JLabel label_1 = new JLabel("Do");
 		label_1.setBounds(179, 44, 23, 14);
 		frmMenadzerIzvjestajZa.getContentPane().add(label_1);
-		
-		MaskFormatter maska=new MaskFormatter();
-		try {
-			maska = new MaskFormatter("##.##.####");
-			maska.setPlaceholderCharacter('_');
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-		final JFormattedTextField datumOd = new JFormattedTextField(maska);
+				
+		final JFormattedTextField datumOd = new JFormattedTextField(Masks.vratiMaskuZaDatum());
 		datumOd.setBounds(54, 40, 95, 23);
 		frmMenadzerIzvjestajZa.getContentPane().add(datumOd);
 		
-		final JFormattedTextField datumDo = new JFormattedTextField(maska);
+		final JFormattedTextField datumDo = new JFormattedTextField(Masks.vratiMaskuZaDatum());
 		datumDo.setBounds(212, 40, 95, 23);
 		frmMenadzerIzvjestajZa.getContentPane().add(datumDo);
 		
