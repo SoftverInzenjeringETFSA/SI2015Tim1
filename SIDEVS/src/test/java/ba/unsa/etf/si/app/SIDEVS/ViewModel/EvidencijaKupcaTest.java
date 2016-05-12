@@ -15,7 +15,7 @@ public class EvidencijaKupcaTest {
 	public void DodajKupcaTest() {
 		try
 		{
-			Sessions s= new Sessions("radnik","password");
+			Sessions s= new Sessions("admin","password");
 			EvidencijaKupca ek= new EvidencijaKupca(s);
 			String naziv="apoteka 1";
 			String adresa="adresica";
@@ -35,8 +35,26 @@ public class EvidencijaKupcaTest {
 		
 		
 	}
-
+	/*@Test(expected = Exception.class)
+	public void DodajKupcaExceptionTest()
+	{
+		try{
+		
+		Sessions s= new Sessions("admin","password");
+		EvidencijaKupca ek= new EvidencijaKupca(s);
+		String naziv="Unalijek";
+		String adresa="Adresa 22";
+	ek.dodajKupca(naziv, adresa);
+	fail("Nije bacen izuzetak");
+		}
+		catch(Exception ex)
+		{
+			assertTrue(true);
+		}
+	
+		
+	}*/
+	}
 	
 	
 
-}
