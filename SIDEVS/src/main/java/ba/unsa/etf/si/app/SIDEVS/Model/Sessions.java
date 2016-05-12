@@ -22,7 +22,7 @@ public final class Sessions {
 	public Korisnik getKorisnik() {
 		return korisnik;
 	}
-	private Sessions(String email, String password) throws Exception{
+	public Sessions(String email, String password) throws Exception{
 		System.out.println("Setup new session");
 		session = HibernateUtil.getSessionFactory().openSession();
 		trasaction = session.beginTransaction();
