@@ -31,6 +31,7 @@ public class Lot implements Serializable{
 	private double ulazna_cijena;
 	private int kolicina_tableta;
 	private Date datum_ulaza;
+	//private Date datum_otpisa;
 	@OneToMany(mappedBy = "lot")
 	private Set<FakturaLot> fakture_lotovi = new HashSet<FakturaLot>(0);
 	@OneToMany(mappedBy = "lot")
@@ -78,6 +79,7 @@ public class Lot implements Serializable{
 	public void setDatum_ulaza(Date date) {
 		this.datum_ulaza = date;
 	}
+
 	public Set<FakturaLot> getFaktureLotovi() {
 		return fakture_lotovi;
 	}

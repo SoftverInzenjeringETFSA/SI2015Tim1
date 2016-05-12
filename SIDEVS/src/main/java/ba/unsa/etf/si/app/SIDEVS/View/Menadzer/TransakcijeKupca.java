@@ -155,7 +155,7 @@ public class TransakcijeKupca {
 		btnPretraga.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				
+				/*
 				String kupac = listaKupaca.getSelectedItem().toString();
 				
 				String datum_od = datumOd.getText();
@@ -181,7 +181,7 @@ public class TransakcijeKupca {
 					model.addRow(row);
 					i++;
 				}
-				
+				*/
 				
 			}
 		});

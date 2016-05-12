@@ -33,6 +33,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
+import ba.unsa.etf.si.app.SIDEVS.Validation.*;
 
 public final class IzvjestajZaKupcaVM {
 	
@@ -47,24 +48,10 @@ public final class IzvjestajZaKupcaVM {
 	public List<FakturaLot> vratiFaktureKupca(Kupac k, String datumOd, String datumDo){
 		
 		List<FakturaLot> faktureKupca = new ArrayList<FakturaLot>();
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.mm.yyyy");
-		Date datum_od=new Date();
-		try {
-			datum_od = sdf.parse(datumOd);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Date datum_do=new Date();
-		try {
-			datum_do = sdf.parse(datumDo);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+
+		Date datum_od = Conversions.stringToDate(datumOd);
+		Date datum_do = Conversions.stringToDate(datumDo);
+	
 		//izdvajamo fakture kupca:
 		List<Faktura> fakture_tmp = sesija.getSession().createCriteria(Faktura.class).add(Restrictions.eq("kupac", k)).
 				add(Restrictions.between("datum_kreiranja", datum_od, datum_do)).list();
