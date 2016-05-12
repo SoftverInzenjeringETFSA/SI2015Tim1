@@ -23,8 +23,10 @@ import ba.unsa.etf.si.app.SIDEVS.Model.ObrisanLot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
+import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajUlaziIzlaziVM;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajZaKupcaVM;
+import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajZaOdredjeniPeriodVM;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.SkladisteVM;
 
 import javax.swing.JFormattedTextField;
@@ -33,6 +35,7 @@ import java.awt.event.MouseEvent;
 
 public class IzvjestajUlaziIzlazi {
 	private Sessions sesija;
+	private IzvjestajUlaziIzlaziVM iz;
 	private JFrame frmMenadzerIzvjestaO;
 	private JTable table;
 	String [] cols=new String[] {"Datum", "Tip","Lot","Količina","Trenutno stanje"};
@@ -64,6 +67,7 @@ public class IzvjestajUlaziIzlazi {
 	}
 	public IzvjestajUlaziIzlazi(Sessions sesija) throws Exception{
 		this.sesija = sesija;
+		iz = new IzvjestajUlaziIzlaziVM(sesija);
 		initialize(sesija);
 		frmMenadzerIzvjestaO.setVisible(true);
 		if (!sesija.daLiPostoji())
@@ -80,37 +84,14 @@ public class IzvjestajUlaziIzlazi {
 		frmMenadzerIzvjestaO.setBounds(100, 100, 450, 300);
 		frmMenadzerIzvjestaO.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmMenadzerIzvjestaO.getContentPane().setLayout(null);
+		frmMenadzerIzvjestaO.setLocationRelativeTo(null);		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 134, 414, 73);
 		frmMenadzerIzvjestaO.getContentPane().add(scrollPane);
-		
-		
-		/*
-		 * 
-		 * transkacijeKupacaTable = new JTable();
-		transkacijeKupacaTable.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-			},
-			new String[] {
-				"Naziv lijeka", "Vrijednost", "Kolicina"
-			}
-		));
-		 * */
+
 		table = new JTable(model);
-		/*table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-			},
-			new String[] {
-				"Datum", "Tip", "LOT", "Kolicina", "Trenutno stanje"
-			}
-		));*/
+
 		scrollPane.setViewportView(table);
 		
 		JLabel label = new JLabel("Od");
@@ -134,9 +115,7 @@ public class IzvjestajUlaziIzlazi {
 		listaLijekova.setBounds(10, 103, 191, 20);
 		frmMenadzerIzvjestaO.getContentPane().add(listaLijekova);
 		
-		JButton btnGenerisiIzvjestaj = new JButton("Generisi izvjestaj");
-		btnGenerisiIzvjestaj.setBounds(10, 218, 414, 23);
-		frmMenadzerIzvjestaO.getContentPane().add(btnGenerisiIzvjestaj);
+		
 		
 		JLabel lblOdaberiSkladiste = new JLabel("Odaberi skladište");
 		lblOdaberiSkladiste.setBounds(10, 11, 191, 14);
@@ -175,8 +154,7 @@ public class IzvjestajUlaziIzlazi {
 				
 				String datum_od = datumOd.getText();
 				String datum_do = datumDo.getText();
-					
-				IzvjestajUlaziIzlaziVM iz = new IzvjestajUlaziIzlaziVM(sesija);			
+						
 				List<Lot> sviLotovi= iz.vratiSveLotove(odabraniLijek, odabranoSkladiste);	
 				List<Lot> ulazniLotovi = iz.vratiUlazneLotove(sviLotovi, datum_od, datum_do);		
 				List<Lot> izlazniLotovi = iz.vratiIzlazneLotove(sviLotovi, datum_od, datum_do);			
@@ -188,8 +166,12 @@ public class IzvjestajUlaziIzlazi {
 				int i=0;
 				while (i < ulazniLotovi.size()){
 					int stanje = iz.vratiTrenutnoStanje(ulazniLotovi.get(i));
-					Object[] row = {iz.vratiDatum(ulazniLotovi.get(i),true).toString(), "ulaz", ulazniLotovi.get(i).getBroj_lota(), kolicineUlaznih.get(i), stanje};
+					Object[] row = {iz.vratiDatum(ulazniLotovi.get(i),true).toString(), "ulaz", 
+							ulazniLotovi.get(i).getBroj_lota(), kolicineUlaznih.get(i), stanje};
 					model.addRow(row);
+					String[] all = {iz.vratiDatum(ulazniLotovi.get(i),true).toString(), "ulaz", 
+							ulazniLotovi.get(i).getBroj_lota(), Integer.toString(kolicineUlaznih.get(i)), Integer.toString(stanje)};
+					iz.dodaj(all);
 					i++;
 				}
 				
@@ -202,6 +184,9 @@ public class IzvjestajUlaziIzlazi {
 					while(j<datumi.size()){
 						Object[] row = {datumi.get(j), "izlaz", izlazniLotovi.get(i).getBroj_lota(), kolicineIzlaznih.get(i), stanje };
 						model.addRow(row);
+						String[] all = {datumi.get(j), "izlaz",
+								izlazniLotovi.get(i).getBroj_lota(), Integer.toString(kolicineIzlaznih.get(i)), Integer.toString(stanje)};
+						iz.dodaj(all);
 						j++;
 					}
 					i++;
@@ -213,12 +198,28 @@ public class IzvjestajUlaziIzlazi {
 					Object[] row = { otpisaniLotovi.get(i).getDatum_otpisa(), "otpis", otpisaniLotovi.get(i).getBroj_lota(), 
 							suma , 0 };
 					model.addRow(row);
+					String[] all = {Conversions.dateToString(otpisaniLotovi.get(i).getDatum_otpisa()), "otpis", 
+							otpisaniLotovi.get(i).getBroj_lota(), Integer.toString(suma), "0"};
+					iz.dodaj(all);
 					i++;
 				}
 			}
 		});
 		
+		JButton btnGenerisiIzvjestaj = new JButton("Generisi izvjestaj");
+		btnGenerisiIzvjestaj.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {				
+				iz.createPDF(datumOd.getText(), datumDo.getText());
+				frmMenadzerIzvjestaO.dispose();
+			}
+		});
+		btnGenerisiIzvjestaj.setBounds(10, 218, 414, 23);
+		frmMenadzerIzvjestaO.getContentPane().add(btnGenerisiIzvjestaj);
+		
 	}
+	
+	
 	
 
 	public void prikazi() {
