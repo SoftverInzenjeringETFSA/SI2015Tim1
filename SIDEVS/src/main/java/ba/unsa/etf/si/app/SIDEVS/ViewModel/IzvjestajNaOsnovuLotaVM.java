@@ -15,12 +15,12 @@ import org.hibernate.criterion.Restrictions;
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
 
 public class IzvjestajNaOsnovuLotaVM {
-	public static String datum_ulaza (Sessions ses, String broj_lota)throws NoSuchAlgorithmException,InvalidKeySpecException
+	public static String datum_ulaza (Sessions ses, String broj)throws NoSuchAlgorithmException,InvalidKeySpecException
 	{
 		try
 		{
 		//izabrani lot
-		Criteria criteria = ses.getSession().createCriteria(Lot.class).setProjection(Projections.property("broj_lota"));
+		Criteria criteria = ses.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", broj));
 		List<Lot> listaLotova = criteria.list();
 		Date datum_ulaza = listaLotova.get(0).getDatum_ulaza();
 		
@@ -35,12 +35,12 @@ public class IzvjestajNaOsnovuLotaVM {
 		return "-";
 	}
 	
-	public static String kolicina_ulaza (Sessions ses, String broj_lota)throws NoSuchAlgorithmException,InvalidKeySpecException
+	public static String kolicina_ulaza (Sessions ses, String broj)throws NoSuchAlgorithmException,InvalidKeySpecException
 	{
 		try
 		{
 		//izabrani lot
-		Criteria criteria = ses.getSession().createCriteria(Lot.class).setProjection(Projections.property("broj_lota"));
+		Criteria criteria = ses.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", broj));
 		List<Lot> listaLotova = criteria.list();
 		int kolicina_ulaza=listaLotova.get(0).getKolicina_tableta();
 		return String.valueOf(kolicina_ulaza);
@@ -56,7 +56,7 @@ public class IzvjestajNaOsnovuLotaVM {
 		try
 		{
 		//izabrani lot
-		Criteria criteria = ses.getSession().createCriteria(ObrisanLot.class).setProjection(Projections.property("broj_lota"));
+		Criteria criteria = ses.getSession().createCriteria(ObrisanLot.class).add(Restrictions.eq("broj_lota", broj_lota));
 		List<ObrisanLot> listaObrisanihLotova = criteria.list();
 		Date datum_otpisa = listaObrisanihLotova.get(0).getDatum_otpisa();
 		
@@ -75,8 +75,7 @@ public class IzvjestajNaOsnovuLotaVM {
 	{
 		try
 		{
-		//izabrani lot
-		Criteria criteria = ses.getSession().createCriteria(ObrisanLot.class).setProjection(Projections.property("broj_lota"));
+		Criteria criteria = ses.getSession().createCriteria(ObrisanLot.class).add(Restrictions.eq("broj_lota", broj_lota));
 		List<ObrisanLot> listaObrisanihLotova = criteria.list();
 		int kolicina_otpisa = listaObrisanihLotova.get(0).getKolicina_tableta();
 		return String.valueOf(kolicina_otpisa);
@@ -91,8 +90,7 @@ public class IzvjestajNaOsnovuLotaVM {
 	{
 		try
 		{
-		//izabrani lot
-		Criteria criteria = ses.getSession().createCriteria(Lot.class).setProjection(Projections.property("broj_lota"));
+		Criteria criteria = ses.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", broj_lota));
 		List<Lot> listaLotova = criteria.list();
 		List<FakturaLot> listaFakturaLot = new ArrayList<FakturaLot> (listaLotova.get(0).getFaktureLotovi());
 		List<String> lista_datuma_izlaza = new ArrayList<String>();
@@ -114,8 +112,7 @@ public class IzvjestajNaOsnovuLotaVM {
 	{
 		try
 		{
-		//izabrani lot
-		Criteria criteria = ses.getSession().createCriteria(Lot.class).setProjection(Projections.property("broj_lota"));
+		Criteria criteria = ses.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", broj_lota));
 		List<Lot> listaLotova = criteria.list();
 		List<FakturaLot> listaFakturaLot = new ArrayList<FakturaLot> (listaLotova.get(0).getFaktureLotovi());
 		List<String> lista_kolicine_izlaza = new ArrayList<String>();
