@@ -87,6 +87,7 @@ public class TransakcijeKupca {
 		frmMenadzerTransakcijeKupca.setBounds(100, 100, 450, 300);
 		frmMenadzerTransakcijeKupca.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmMenadzerTransakcijeKupca.getContentPane().setLayout(null);
+		frmMenadzerTransakcijeKupca.setLocationRelativeTo(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 103, 414, 73);

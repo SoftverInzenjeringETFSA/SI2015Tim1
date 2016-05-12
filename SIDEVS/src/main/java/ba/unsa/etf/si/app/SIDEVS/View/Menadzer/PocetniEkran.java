@@ -35,6 +35,7 @@ public class PocetniEkran {
 	private IzvjestajNaOsnovuLota inol;
 	private TransakcijeKupca tk;
 	private IzvjestajUlaziIzlazi iui;
+	private IzvjestajZaOdredjeniPeriod iop;
 
 	
 	/**
@@ -78,6 +79,7 @@ public class PocetniEkran {
 		frmMenadzerPocetniEkran.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmMenadzerPocetniEkran.getContentPane().setLayout(null);
 		frmMenadzerPocetniEkran.setLocationRelativeTo(null);
+		
 		
 		JLabel lblIzvjestaj = new JLabel("Izvještaj");
 		lblIzvjestaj.setBounds(10, 11, 106, 14);
@@ -175,6 +177,16 @@ public class PocetniEkran {
 		frmMenadzerPocetniEkran.getContentPane().add(btnOtpisLijekova);
 		
 		JButton btnDesavanjaZaOdredjeni = new JButton("Dešavanja za određeni vremenski period");
+		btnDesavanjaZaOdredjeni.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					if(iop == null) iop = new IzvjestajZaOdredjeniPeriod(s);
+					iop.prikazi();
+				} catch (Exception c) {
+					c.printStackTrace();
+				}
+			}
+		});
 		btnDesavanjaZaOdredjeni.setBounds(10, 160, 309, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnDesavanjaZaOdredjeni);
 		

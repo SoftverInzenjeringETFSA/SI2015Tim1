@@ -40,6 +40,7 @@ public class DodajKupca {
 		frmDodajKupca.setBounds(100, 100, 302, 196);
 		frmDodajKupca.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmDodajKupca.getContentPane().setLayout(null);
+		frmDodajKupca.setLocationRelativeTo(null);
 		
 		JLabel lblImeIPrezime = new JLabel("Ime i prezime:");
 		lblImeIPrezime.setBounds(10, 36, 91, 14);
