@@ -2,6 +2,7 @@ package ba.unsa.etf.si.app.SIDEVS.View.Menadzer;
 
 import java.awt.EventQueue;
 import java.text.ParseException;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -12,6 +13,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajZaOdredjeniPeriodVM;
+import ba.unsa.etf.si.app.SIDEVS.Model.*;
 
 import javax.swing.JFormattedTextField;
 import java.awt.event.MouseAdapter;
@@ -56,7 +59,7 @@ public class IzvjestajZaOdredjeniPeriod {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(Sessions sesija) {
+	private void initialize(final Sessions sesija) {
 		frmMenadzerIzvjestajZa = new JFrame();
 		frmMenadzerIzvjestajZa.setTitle("Izvjestaj za odredjeni vremenski period");
 		frmMenadzerIzvjestajZa.setBounds(100, 100, 571, 268);
@@ -88,19 +91,31 @@ public class IzvjestajZaOdredjeniPeriod {
 			e.printStackTrace();
 		}
 		
-		JFormattedTextField datumOd = new JFormattedTextField(maska);
+		final JFormattedTextField datumOd = new JFormattedTextField(maska);
 		datumOd.setBounds(54, 40, 95, 23);
 		frmMenadzerIzvjestajZa.getContentPane().add(datumOd);
 		
-		JFormattedTextField datumDo = new JFormattedTextField(maska);
+		final JFormattedTextField datumDo = new JFormattedTextField(maska);
 		datumDo.setBounds(212, 40, 95, 23);
 		frmMenadzerIzvjestajZa.getContentPane().add(datumDo);
 		
 		JButton btnPretraga = new JButton("Pretraga");
 		btnPretraga.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
-				Object[] row = { "maida", "","","",""};
-				model.addRow(row);
+				IzvjestajZaOdredjeniPeriodVM iz = new IzvjestajZaOdredjeniPeriodVM(sesija);
+				List<Lot> ulazniLotovi = iz.vratiUlazneLotove(datumOd.getText(), datumDo.getText());
+				
+				for (Lot lot: ulazniLotovi){
+					for (Skladiste s: iz.vratiSkladista(lot)){
+						Object[] row = { lot.getLijek().getNaziv(), 
+								lot.getBroj_lota(), 
+								s.getBroj_skladista(), 
+								iz.vratiUkupniUlaz(lot, s),
+								iz.vratiUkupniIzlaz(lot, s, datumOd.getText(), datumDo.getText())
+						};
+						model.addRow(row);
+					}
+				}
 			}
 		});
 		btnPretraga.setBounds(341, 40, 190, 23);
