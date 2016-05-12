@@ -35,7 +35,7 @@ public class EvidencijaKupcaTest {
 		
 		
 	}
-	/*@Test(expected = Exception.class)
+	@Test(expected = Exception.class)
 	public void DodajKupcaExceptionTest()
 	{
 		try{
@@ -53,7 +53,7 @@ public class EvidencijaKupcaTest {
 		}
 	
 		
-	}*/
+	}
 	}
 	
 	
