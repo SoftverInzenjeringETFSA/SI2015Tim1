@@ -7,6 +7,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -27,6 +29,8 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 
 public class ModifikacijaKorisnika {
+	
+	final static Logger logger = Logger.getLogger(ModifikacijaKorisnika.class);
 	
 	private Sessions _sesija;
 	private JFrame frmAdministratormodifikacijaKorisnika;
@@ -49,7 +53,7 @@ public class ModifikacijaKorisnika {
 					ModifikacijaKorisnika window = new ModifikacijaKorisnika();
 					window.frmAdministratormodifikacijaKorisnika.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -206,7 +210,7 @@ public class ModifikacijaKorisnika {
 					JOptionPane.showMessageDialog(null, "Korisnik uspješno ažuriran", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);
 				}
 				catch(Exception ex){
-					System.out.println(ex.toString());
+					logger.error(ex);
 					JOptionPane.showMessageDialog(null, "Došlo je do greške u dodavanju", "InfoBox: " + "Error", JOptionPane.INFORMATION_MESSAGE);		
 				}
 				resetContent();
@@ -240,8 +244,7 @@ public class ModifikacijaKorisnika {
 		try {
 			datumPocetkaRadaModifikacija = new JFormattedTextField(Masks.vratiMaskuZaDatum());
 		} catch (WrongInputException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		}
 		datumPocetkaRadaModifikacija.setBounds(50, 440, 102, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(datumPocetkaRadaModifikacija);
@@ -285,8 +288,7 @@ public class ModifikacijaKorisnika {
 					adresa.setText(adresa2);
 				}
 				catch(Exception ex){
-					System.out.println("Greška pri pristupu bazi");
-					System.out.println(ex.toString());
+					logger.error(ex);
 				}
 			}
 		});
