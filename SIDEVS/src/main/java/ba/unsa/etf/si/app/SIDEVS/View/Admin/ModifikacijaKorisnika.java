@@ -10,6 +10,9 @@ import javax.swing.JTextField;
 import org.hibernate.Criteria;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+
+import Exceptions.WrongInputException;
+
 import java.util.Date;
 import java.util.List;
 import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
@@ -234,7 +237,12 @@ public class ModifikacijaKorisnika {
 		
 		
 
-		datumPocetkaRadaModifikacija = new JFormattedTextField(Masks.vratiMaskuZaDatum());
+		try {
+			datumPocetkaRadaModifikacija = new JFormattedTextField(Masks.vratiMaskuZaDatum());
+		} catch (WrongInputException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		datumPocetkaRadaModifikacija.setBounds(50, 440, 102, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(datumPocetkaRadaModifikacija);
 		

@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 import org.hibernate.criterion.Restrictions;
 
+import Exceptions.WrongInputException;
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
 
 public final class Validator {
@@ -64,7 +65,7 @@ public final class Validator {
 	
 
 
-	public static boolean isDateValid(String date) 
+	public static boolean isDateValid(String date) throws WrongInputException 
 	{
 	        try {
 	            DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
@@ -72,7 +73,7 @@ public final class Validator {
 	            df.parse(date);
 	            return true;
 	        } catch (Exception e) {
-	            return false;
+	            throw new WrongInputException("Datum nije unešen ispravno");
 	        }
 	}
 	
@@ -84,8 +85,9 @@ public final class Validator {
 	
 	public static String validirajLot(Sessions sesija, String brojLota){
 		String msg="";
-		if(!validirajString(brojLota)) msg = "Popunite broj lota(samo slova i brojevi)";
-		else if(brojLota.length() != 6) msg = "Broj lota mora biti dužine 6";
+		
+		if (brojLota.length()==0) msg = "Morate unijeti broj lota";
+		else if(brojLota.length() < 6 && brojLota.length()>15) msg = "Broj lota mora biti između 6 i 15";
 		else {
 		List<Lot> lotovi = sesija.getSession().createCriteria(Lot.class).
 				add(Restrictions.eq("broj_lota", brojLota)).add(Restrictions.isNull("datum_otpisa")).list();
@@ -121,6 +123,17 @@ public final class Validator {
 		if (lijekovi.size()==0) msg = "Uneseni naziv kupca ne postoji u sistemu";
 		}
 		return msg;
+	}
+	public static boolean validirajCijenu(String cijena) throws WrongInputException {
+		
+		try{
+			Double.parseDouble(cijena);
+		}
+		catch ( NumberFormatException e){
+			throw new WrongInputException("Cijena nije u ispravnom formatu");
+		}
+		
+		return false;
 	}
 
 }

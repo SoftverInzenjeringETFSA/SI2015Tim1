@@ -130,9 +130,11 @@ public class IzvjestajNaOsnovuLota {
 							   Object[] row2={datum_otpisa, kolicina_otpisa, "otpis"};
 							   model.addRow(row2);
 						   }
-						   
+						   if (model.getRowCount()==0) 
+								label_obavijest.setText("Nema podataka za taj vremenski period.");
 					}
 				}
+				
 				catch(Exception ex){
 					noticeLabel.setForeground(Color.RED);
 					noticeLabel.setText(ex.getMessage());
@@ -156,8 +158,8 @@ public class IzvjestajNaOsnovuLota {
 	private boolean validirajPolja() {
 		String msg = "";
 		label_obavijest.setForeground(Color.RED);
-		
-		msg = Validator.validirajLot(_sesija, listaLotova.getSelectedItem().toString());
+		if (listaLotova.getSelectedIndex()==-1) msg="Morate unijeti lot";
+		else msg = Validator.validirajLot(_sesija, listaLotova.getSelectedItem().toString());
 		
 		if(msg != ""){
 			label_obavijest.setText(msg);
