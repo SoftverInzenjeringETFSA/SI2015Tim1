@@ -1,5 +1,6 @@
 package ba.unsa.etf.si.app.SIDEVS.View.Menadzer;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.text.ParseException;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 import ba.unsa.etf.si.app.SIDEVS.View.Masks;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajZaOdredjeniPeriodVM;
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
@@ -27,7 +29,10 @@ public class IzvjestajZaOdredjeniPeriod {
 	private JTable IzvjestajZaodredjeniPeriodTable;
 	String [] cols=new String[] {"Proizvod", "Lot","Skladište","Ulazi","Izlazi/Otpisi"};
 	DefaultTableModel model = new DefaultTableModel(cols, 0);
-
+	private JLabel label_obavijest;
+	private JFormattedTextField datumOd;
+	private JFormattedTextField datumDo;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -69,10 +74,11 @@ public class IzvjestajZaOdredjeniPeriod {
 		frmMenadzerIzvjestajZa.setLocationRelativeTo(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 74, 522, 110);
+		scrollPane.setBounds(10, 74, 522, 100);
 		frmMenadzerIzvjestajZa.getContentPane().add(scrollPane);
 		
 		IzvjestajZaodredjeniPeriodTable = new JTable(model);
+		IzvjestajZaodredjeniPeriodTable.setEnabled(false);
 		
 		scrollPane.setViewportView(IzvjestajZaodredjeniPeriodTable);
 		
@@ -84,31 +90,38 @@ public class IzvjestajZaOdredjeniPeriod {
 		label_1.setBounds(179, 44, 23, 14);
 		frmMenadzerIzvjestajZa.getContentPane().add(label_1);
 				
-		final JFormattedTextField datumOd = new JFormattedTextField(Masks.vratiMaskuZaDatum());
+		datumOd = new JFormattedTextField(Masks.vratiMaskuZaDatum());
 		datumOd.setBounds(54, 40, 95, 23);
 		frmMenadzerIzvjestajZa.getContentPane().add(datumOd);
 		
-		final JFormattedTextField datumDo = new JFormattedTextField(Masks.vratiMaskuZaDatum());
+		datumDo = new JFormattedTextField(Masks.vratiMaskuZaDatum());
 		datumDo.setBounds(212, 40, 95, 23);
 		frmMenadzerIzvjestajZa.getContentPane().add(datumDo);
 		
 		JButton btnPretraga = new JButton("Pretraga");
 		btnPretraga.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
-				IzvjestajZaOdredjeniPeriodVM iz = new IzvjestajZaOdredjeniPeriodVM(sesija);
-				List<Lot> ulazniLotovi = iz.vratiUlazneLotove(datumOd.getText(), datumDo.getText());
-				
-				for (Lot lot: ulazniLotovi){
-					for (Skladiste s: iz.vratiSkladista(lot)){
-						Object[] row = { lot.getLijek().getNaziv(), 
-								lot.getBroj_lota(), 
-								s.getBroj_skladista(), 
-								iz.vratiUkupniUlaz(lot, s),
-								iz.vratiUkupniIzlaz(lot, s, datumOd.getText(), datumDo.getText())
-						};
-						model.addRow(row);
+				 clearTable();
+				 
+				if (validirajPolja()){
+					label_obavijest.setText("");
+					IzvjestajZaOdredjeniPeriodVM iz = new IzvjestajZaOdredjeniPeriodVM(sesija);
+					List<Lot> ulazniLotovi = iz.vratiUlazneLotove(datumOd.getText(), datumDo.getText());
+					
+					for (Lot lot: ulazniLotovi){
+						for (Skladiste s: iz.vratiSkladista(lot)){
+							Object[] row = { lot.getLijek().getNaziv(), 
+									lot.getBroj_lota(), 
+									s.getBroj_skladista(), 
+									iz.vratiUkupniUlaz(lot, s),
+									iz.vratiUkupniIzlaz(lot, s, datumOd.getText(), datumDo.getText())
+							};
+							model.addRow(row);
+						}
 					}
-				}
+					
+				} 
+				
 			}
 		});
 		btnPretraga.setBounds(341, 40, 190, 23);
@@ -124,8 +137,32 @@ public class IzvjestajZaOdredjeniPeriod {
 				frmMenadzerIzvjestajZa.dispose();
 			}
 		});
-		btnGenerisiIzvjestaj.setBounds(144, 195, 282, 23);
+		btnGenerisiIzvjestaj.setBounds(144, 185, 282, 23);
 		frmMenadzerIzvjestajZa.getContentPane().add(btnGenerisiIzvjestaj);	
+		
+		label_obavijest = new JLabel("");
+		label_obavijest.setBounds(10, 215, 384, 14);
+		frmMenadzerIzvjestajZa.getContentPane().add(label_obavijest);
+	}
+
+	private boolean validirajPolja() {
+		String msg = "";
+		label_obavijest.setForeground(Color.RED);
+		
+		if ( !Validator.isDateValid( datumOd.getText()) ) msg="Prvi datum nije ispravan";
+		else if ( !Validator.isDateValid( datumDo.getText()) ) msg="Drugi datum nije ispravan";
+		else if (!Validator.veciStringDatum(datumOd.getText() , datumDo.getText()) ) msg="Drugi datum mora biti veci od prvog";
+		
+		if(msg != ""){
+			label_obavijest.setText(msg);
+			return false;
+		}
+		return true;
+	}
+	private void clearTable() {
+		while(model.getRowCount()>0){
+			model.removeRow(0);
+		}
 	}
 
 	public void prikazi() {

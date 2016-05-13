@@ -158,6 +158,7 @@ public class IzvjestajNaOsnovuLota {
 		label_obavijest.setForeground(Color.RED);
 		
 		msg = Validator.validirajLot(_sesija, listaLotova.getSelectedItem().toString());
+		
 		if(msg != ""){
 			label_obavijest.setText(msg);
 			return false;
