@@ -17,13 +17,13 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 
 public class PretragaLijekovaVM {
-	private Sessions s;
+	private static Sessions s;
 	
 	public PretragaLijekovaVM(Sessions s){
 		this.s = s;
 	}
 	
-	public Map<Integer, Integer> dajKolicinuLijekaUSkladistu(String naziv_lijeka) throws Exception{
+	public static Map<Integer, Integer> dajKolicinuLijekaUSkladistu(String naziv_lijeka) throws Exception{
 		Map<Integer, Integer> mapa = new HashMap<Integer, Integer>();
 		//Lijek
 		Lijek lijek = (Lijek) s.getSession().createCriteria(Lijek.class).add(Restrictions.eq("naziv", naziv_lijeka))
