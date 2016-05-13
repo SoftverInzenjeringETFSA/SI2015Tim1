@@ -54,6 +54,7 @@ public class KreiranjeFakture {
 	public KreiranjeFakture(Sessions s) throws Exception {
 		this.s = s;
 		initialize();
+		
 		frmKreiranjeFakture.setVisible(true);
 		if (!s.daLiPostoji()) {
 			throw new Exception("Sesija nije kreirana!");
