@@ -31,9 +31,6 @@ public class DodavanjeKorisnikaVM {
 		try{
 			Transaction t = ses.getSession().beginTransaction();
 			Korisnik k;
-			
-			
-	
 			if(tipKorisnika == "Menadzer"){
 				k = new Menadzer();
 			} else if (tipKorisnika == "Radnik"){
