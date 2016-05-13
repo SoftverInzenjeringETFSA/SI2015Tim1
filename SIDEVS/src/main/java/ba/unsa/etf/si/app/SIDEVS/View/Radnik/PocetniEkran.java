@@ -104,8 +104,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(ol == null) ol = new OtpisLijeka(s);
-					ol.frmOtpisLijeka.setVisible(true);
+					ol = new OtpisLijeka(s);
 				} catch (Exception c) {
 					c.printStackTrace();
 				}

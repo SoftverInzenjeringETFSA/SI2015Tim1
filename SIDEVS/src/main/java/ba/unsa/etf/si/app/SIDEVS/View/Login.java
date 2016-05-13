@@ -58,6 +58,7 @@ public class Login {
 	}
 	
 	public Login() {
+		HibernateUtil.getSessionFactory().openSession();
 		initialize();
 	}
 

@@ -8,13 +8,16 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
+import ba.unsa.etf.si.app.SIDEVS.Model.Pakovanje;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Validation.*;
@@ -23,19 +26,26 @@ import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JSplitPane;
 import javax.swing.JButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import javax.swing.JTable;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
 public class OtpisLijeka {
 
 	private Sessions sesija;
 	public JFrame frmOtpisLijeka;
 	private JTextField kolicinaTextField;
-	private Sessions _sesija;
 	private JLabel noticeLabel;
+	private JTable table;
+	private DefaultTableModel model = new DefaultTableModel();
 
 	/**
 	 * Launch the application.
@@ -76,7 +86,7 @@ public class OtpisLijeka {
 		
 		frmOtpisLijeka = new JFrame();
 		frmOtpisLijeka.setTitle("Otpis lijeka");
-		frmOtpisLijeka.setBounds(100, 100, 278, 277);
+		frmOtpisLijeka.setBounds(100, 100, 278, 520);
 		frmOtpisLijeka.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmOtpisLijeka.getContentPane().setLayout(null);
 		frmOtpisLijeka.setLocationRelativeTo(null);
@@ -189,5 +199,86 @@ public class OtpisLijeka {
 	    noticeLabel = new JLabel("");
 		noticeLabel.setBounds(10, 218, 238, 14);
 		frmOtpisLijeka.getContentPane().add(noticeLabel);
+		
+		table = new JTable(model);
+		table.setBorder(new LineBorder(new Color(0, 0, 0)));
+		table.setBounds(10, 274, 238, 150);
+		model.addColumn("Lijek"); 
+		model.addColumn("Lot");
+		popuniTabelu();
+		table.setSelectionModel(new ForcedListSelectionModel());
+		frmOtpisLijeka.getContentPane().add(table);
+		
+		JLabel lblLotoviKojimaIstie = new JLabel("Lotovi kojima ističe ili je istekao rok:");
+		lblLotoviKojimaIstie.setBounds(10, 245, 238, 16);
+		frmOtpisLijeka.getContentPane().add(lblLotoviKojimaIstie);
+		
+		JButton btnOtpisTabela = new JButton("Otpiši iz tabele");
+		btnOtpisTabela.setBounds(10, 437, 238, 25);
+		btnOtpisTabela.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{	
+					int a = table.getSelectedRow();
+					int	b =	table.getSelectedColumn();
+					if(a==0) return;
+					if(b==0)b=1;
+					String lotBrisanje = table.getValueAt(a, b).toString();
+					Transaction t = sesija.getSession().beginTransaction();
+						
+					//Lot
+					List<Lot> lotovi = sesija.getSession().createCriteria(Lot.class).add(Restrictions.like("broj_lota", lotBrisanje)).list();
+					Lot lot = lotovi.get(0);		
+					
+					//pakovanje
+					List<Pakovanje> pakovanja = sesija.getSession().createCriteria(Pakovanje.class).add(Restrictions.like("lot", lot)).list();
+					Pakovanje pakovanje = pakovanja.get(0);
+					
+					sesija.getSession().delete(pakovanje);
+					sesija.getSession().delete(lot);
+					
+					t.commit();
+					
+					//Osvježi tabelu
+	                popuniTabelu();
+					
+	               	noticeLabel.setForeground(Color.GREEN);
+					noticeLabel.setText("Lijek je uspješno otpisan");
+				}
+				catch(Exception ex){
+					System.out.println(ex.getMessage());
+					noticeLabel.setForeground(Color.RED);
+					noticeLabel.setText(ex.getMessage());
+				}
+			}
+		});
+		frmOtpisLijeka.getContentPane().add(btnOtpisTabela);
+	}
+	
+	public void popuniTabelu(){
+		model.setRowCount(0);  
+		model.addRow(new Object[]{"Lijek", "Lot"});
+		Transaction t = sesija.getSession().beginTransaction();
+		Date myDate = new Date();
+		List<Lot> lotovi = sesija.getSession().createCriteria(Lot.class).add(Restrictions.lt("rok_trajanja",myDate)).list();
+		for(int i = 0; i < lotovi.size(); i++){
+			Lijek tmp = lotovi.get(i).getLijek();
+			Long tmpx = Long.valueOf(tmp.getId()).longValue();
+			System.out.println(tmp);
+			List<Lijek> lijek =  sesija.getSession().createCriteria(Lijek.class).add(Restrictions.like("id", tmpx)).list();	
+			model.addRow(new Object[]{lijek.get(0).getNaziv(), lotovi.get(i).getBroj_lota()});
+		}
+	}
+	public class ForcedListSelectionModel extends DefaultListSelectionModel {
+	    public ForcedListSelectionModel () {
+	        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	    }
+
+	    @Override
+	    public void clearSelection() {
+	    }
+
+	    @Override
+	    public void removeSelectionInterval(int index0, int index1) {
+	    }
 	}
 }
