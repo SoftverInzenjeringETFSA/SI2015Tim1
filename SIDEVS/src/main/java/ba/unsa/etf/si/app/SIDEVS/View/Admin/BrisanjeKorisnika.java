@@ -10,6 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -21,6 +22,8 @@ import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 import javax.swing.JButton;
 
 public class BrisanjeKorisnika {
+	
+	final static Logger logger = Logger.getLogger(BrisanjeKorisnika.class);
 	
 	private Sessions _sesija;
 	private JFrame frmAdministratorBrisanjeKorisnika;
@@ -35,7 +38,7 @@ public class BrisanjeKorisnika {
 					BrisanjeKorisnika window = new BrisanjeKorisnika();
 					window.frmAdministratorBrisanjeKorisnika.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -98,8 +101,9 @@ public class BrisanjeKorisnika {
 					JOptionPane.showMessageDialog(null, "Korisnik uspješno obrisan", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);				
 				}
 				catch(Exception ex){
-					System.out.println(ex.toString());
+					logger.error(ex);
 					JOptionPane.showMessageDialog(null, "Došlo je do greške u brisanju", "InfoBox: " + "Error", JOptionPane.INFORMATION_MESSAGE);
+				
 				}
 				listaKorisnikaBrisanje.setSelectedItem("");
 			}

@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+
 import Exceptions.WrongInputException;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.View.Masks;
@@ -18,6 +20,8 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 
 public class DodavanjeKorisnika {
+	
+	final static Logger logger = Logger.getLogger(DodavanjeKorisnika.class);
 	
 	private Sessions _sesija;
 	private JFrame frmAdministratorDodavanjeKorisnika;
@@ -39,7 +43,7 @@ public class DodavanjeKorisnika {
 					DodavanjeKorisnika window = new DodavanjeKorisnika();
 					window.frmAdministratorDodavanjeKorisnika.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -187,6 +191,7 @@ public class DodavanjeKorisnika {
 					JOptionPane.showMessageDialog(null, "Korisnik uspješno dodan", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);	
 				}
 				catch(Exception ex){
+					logger.error(ex);
 					JOptionPane.showMessageDialog(null, "Došlo je do greške u dodavanju", "InfoBox: " + "Error", JOptionPane.INFORMATION_MESSAGE);		
 				}
 				//Brisanje vrijednosti iz boxova
@@ -203,8 +208,7 @@ public class DodavanjeKorisnika {
 		try {
 			datumPocetkaRada = new JFormattedTextField(Masks.vratiMaskuZaDatum());
 		} catch (WrongInputException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		}
 		
 		
