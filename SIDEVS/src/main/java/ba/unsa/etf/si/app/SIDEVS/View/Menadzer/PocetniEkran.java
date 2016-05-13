@@ -16,6 +16,8 @@ import ba.unsa.etf.si.app.SIDEVS.ViewModel.*;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class PocetniEkran {
@@ -123,6 +125,10 @@ public class PocetniEkran {
 		frmMenadzerPocetniEkran.getContentPane().add(btnEvidencijaLijekova);
 		
 		JButton btnPretragaLijekova = new JButton("Pretraga lijekova");
+		btnPretragaLijekova.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnPretragaLijekova.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
