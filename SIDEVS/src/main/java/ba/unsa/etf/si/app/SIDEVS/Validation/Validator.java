@@ -8,12 +8,16 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
 import org.hibernate.criterion.Restrictions;
 
 import Exceptions.WrongInputException;
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
 
 public final class Validator {
+
+	final static Logger logger = Logger.getLogger(Validator.class);
+	
 	private static Pattern VALID_TEXT = Pattern.compile("^[\\p{L}0-9]*$");
 	
 	public static Boolean validirajString(String tekst){
@@ -27,6 +31,7 @@ public final class Validator {
 			if(d <= 0) return false;
 		}
 		catch(Exception e){
+			logger.error(e);
 			return false;
 		}
 		return true;
@@ -43,6 +48,7 @@ public final class Validator {
 			if (m < 1 || m > 12) return false;
 			if(g < 1900) return false;
 		} catch (Exception e) {
+			logger.error(e);
 			return false;
 		}
 		return true;
@@ -57,6 +63,7 @@ public final class Validator {
 			if (m < 1 || m > 12) return false;
 			if(g < 1900) return false;
 		} catch (Exception e) {
+			logger.error(e);
 			return false;
 		}
 		
@@ -73,6 +80,7 @@ public final class Validator {
 	            df.parse(date);
 	            return true;
 	        } catch (Exception e) {
+	        	logger.error(e);
 	            throw new WrongInputException("Datum nije unešen ispravno");
 	        }
 	}
@@ -130,6 +138,7 @@ public final class Validator {
 			Double.parseDouble(cijena);
 		}
 		catch ( NumberFormatException e){
+			logger.error(e);
 			throw new WrongInputException("Cijena nije u ispravnom formatu");
 		}
 		
