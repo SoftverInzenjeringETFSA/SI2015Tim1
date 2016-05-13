@@ -4,7 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 public final class Conversions {
+	
+	final static Logger logger = Logger.getLogger(Conversions.class);
 
 	public static Date stringToDate(String input){
 		
@@ -13,8 +17,7 @@ public final class Conversions {
 		try {
 			date = sdf.parse(input);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		}
 		
 		return date;
@@ -36,8 +39,7 @@ public final class Conversions {
 		try {
 			date = sdf1.parse(input);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		}
 		
 		java.text.SimpleDateFormat sdf2 = 
@@ -49,8 +51,7 @@ public final class Conversions {
 		try {
 			d = sdf2.parse(s);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		}
 		
 		return d;

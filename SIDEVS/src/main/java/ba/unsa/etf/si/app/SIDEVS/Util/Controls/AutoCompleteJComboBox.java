@@ -14,6 +14,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.ProjectionList;
@@ -27,6 +28,8 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 public class AutoCompleteJComboBox extends JComboBox<Object> {
 
 	private static final long serialVersionUID = 1L;
+	
+	final static Logger logger = Logger.getLogger(AutoCompleteJComboBox.class);
 
 	/*
 	 * Konstruktor kontrole Prima sesiju i klasu nad kojom će se vršiti pretraga
@@ -103,9 +106,7 @@ public class AutoCompleteJComboBox extends JComboBox<Object> {
 								}
 
 							} catch (Exception e) {
-
-								System.out.println("Greška pri pristupu bazi");
-								System.out.println(e.toString());
+								logger.error(e);
 							}
 
 						}
