@@ -15,6 +15,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Kupac;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
+import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -25,6 +26,7 @@ public class BrisanjeKupca {
 	private Sessions _sesija;
 	public JFrame frmBrisanjeKupca;
     private JLabel noticeLabel;
+    private  AutoCompleteJComboBox  listaKupaca;
 	/**
 	 * Launch the application.
 	 */
@@ -75,12 +77,7 @@ public class BrisanjeKupca {
 		lblKupac.setBounds(10, 11, 69, 14);
 		frmBrisanjeKupca.getContentPane().add(lblKupac);
 		
-		/*JComboBox listaKupaca = new JComboBox();
-		listaKupaca.setModel(new DefaultComboBoxModel(new String[] {"Izaberite kupca"}));
-		listaKupaca.setBounds(89, 8, 112, 20);
-		frmBrisanjeKupca.getContentPane().add(listaKupaca);*/
-		
-		final AutoCompleteJComboBox  listaKupaca = new AutoCompleteJComboBox(s, Kupac.class, "naziv");
+		listaKupaca = new AutoCompleteJComboBox(s, Kupac.class, "naziv");
 		listaKupaca.setBounds(89, 8, 112, 20);
 		frmBrisanjeKupca.getContentPane().add(listaKupaca);
 		
@@ -91,14 +88,16 @@ public class BrisanjeKupca {
 		btnIzbriši.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{					
-					String txt = listaKupaca.getSelectedItem().toString();	
-					
-					boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.BrisanjeKupcaVM.BrisiKupca(_sesija, txt);		
-					if(!state) throw new Exception();
+					if (validirajPolja()){
+						String txt = listaKupaca.getSelectedItem().toString();	
+						
+						boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.BrisanjeKupcaVM.BrisiKupca(_sesija, txt);		
+						if(!state) throw new Exception();
 
-					//JOptionPane.showMessageDialog(null, "Kupac uspješno obrisan", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);
-					noticeLabel.setForeground(Color.GREEN);
-					noticeLabel.setText("Kupac je uspješno obrisan");
+						//JOptionPane.showMessageDialog(null, "Kupac uspješno obrisan", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);
+						noticeLabel.setForeground(Color.GREEN);
+						noticeLabel.setText("Kupac je uspješno obrisan");
+					}
 				}
 				catch(Exception ex){
 					
@@ -115,5 +114,17 @@ public class BrisanjeKupca {
 			noticeLabel.setBounds(10, 75, 274, 14);
 			frmBrisanjeKupca.getContentPane().add(noticeLabel);
 		
+	}
+	
+	private boolean validirajPolja() {
+		String msg = "";
+		if (listaKupaca.getSelectedItem()==null) msg="Morate unijeti kupca";
+		else msg = Validator.validirajKupca(_sesija, listaKupaca.getSelectedItem().toString());
+		if(msg != ""){
+			noticeLabel.setForeground(Color.red);
+			noticeLabel.setText(msg);
+			return false;
+		}
+		return true;
 	}
 }

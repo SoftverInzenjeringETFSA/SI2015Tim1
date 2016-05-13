@@ -180,15 +180,15 @@ public class TransakcijeKupca {
 							model.addRow(row);
 							i++;
 						}
-						
+						if (model.getRowCount()==0) 
+							label_obavijest.setText("Nema podataka za taj vremenski period.");
 					}
 				} catch (HibernateException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (WrongInputException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					label_obavijest.setText(e.getMessage());
+				} 
 				
 				
 			}

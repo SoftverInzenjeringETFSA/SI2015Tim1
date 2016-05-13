@@ -109,10 +109,14 @@ public class DodajKupca {
 	}
 
 	private boolean validirajPolja() {
-		
-		
-		
-		
+		String msg = "";
+		if (ime_txt.getText().length()==0) msg = "Morate unijeti naziv kupca";
+		else if	(adresa_txt.getText().length()==0) msg = "Morate unijeti adresu kupca";
+		if(msg != ""){
+			obavijest_lbl.setForeground(Color.red);
+			obavijest_lbl.setText(msg);
+			return false;
+		}
 		return true;
 	}
 	
