@@ -41,7 +41,8 @@ public final class FakturaVM {
 		this.s = s;
 	}
 
-	public void dodajFakturu(List<Lot> lotovi, List<Integer> kolicine, List<Skladiste> skladista, Kupac k) {
+	public void dodajFakturu(List<Lot> lotovi, List<Integer> kolicine, List<Skladiste> skladista, Kupac k,
+			List<Double> cijene) {
 		try {
 			Faktura f = new Faktura();
 			f.setKorisnik(s.getKorisnik());
@@ -49,7 +50,7 @@ public final class FakturaVM {
 			double izlazna_cijena = 0;
 			int i = 0;
 			for (Lot l : lotovi) {
-				izlazna_cijena += l.getUlazna_cijena() * kolicine.get(i);
+				izlazna_cijena += cijene.get(i) * kolicine.get(i);
 				i++;
 			}
 			f.setIzlazna_cijena(izlazna_cijena);
@@ -130,7 +131,7 @@ public final class FakturaVM {
 					document.add(table);
 
 					// Izlaz lijekovi
-					table = new PdfPTable(4);
+					table = new PdfPTable(5);
 					table.setWidthPercentage(100);
 					table.setSpacingBefore(10f);
 					table.setSpacingAfter(10f);
@@ -139,13 +140,13 @@ public final class FakturaVM {
 					double total = 0;
 
 					for (Lot lot : lotovi) {
-						PdfPTable table_lot = new PdfPTable(4);
+						PdfPTable table_lot = new PdfPTable(5);
 						Lijek lijek = lot.getLijek();
 						if (!lijekovi.contains(lijek)) {
 							PdfPCell cell = new PdfPCell(new Paragraph(lijek.getNaziv(), boldFont));
 							cell.setPadding(10);
 							cell.setBorder(Rectangle.BOTTOM);
-							cell.setColspan(4);
+							cell.setColspan(5);
 							cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
 							table.addCell(cell);
 
@@ -155,17 +156,22 @@ public final class FakturaVM {
 							cell.setBorder(Rectangle.LEFT | Rectangle.TOP | Rectangle.BOTTOM);
 							table.addCell(cell);
 
+							cell = new PdfPCell(new Paragraph("Skladište", boldFont));
+							cell.setPadding(10);
+							cell.setBorder(Rectangle.TOP | Rectangle.BOTTOM);
+							table.addCell(cell);
+
 							cell = new PdfPCell(new Paragraph("Izlazna cijena", boldFont));
 							cell.setPadding(10);
 							cell.setBorder(Rectangle.TOP | Rectangle.BOTTOM);
 							table.addCell(cell);
-
-							cell = new PdfPCell(new Paragraph("Količina", boldFont));
+							
+							cell = new PdfPCell(new Paragraph("Kolicina", boldFont));
 							cell.setPadding(10);
 							cell.setBorder(Rectangle.TOP | Rectangle.BOTTOM);
 							table.addCell(cell);
 
-							cell = new PdfPCell(new Paragraph("Skladište", boldFont));
+							cell = new PdfPCell(new Paragraph("Ukupna cijena", boldFont));
 							cell.setPadding(10);
 							cell.setBorder(Rectangle.TOP | Rectangle.BOTTOM | Rectangle.RIGHT);
 							table.addCell(cell);
@@ -182,15 +188,22 @@ public final class FakturaVM {
 									cell.setBorder(Rectangle.NO_BORDER);
 									table_lot.addCell(cell);
 									// 2
-									double cijena = new BigDecimal(lot_ostali.getUlazna_cijena() * 0.17
-											+ lot_ostali.getUlazna_cijena()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+									
+									cell = new PdfPCell(
+											new Paragraph(Integer.toString(skladista.get(index).getBroj_skladista())));
+									cell.setPadding(10);
+									cell.setBorder(Rectangle.NO_BORDER);
+									table_lot.addCell(cell);
+									
+									//3
+									double cijena = new BigDecimal(cijene.get(index) * 0.17 + cijene.get(index))
+											.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 									cijena_po_lijeku += cijena;
-									total += cijena;
 									cell = new PdfPCell(new Paragraph(Double.toString(cijena) + " KM"));
 									cell.setPadding(10);
 									cell.setBorder(Rectangle.NO_BORDER);
 									table_lot.addCell(cell);
-									// 3
+									// 4
 									cell = new PdfPCell(new Paragraph(kolicine.get(index).toString()));
 									cell.setPadding(10);
 									cell.setBorder(Rectangle.NO_BORDER);
@@ -198,9 +211,11 @@ public final class FakturaVM {
 
 									kolicina_po_lijeku += kolicine.get(index);
 
-									// 4
-									cell = new PdfPCell(
-											new Paragraph(Integer.toString(skladista.get(index).getBroj_skladista())));
+									//5
+									
+									total += cijena*kolicine.get(index);
+									
+									cell = new PdfPCell(new Paragraph(Double.toString(cijena*kolicine.get(index))+ " KM"));
 									cell.setPadding(10);
 									cell.setBorder(Rectangle.NO_BORDER);
 									table_lot.addCell(cell);
@@ -214,6 +229,11 @@ public final class FakturaVM {
 								cell.setBorder(Rectangle.BOTTOM | Rectangle.TOP);
 								table_lot.addCell(cell);
 								
+								cell = new PdfPCell(new Paragraph("", boldFont));
+								cell.setPadding(10);
+								cell.setBorder(Rectangle.BOTTOM | Rectangle.TOP);
+								table_lot.addCell(cell);
+
 								cell = new PdfPCell(new Paragraph(Double.toString(cijena_po_lijeku) + " KM", boldFont));
 								cell.setPadding(10);
 								cell.setBorder(Rectangle.BOTTOM | Rectangle.TOP);
@@ -224,6 +244,7 @@ public final class FakturaVM {
 								cell.setBorder(Rectangle.BOTTOM | Rectangle.TOP);
 								table_lot.addCell(cell);
 
+								
 								cell = new PdfPCell(new Paragraph("", boldFont));
 								cell.setPadding(10);
 								cell.setBorder(Rectangle.BOTTOM | Rectangle.TOP);
@@ -234,14 +255,18 @@ public final class FakturaVM {
 							cell = new PdfPCell(table_lot);
 							cell.setPadding(10);
 							cell.setBorder(Rectangle.BOTTOM);
-							cell.setColspan(4);
+							cell.setColspan(5);
 							table.addCell(cell);
 						}
 					}
-					
-					PdfPCell cell = new PdfPCell(new Paragraph("Total: " + Double.toString(new BigDecimal(total).setScale(2,  BigDecimal.ROUND_HALF_UP).doubleValue()) + " KM", boldFont));
+
+					PdfPCell cell = new PdfPCell(
+							new Paragraph("Total: "
+									+ Double.toString(
+											new BigDecimal(total).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue())
+									+ " KM", boldFont));
 					cell.setPadding(10);
-					cell.setColspan(4);
+					cell.setColspan(5);
 					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					table.addCell(cell);

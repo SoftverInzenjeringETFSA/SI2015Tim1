@@ -31,11 +31,7 @@ import ba.unsa.etf.si.app.SIDEVS.ViewModel.SkladisteVM;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -52,6 +48,8 @@ public class KreiranjeFakture {
 	private List<Lot> lotovi = new ArrayList<Lot>();
 	private List<Integer> kolicine = new ArrayList<Integer>();
 	private List<Skladiste> skladista = new ArrayList<Skladiste>();
+	private List<Double> cijene = new ArrayList<Double>();
+	private JTextField textField_cijena;
 
 	public KreiranjeFakture(Sessions s) throws Exception {
 		this.s = s;
@@ -67,9 +65,8 @@ public class KreiranjeFakture {
 	 */
 	private void initialize() {
 		frmKreiranjeFakture = new JFrame();
-		frmKreiranjeFakture.setResizable(false);
 		frmKreiranjeFakture.setTitle("Kreiranje fakture");
-		frmKreiranjeFakture.setBounds(100, 100, 755, 448);
+		frmKreiranjeFakture.setBounds(100, 100, 755, 486);
 		frmKreiranjeFakture.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmKreiranjeFakture.getContentPane().setLayout(null);
 		frmKreiranjeFakture.setLocationRelativeTo(null);
@@ -125,7 +122,7 @@ public class KreiranjeFakture {
 		panel_1.add(comboBox_skladista);
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(10, 197, 201, 88);
+		panel_2.setBounds(10, 197, 201, 113);
 		panel_2.setLayout(null);
 		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Proizvod (lot)",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -136,7 +133,7 @@ public class KreiranjeFakture {
 		panel_2.add(comboBox_lot);
 
 		JLabel lblKoliina = new JLabel("Količina (kom):");
-		lblKoliina.setBounds(10, 61, 84, 14);
+		lblKoliina.setBounds(10, 85, 84, 14);
 		panel_2.add(lblKoliina);
 
 		textField_kolicina = new JTextField();
@@ -148,16 +145,25 @@ public class KreiranjeFakture {
 				}
 			}
 		});
-		textField_kolicina.setBounds(96, 58, 95, 20);
+		textField_kolicina.setBounds(96, 82, 95, 20);
 		panel_2.add(textField_kolicina);
 		textField_kolicina.setColumns(10);
+		
+		JLabel lblCijena = new JLabel("Cijena:");
+		lblCijena.setBounds(10, 60, 46, 14);
+		panel_2.add(lblCijena);
+		
+		textField_cijena = new JTextField();
+		textField_cijena.setBounds(96, 57, 95, 20);
+		panel_2.add(textField_cijena);
+		textField_cijena.setColumns(10);
 
 		final JLabel label_obavijest = new JLabel("");
-		label_obavijest.setBounds(10, 398, 719, 14);
+		label_obavijest.setBounds(10, 423, 719, 14);
 		frmKreiranjeFakture.getContentPane().add(label_obavijest);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(221, 20, 508, 333);
+		scrollPane.setBounds(221, 20, 508, 358);
 		frmKreiranjeFakture.getContentPane().add(scrollPane);
 
 		final DefaultTableModel table_model = new DefaultTableModel();
@@ -187,6 +193,7 @@ public class KreiranjeFakture {
 							Integer.parseInt(comboBox_skladista.getSelectedItem().toString()));
 					Lot lot = s.getSession().get(Lot.class, comboBox_lot.getSelectedItem().toString());
 					int kolicina = Integer.parseInt(textField_kolicina.getText());
+					Double cijena = Double.parseDouble(textField_cijena.getText());
 
 					if (k == null) {
 						k = (Kupac) s.getSession().createCriteria(Kupac.class)
@@ -214,11 +221,11 @@ public class KreiranjeFakture {
 						
 						lotovi.add(lot);
 						kolicine.add(kolicina);
+						cijene.add(cijena);
 						skladista.add(skladiste);
 
 						table_model.addRow(new Object[] { redni_broj, skladiste.getBroj_skladista(), lijek.getNaziv(),
-								lot.getBroj_lota(), kolicina, lot.getUlazna_cijena(),
-								kolicina * lot.getUlazna_cijena() });
+								lot.getBroj_lota(), kolicina, cijena, kolicina * cijena });
 						redni_broj += 1;
 
 						refreshPolja();
@@ -243,6 +250,7 @@ public class KreiranjeFakture {
 				comboBox_skladista.setSelectedIndex(0);
 				comboBox_lot.setSelectedIndex(-1);
 				textField_kolicina.setText("");
+				textField_cijena.setText("");
 			}
 
 			private boolean validriajUnosStavke() {
@@ -263,7 +271,7 @@ public class KreiranjeFakture {
 				return true;
 			}
 		});
-		btnDodajStavku.setBounds(10, 296, 201, 23);
+		btnDodajStavku.setBounds(10, 321, 201, 23);
 		frmKreiranjeFakture.getContentPane().add(btnDodajStavku);
 
 		JButton btnFakturii = new JButton("Fakturiši");
@@ -275,10 +283,11 @@ public class KreiranjeFakture {
 					label_obavijest.setText("Nemate stavki na fakturi");
 				} else {
 					FakturaVM f = new FakturaVM(s);
-					f.dodajFakturu(lotovi, kolicine, skladista, k);
+					f.dodajFakturu(lotovi, kolicine, skladista, k, cijene);
 					comboBox_skladista.setSelectedIndex(0);
 					comboBox_lot.setSelectedIndex(-1);
 					textField_kolicina.setText("");
+					textField_cijena.setText("");
 					table_model.setRowCount(0);
 					for (Component c : panel_kupac.getComponents()) {
 						c.setEnabled(true);
@@ -288,7 +297,7 @@ public class KreiranjeFakture {
 				}
 			}
 		});
-		btnFakturii.setBounds(10, 330, 201, 23);
+		btnFakturii.setBounds(10, 355, 201, 23);
 		frmKreiranjeFakture.getContentPane().add(btnFakturii);
 
 		JButton btnNewButton = new JButton("Obriši sve");
@@ -308,7 +317,7 @@ public class KreiranjeFakture {
 				label_obavijest.setText("Uspješno ste obrisali fakturu");
 			}
 		});
-		btnNewButton.setBounds(10, 364, 201, 23);
+		btnNewButton.setBounds(10, 389, 201, 23);
 		frmKreiranjeFakture.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_brisi_redove = new JButton("Obriši odabrane redove");
@@ -318,7 +327,7 @@ public class KreiranjeFakture {
 				removeSelectedRows(table);
 			}
 		});
-		btnNewButton_brisi_redove.setBounds(546, 364, 183, 23);
+		btnNewButton_brisi_redove.setBounds(546, 389, 183, 23);
 		frmKreiranjeFakture.getContentPane().add(btnNewButton_brisi_redove);
 	}
 
