@@ -31,7 +31,6 @@ import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 
 public class IzvjestajUlaziIzlaziVM {
 
-	//URADITI PDF
 	
 	private Sessions sesija;
 	private Document document;

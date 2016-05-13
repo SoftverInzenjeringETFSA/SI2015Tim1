@@ -8,7 +8,7 @@ public final class Conversions {
 
 	public static Date stringToDate(String input){
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.mm.yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 		Date date = new Date();
 		try {
 			date = sdf.parse(input);
@@ -22,7 +22,7 @@ public final class Conversions {
 	
 	public static String dateToString(Date date){
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.mm.yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 		String s = sdf.format(date);
 		
 		return s;
@@ -30,7 +30,7 @@ public final class Conversions {
 	
 	
 	public static Date dajDatumZaBazu(String input){
-		java.text.SimpleDateFormat sdf1 = new java.text.SimpleDateFormat("dd.mm.yyyy");
+		java.text.SimpleDateFormat sdf1 = new java.text.SimpleDateFormat("dd.MM.yyyy");
 		
 		java.util.Date date = new Date();
 		try {

@@ -7,21 +7,16 @@ import javax.swing.JLabel;
 
 
 
-import ba.unsa.etf.si.app.SIDEVS.View.Login;
-import ba.unsa.etf.si.app.SIDEVS.View.Radnik.KreiranjeFakture;
-
+import ba.unsa.etf.si.app.SIDEVS.View.*;
+import ba.unsa.etf.si.app.SIDEVS.View.Radnik.*;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
-import ba.unsa.etf.si.app.SIDEVS.View.Radnik.BrisanjeKupca;
-import ba.unsa.etf.si.app.SIDEVS.View.Radnik.DodajKupca;
-import ba.unsa.etf.si.app.SIDEVS.View.Radnik.OtpisLijeka;
-import ba.unsa.etf.si.app.SIDEVS.View.Radnik.PretragaLijeka;
-import ba.unsa.etf.si.app.SIDEVS.View.Radnik.DodajKupca;
+import ba.unsa.etf.si.app.SIDEVS.ViewModel.*;
+
 
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
 
 public class PocetniEkran {
 
@@ -98,6 +93,12 @@ public class PocetniEkran {
 		frmMenadzerPocetniEkran.getContentPane().add(lblKupac);
 		
 		JButton btnTrenutnoStanjeNa = new JButton("Trenutno stanje na skladištima");
+		btnTrenutnoStanjeNa.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
+				TrenutnoStanjeVM t = new TrenutnoStanjeVM(s);
+				t.createPDF();
+			}
+		});
 		btnTrenutnoStanjeNa.setBounds(10, 28, 299, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnTrenutnoStanjeNa);
 		
