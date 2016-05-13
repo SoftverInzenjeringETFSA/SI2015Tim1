@@ -22,9 +22,13 @@ import org.hibernate.criterion.Restrictions;
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
+import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajNaOsnovuLotaVM;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class IzvjestajNaOsnovuLota {
 	private Sessions _sesija;
+	private IzvjestajNaOsnovuLotaVM vm;
 	public JFrame frmMenadzerIzvjestajNa;
 	private JTable table;
 	private AutoCompleteJComboBox  listaLotova;
@@ -60,6 +64,7 @@ public class IzvjestajNaOsnovuLota {
 	
 	public IzvjestajNaOsnovuLota(Sessions s) throws Exception {
 		_sesija = s;
+		vm = new IzvjestajNaOsnovuLotaVM(s);
 		initialize(_sesija);
 		frmMenadzerIzvjestajNa.setVisible(true);
 		if(!s.daLiPostoji()){
@@ -70,7 +75,7 @@ public class IzvjestajNaOsnovuLota {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(Sessions s) {
+	private void initialize(final Sessions s) {
 		
 		frmMenadzerIzvjestajNa = new JFrame();
 		frmMenadzerIzvjestajNa.setTitle("Izvjestaj na osnovu lota");
@@ -101,14 +106,17 @@ public class IzvjestajNaOsnovuLota {
 				try{
 					clearTable();
 					if (validirajPolja()){
+						
 						 String lot = listaLotova.getSelectedItem().toString();
 		                   //ulaz
 		                   String datum_ulaza = ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajNaOsnovuLotaVM.datum_ulaza(_sesija, lot);
 		                   String kolicina_ulaza = ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajNaOsnovuLotaVM.kolicina_ulaza(_sesija, lot);
 						   if (datum_ulaza!="-")
 						   {   
+							   String[] s = {datum_ulaza,kolicina_ulaza,"ulaz"};
 							   Object[] row = {datum_ulaza,kolicina_ulaza,"ulaz"};
 							   model.addRow(row);
+							   vm.dodaj(s);
 						   }
 						   //izlazi
 						   List<String> lista_Datuma_izlaza = ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajNaOsnovuLotaVM.lista_datumi_izlaza(_sesija, lot);
@@ -117,8 +125,10 @@ public class IzvjestajNaOsnovuLota {
 						   {
 							   for (int i=0; i<lista_Datuma_izlaza.size();i++)
 							   {
+								   String[] s = {lista_Datuma_izlaza.get(i),lista_Kolicina_izlaza.get(i),"izlaz"};
 								   Object[] row1={lista_Datuma_izlaza.get(i),lista_Kolicina_izlaza.get(i),"izlaz"};
 								   model.addRow(row1);
+								   vm.dodaj(s);
 							   }
 						   }
 						   
@@ -127,8 +137,10 @@ public class IzvjestajNaOsnovuLota {
 						   String datum_otpisa=ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajNaOsnovuLotaVM.datum_otpisa(_sesija, lot);
 						   if (datum_otpisa!="-")
 						   {
-							   Object[] row2={datum_otpisa, kolicina_otpisa, "otpis"};
+							   String[] s = {datum_otpisa, kolicina_otpisa, "otpis"};
+							   Object[] row2= {datum_otpisa, kolicina_otpisa, "otpis"};
 							   model.addRow(row2);
+							   vm.dodaj(s);
 						   }
 						   if (model.getRowCount()==0) 
 								label_obavijest.setText("Nema podataka za taj vremenski period.");
@@ -143,6 +155,19 @@ public class IzvjestajNaOsnovuLota {
 		});
 		
 		JButton btnGenerisiIzvjestaj = new JButton("Generiši izvještaj");
+		btnGenerisiIzvjestaj.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if (model.getRowCount()==0)  {
+					label_obavijest.setForeground(Color.RED);
+					label_obavijest.setText("Nije moguce generisati PDF jer nema podataka.");
+				}
+				else{
+				vm.createPDF(listaLotova.getSelectedItem().toString());
+				frmMenadzerIzvjestajNa.dispose();
+				}
+			}
+		});
 		btnGenerisiIzvjestaj.setBounds(10, 154, 414, 23);
 		frmMenadzerIzvjestajNa.getContentPane().add(btnGenerisiIzvjestaj);
 		

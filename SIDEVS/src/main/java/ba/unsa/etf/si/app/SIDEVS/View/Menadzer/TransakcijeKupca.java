@@ -202,13 +202,28 @@ public class TransakcijeKupca {
 		lblTotal.setBounds(10, 193, 46, 14);
 		frmMenadzerTransakcijeKupca.getContentPane().add(lblTotal);
 		
-		JButton btnGenerisiIzvjestaj = new JButton("Generisi izvjestaj");
-		btnGenerisiIzvjestaj.setBounds(10, 218, 414, 23);
-		frmMenadzerTransakcijeKupca.getContentPane().add(btnGenerisiIzvjestaj);
+		
 		
 		label_obavijest = new JLabel("");
 		label_obavijest.setBounds(10, 247, 341, 14);
 		frmMenadzerTransakcijeKupca.getContentPane().add(label_obavijest);
+		
+		JButton btnGenerisiIzvjestaj = new JButton("Generisi izvjestaj");
+		btnGenerisiIzvjestaj.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (model.getRowCount()==0)  {
+					label_obavijest.setForeground(Color.RED);
+					label_obavijest.setText("Nije moguce generisati PDF jer nema podataka.");
+				}
+				else{
+					
+					
+				}
+			}
+		});
+		btnGenerisiIzvjestaj.setBounds(10, 218, 414, 23);
+		frmMenadzerTransakcijeKupca.getContentPane().add(btnGenerisiIzvjestaj);
 	}
 	
 	private boolean validirajPolja() throws WrongInputException {

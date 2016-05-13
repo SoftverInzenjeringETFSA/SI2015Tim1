@@ -140,10 +140,16 @@ public class IzvjestajZaOdredjeniPeriod {
 		btnGenerisiIzvjestaj.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				if (model.getRowCount()==0)  {
+					label_obavijest.setForeground(Color.RED);
+					label_obavijest.setText("Nije moguce generisati PDF jer nema podataka.");
+				}
+				else{
 				IzvjestajZaOdredjeniPeriodVM iz = new IzvjestajZaOdredjeniPeriodVM(sesija);
 				List<Lot> lotovi = iz.vratiUlazneLotove(datumOd.getText(), datumDo.getText());
 				iz.createPDF(lotovi, datumOd.getText(), datumDo.getText());
 				frmMenadzerIzvjestajZa.dispose();
+				}
 			}
 		});
 		btnGenerisiIzvjestaj.setBounds(144, 185, 282, 23);

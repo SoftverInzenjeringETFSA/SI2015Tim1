@@ -133,7 +133,7 @@ public final class Validator {
 			throw new WrongInputException("Cijena nije u ispravnom formatu");
 		}
 		
-		return false;
+		return true;
 	}
 
 }

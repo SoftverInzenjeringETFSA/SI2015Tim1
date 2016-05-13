@@ -93,8 +93,6 @@ public class BrisanjeKupca {
 						
 						boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.BrisanjeKupcaVM.BrisiKupca(_sesija, txt);		
 						if(!state) throw new Exception();
-
-						//JOptionPane.showMessageDialog(null, "Kupac uspješno obrisan", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);
 						noticeLabel.setForeground(Color.GREEN);
 						noticeLabel.setText("Kupac je uspješno obrisan");
 					}

@@ -1,10 +1,16 @@
 package ba.unsa.etf.si.app.SIDEVS.ViewModel;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import org.hibernate.Criteria;
@@ -12,9 +18,37 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
+import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 
 public class IzvjestajNaOsnovuLotaVM {
+	
+	private Sessions sesija;
+	private Document document;
+	private PdfPTable tableData;
+	private List<String[]> lista;
+	
+	public IzvjestajNaOsnovuLotaVM(Sessions s){
+		sesija = s;
+		document = new Document();
+		lista=new ArrayList<String[]>();
+		tableData = new PdfPTable(5);
+		tableData.setWidthPercentage(100);
+		tableData.setSpacingBefore(10f);
+		tableData.setSpacingAfter(10f);
+	}
+	
 	public static String datum_ulaza (Sessions ses, String broj)throws NoSuchAlgorithmException,InvalidKeySpecException
 	{
 		try
@@ -131,4 +165,89 @@ public class IzvjestajNaOsnovuLotaVM {
 		return Collections.emptyList();
 	}
 	
+	public void dodaj(String[] celije){
+		lista.add(celije);
+	}
+	
+	
+	public void createPDF(String lot){
+		String datum = Conversions.dateToString(new Date());
+		JFileChooser chooser = new JFileChooser();
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		int option = chooser.showSaveDialog(null);
+		if (option == JFileChooser.APPROVE_OPTION) {
+
+
+			String new_file_path = chooser.getSelectedFile().getAbsolutePath().toString() + "\\Izvjestaj_"
+					+ "_lot_" + datum + ".pdf";
+
+			try {
+				Font titleFont = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
+				Font boldFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+
+				PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new_file_path));
+				document.open();
+				
+				PdfPTable table = new PdfPTable(2);
+				
+				String[] top = {"SIDEVS", "Datum: " + datum};					
+				for (String s: top){
+					PdfPCell cell = new PdfPCell(new Paragraph(s, titleFont));
+					cell.setPadding(10);
+					cell.setBorder(Rectangle.NO_BORDER);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					table.addCell(cell);
+				}
+				document.add(table);
+				document.add(new Phrase("\n"));
+				
+				PdfPTable tLot = new PdfPTable(1);
+				String str ="Lot broj:  " + lot;
+				PdfPCell cell = new PdfPCell(new Paragraph(str,boldFont));
+				cell.setBorder(Rectangle.BOTTOM);
+				tLot.addCell(cell);	
+				document.add(tLot);
+				document.add(new Phrase("\n"));
+				
+				PdfPTable headerTable = new PdfPTable(3);
+				
+				String[] header = {"Datum", "Kolicina", "Tip"};
+				
+				for (int i=0; i<header.length; i++){
+					cell = new PdfPCell(new Paragraph(header[i], boldFont));
+					//cell.setPadding(10);
+					headerTable.addCell(cell);
+				}
+
+				document.add(headerTable);
+
+				PdfPTable t = new PdfPTable(3);
+				for (String[] stringovi: lista){
+					for (String ss: stringovi){
+						 cell = new PdfPCell(new Paragraph(ss));
+						cell.setPadding(10);
+						t.addCell(cell);
+					}
+				}
+				document.add(t);
+
+				document.close();
+				writer.close();
+			} catch (DocumentException e) {
+				System.out.println(e.getMessage());
+			} catch (FileNotFoundException e) {
+				System.out.println(e.getMessage());
+			}
+
+			if (Desktop.isDesktopSupported()) {
+				try {
+					File myFile = new File(new_file_path);
+					Desktop.getDesktop().open(myFile);
+				} catch (IOException ex) {
+					// no application registered for PDFs
+				}
+			}
+		}		
+	}
 }

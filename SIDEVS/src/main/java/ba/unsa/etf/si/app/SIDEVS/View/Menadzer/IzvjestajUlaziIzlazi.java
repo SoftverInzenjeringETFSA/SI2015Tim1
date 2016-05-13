@@ -228,9 +228,16 @@ public class IzvjestajUlaziIzlazi {
 		JButton btnGenerisiIzvjestaj = new JButton("Generisi izvjestaj");
 		btnGenerisiIzvjestaj.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {				
+			public void mouseClicked(MouseEvent arg0) {		
+				
+				if (model.getRowCount()==0)  {
+					label_obavijest.setForeground(Color.RED);
+					label_obavijest.setText("Nije moguce generisati PDF jer nema podataka.");
+				}
+				else{
+				
 				iz.createPDF(datumOd.getText(), datumDo.getText());
-				frmMenadzerIzvjestaO.dispose();
+				frmMenadzerIzvjestaO.dispose();}
 			}
 		});
 		btnGenerisiIzvjestaj.setBounds(10, 218, 414, 23);
