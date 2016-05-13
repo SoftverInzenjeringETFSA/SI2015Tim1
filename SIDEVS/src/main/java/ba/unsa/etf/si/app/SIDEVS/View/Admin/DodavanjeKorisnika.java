@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+
+import Exceptions.WrongInputException;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.View.Masks;
 
@@ -198,7 +200,12 @@ public class DodavanjeKorisnika {
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(lblAdresa);
 		
 		
-		datumPocetkaRada = new JFormattedTextField(Masks.vratiMaskuZaDatum());
+		try {
+			datumPocetkaRada = new JFormattedTextField(Masks.vratiMaskuZaDatum());
+		} catch (WrongInputException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		datumPocetkaRada.setBounds(45, 390, 140, 20);

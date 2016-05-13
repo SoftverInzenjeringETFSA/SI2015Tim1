@@ -13,6 +13,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
+import Exceptions.WrongInputException;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 import ba.unsa.etf.si.app.SIDEVS.View.Masks;
@@ -51,8 +52,9 @@ public class IzvjestajZaOdredjeniPeriod {
 
 	/**
 	 * Create the application.
+	 * @throws WrongInputException 
 	 */
-	public IzvjestajZaOdredjeniPeriod() {
+	public IzvjestajZaOdredjeniPeriod() throws WrongInputException {
 		initialize(sesija);
 	}
 	public IzvjestajZaOdredjeniPeriod(Sessions sesija) throws Exception{
@@ -64,8 +66,9 @@ public class IzvjestajZaOdredjeniPeriod {
 	}
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws WrongInputException 
 	 */
-	private void initialize(final Sessions sesija) {
+	private void initialize(final Sessions sesija) throws WrongInputException {
 		frmMenadzerIzvjestajZa = new JFrame();
 		frmMenadzerIzvjestajZa.setTitle("Izvjestaj za odredjeni vremenski period");
 		frmMenadzerIzvjestajZa.setBounds(100, 100, 571, 268);
@@ -103,23 +106,28 @@ public class IzvjestajZaOdredjeniPeriod {
 			public void mouseClicked(MouseEvent arg0) {
 				 clearTable();
 				 
-				if (validirajPolja()){
-					label_obavijest.setText("");
-					IzvjestajZaOdredjeniPeriodVM iz = new IzvjestajZaOdredjeniPeriodVM(sesija);
-					List<Lot> ulazniLotovi = iz.vratiUlazneLotove(datumOd.getText(), datumDo.getText());
-					
-					for (Lot lot: ulazniLotovi){
-						for (Skladiste s: iz.vratiSkladista(lot)){
-							Object[] row = { lot.getLijek().getNaziv(), 
-									lot.getBroj_lota(), 
-									s.getBroj_skladista(), 
-									iz.vratiUkupniUlaz(lot, s),
-									iz.vratiUkupniIzlaz(lot, s, datumOd.getText(), datumDo.getText())
-							};
-							model.addRow(row);
+				try {
+					if (validirajPolja()){
+						label_obavijest.setText("");
+						IzvjestajZaOdredjeniPeriodVM iz = new IzvjestajZaOdredjeniPeriodVM(sesija);
+						List<Lot> ulazniLotovi = iz.vratiUlazneLotove(datumOd.getText(), datumDo.getText());
+						
+						for (Lot lot: ulazniLotovi){
+							for (Skladiste s: iz.vratiSkladista(lot)){
+								Object[] row = { lot.getLijek().getNaziv(), 
+										lot.getBroj_lota(), 
+										s.getBroj_skladista(), 
+										iz.vratiUkupniUlaz(lot, s),
+										iz.vratiUkupniIzlaz(lot, s, datumOd.getText(), datumDo.getText())
+								};
+								model.addRow(row);
+							}
 						}
+						
 					}
-					
+				} catch (WrongInputException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				} 
 				
 			}
@@ -145,7 +153,7 @@ public class IzvjestajZaOdredjeniPeriod {
 		frmMenadzerIzvjestajZa.getContentPane().add(label_obavijest);
 	}
 
-	private boolean validirajPolja() {
+	private boolean validirajPolja() throws WrongInputException {
 		String msg = "";
 		label_obavijest.setForeground(Color.RED);
 		

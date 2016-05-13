@@ -4,16 +4,18 @@ import java.text.ParseException;
 
 import javax.swing.text.MaskFormatter;
 
+import Exceptions.WrongInputException;
+
 public final class Masks {
 	
-	public static MaskFormatter vratiMaskuZaDatum(){
+	public static MaskFormatter vratiMaskuZaDatum() throws WrongInputException{
 		MaskFormatter maska=new MaskFormatter();
 		try {
 			maska = new MaskFormatter("##.##.####");
 			maska.setPlaceholderCharacter('_');
 			
 		} catch (ParseException e) {
-			e.printStackTrace();
+			throw new WrongInputException("Datum nije unešen");
 		}
 		return maska;
 	}
@@ -21,7 +23,7 @@ public final class Masks {
 	public static MaskFormatter vratiMaskuZaLot(){
 		MaskFormatter maska=new MaskFormatter();
 		try {
-			maska = new MaskFormatter("AAAAAA");
+			maska = new MaskFormatter("###############");
 			maska.setPlaceholderCharacter('_');
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

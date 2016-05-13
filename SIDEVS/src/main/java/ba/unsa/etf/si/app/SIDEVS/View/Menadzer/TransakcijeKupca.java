@@ -10,8 +10,11 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+
+import Exceptions.WrongInputException;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -65,8 +68,9 @@ public class TransakcijeKupca {
 
 	/**
 	 * Create the application.
+	 * @throws WrongInputException 
 	 */
-	public TransakcijeKupca() {
+	public TransakcijeKupca() throws WrongInputException {
 		initialize(s);
 	}
 	
@@ -82,8 +86,9 @@ public class TransakcijeKupca {
 	/**
 	 * Initialize the contents of the frame.
 	 * @param s 
+	 * @throws WrongInputException 
 	 */
-	private void initialize(Sessions sesija) {
+	private void initialize(Sessions sesija) throws WrongInputException {
 		
 		Transaction t = s.getSession().beginTransaction();
 		
@@ -148,33 +153,41 @@ public class TransakcijeKupca {
 				
 				clearTable();
 				
-				if (validirajPolja()){
-					String kupac = listaKupaca.getSelectedItem().toString();
-					
-					String datum_od = datumOd.getText();
-					System.out.println(datum_od);
-					String datum_do = datumDo.getText();
-					System.out.println(datum_do);
-					IzvjestajZaKupcaVM iz = new IzvjestajZaKupcaVM(s); 
-					
-					List<Kupac> k = s.getSession().createCriteria(Kupac.class).add(Restrictions.eq("naziv", kupac)).list();
+				try {
+					if (validirajPolja()){
+						String kupac = listaKupaca.getSelectedItem().toString();
 						
-					
-					List<FakturaLot> fakture = iz.vratiFaktureKupca(k.get(0), datum_od, datum_do);
-					
-					List<Lijek> lijekovi = iz.vratiLijekoveKupca(fakture);
-					
-					List<Integer> kolicine = iz.vratiKolicineLijekova(fakture, lijekovi);
-					
-					List<Integer> cijene = iz.vratiCijene(fakture, kolicine);
-					
-					int i=0;
-					while (i < lijekovi.size()){
-						Object[] row = { lijekovi.get(i).getNaziv(), kolicine.get(i), cijene.get(i) };
-						model.addRow(row);
-						i++;
+						String datum_od = datumOd.getText();
+						System.out.println(datum_od);
+						String datum_do = datumDo.getText();
+						System.out.println(datum_do);
+						IzvjestajZaKupcaVM iz = new IzvjestajZaKupcaVM(s); 
+						
+						List<Kupac> k = s.getSession().createCriteria(Kupac.class).add(Restrictions.eq("naziv", kupac)).list();
+							
+						
+						List<FakturaLot> fakture = iz.vratiFaktureKupca(k.get(0), datum_od, datum_do);
+						
+						List<Lijek> lijekovi = iz.vratiLijekoveKupca(fakture);
+						
+						List<Integer> kolicine = iz.vratiKolicineLijekova(fakture, lijekovi);
+						
+						List<Integer> cijene = iz.vratiCijene(fakture, kolicine);
+						
+						int i=0;
+						while (i < lijekovi.size()){
+							Object[] row = { lijekovi.get(i).getNaziv(), kolicine.get(i), cijene.get(i) };
+							model.addRow(row);
+							i++;
+						}
+						
 					}
-					
+				} catch (HibernateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (WrongInputException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				
 				
@@ -198,7 +211,7 @@ public class TransakcijeKupca {
 		frmMenadzerTransakcijeKupca.getContentPane().add(label_obavijest);
 	}
 	
-	private boolean validirajPolja() {
+	private boolean validirajPolja() throws WrongInputException {
 		String msg = "";
 		label_obavijest.setForeground(Color.RED);
 		

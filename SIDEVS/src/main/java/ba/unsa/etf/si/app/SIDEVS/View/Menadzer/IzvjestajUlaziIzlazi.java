@@ -15,8 +15,10 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
+import org.hibernate.HibernateException;
 import org.hibernate.criterion.Restrictions;
 
+import Exceptions.WrongInputException;
 import ba.unsa.etf.si.app.SIDEVS.Model.Kupac;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
@@ -66,8 +68,9 @@ public class IzvjestajUlaziIzlazi {
 
 	/**
 	 * Create the application.
+	 * @throws WrongInputException 
 	 */
-	public IzvjestajUlaziIzlazi() {
+	public IzvjestajUlaziIzlazi() throws WrongInputException {
 		initialize(sesija);
 	}
 	public IzvjestajUlaziIzlazi(Sessions sesija) throws Exception{
@@ -82,8 +85,9 @@ public class IzvjestajUlaziIzlazi {
 	/**
 	 * Initialize the contents of the frame.
 	 * @param sesija 
+	 * @throws WrongInputException 
 	 */
-	private void initialize(final Sessions sesija) {
+	private void initialize(final Sessions sesija) throws WrongInputException {
 		frmMenadzerIzvjestaO = new JFrame();
 		frmMenadzerIzvjestaO.setTitle("Izvjestaj o ulazima i izlazima");
 		frmMenadzerIzvjestaO.setBounds(100, 100, 450, 308);
@@ -144,65 +148,76 @@ public class IzvjestajUlaziIzlazi {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				clearTable();
-				if(validirajPolja()){
-					label_obavijest.setText("");
-					Lijek odabraniLijek = (Lijek) sesija.getSession().createCriteria(Lijek.class).
-							add(Restrictions.eq("naziv",  listaLijekova.getSelectedItem().toString())).list().get(0);
-					
-					Skladiste odabranoSkladiste = sesija.getSession().get(Skladiste.class,
-							Integer.parseInt(listaSkladista.getSelectedItem().toString()));
-					
-					String datum_od = datumOd.getText();
-					String datum_do = datumDo.getText();
-							
-					List<Lot> sviLotovi= iz.vratiSveLotove(odabraniLijek, odabranoSkladiste);	
-					List<Lot> ulazniLotovi = iz.vratiUlazneLotove(sviLotovi, datum_od, datum_do);		
-					List<Lot> izlazniLotovi = iz.vratiIzlazneLotove(sviLotovi, datum_od, datum_do);			
-					List<ObrisanLot> otpisaniLotovi = iz.vratiOtpisaneLotove(sviLotovi, datum_od, datum_do);
-					
-					List<Integer> kolicineUlaznih = iz.vratiKolicine(ulazniLotovi, true);
-					List<Integer> kolicineIzlaznih = iz.vratiKolicine(izlazniLotovi, false);
-					
-					int i=0;
-					while (i < ulazniLotovi.size()){
-						int stanje = iz.vratiTrenutnoStanje(ulazniLotovi.get(i));
-						Object[] row = {iz.vratiDatum(ulazniLotovi.get(i),true).toString(), "ulaz", 
-								ulazniLotovi.get(i).getBroj_lota(), kolicineUlaznih.get(i), stanje};
-						model.addRow(row);
-						String[] all = {iz.vratiDatum(ulazniLotovi.get(i),true).toString(), "ulaz", 
-								ulazniLotovi.get(i).getBroj_lota(), Integer.toString(kolicineUlaznih.get(i)), Integer.toString(stanje)};
-						iz.dodaj(all);
-						i++;
-					}
-					
-					i=0;
-					while (i < izlazniLotovi.size()){
-						int stanje = iz.vratiTrenutnoStanje(izlazniLotovi.get(i));
+				try {
+					if(validirajPolja()){
+						label_obavijest.setText("");
+						Lijek odabraniLijek = (Lijek) sesija.getSession().createCriteria(Lijek.class).
+								add(Restrictions.eq("naziv",  listaLijekova.getSelectedItem().toString())).list().get(0);
 						
-						int j=0;
-						List<String> datumi = iz.vratiDatum(izlazniLotovi.get(i),false);
-						while(j<datumi.size()){
-							Object[] row = {datumi.get(j), "izlaz", izlazniLotovi.get(i).getBroj_lota(), kolicineIzlaznih.get(i), stanje };
+						Skladiste odabranoSkladiste = sesija.getSession().get(Skladiste.class,
+								Integer.parseInt(listaSkladista.getSelectedItem().toString()));
+						
+						String datum_od = datumOd.getText();
+						String datum_do = datumDo.getText();
+								
+						List<Lot> sviLotovi= iz.vratiSveLotove(odabraniLijek, odabranoSkladiste);	
+						List<Lot> ulazniLotovi = iz.vratiUlazneLotove(sviLotovi, datum_od, datum_do);		
+						List<Lot> izlazniLotovi = iz.vratiIzlazneLotove(sviLotovi, datum_od, datum_do);			
+						List<ObrisanLot> otpisaniLotovi = iz.vratiOtpisaneLotove(sviLotovi, datum_od, datum_do);
+						
+						List<Integer> kolicineUlaznih = iz.vratiKolicine(ulazniLotovi, true);
+						List<Integer> kolicineIzlaznih = iz.vratiKolicine(izlazniLotovi, false);
+						
+						int i=0;
+						while (i < ulazniLotovi.size()){
+							int stanje = iz.vratiTrenutnoStanje(ulazniLotovi.get(i));
+							Object[] row = {iz.vratiDatum(ulazniLotovi.get(i),true).toString(), "ulaz", 
+									ulazniLotovi.get(i).getBroj_lota(), kolicineUlaznih.get(i), stanje};
 							model.addRow(row);
-							String[] all = {datumi.get(j), "izlaz",
-									izlazniLotovi.get(i).getBroj_lota(), Integer.toString(kolicineIzlaznih.get(i)), Integer.toString(stanje)};
+							String[] all = {iz.vratiDatum(ulazniLotovi.get(i),true).toString(), "ulaz", 
+									ulazniLotovi.get(i).getBroj_lota(), Integer.toString(kolicineUlaznih.get(i)), Integer.toString(stanje)};
 							iz.dodaj(all);
-							j++;
+							i++;
 						}
-						i++;
-					}
+						
+						i=0;
+						while (i < izlazniLotovi.size()){
+							int stanje = iz.vratiTrenutnoStanje(izlazniLotovi.get(i));
+							
+							int j=0;
+							List<String> datumi = iz.vratiDatum(izlazniLotovi.get(i),false);
+							while(j<datumi.size()){
+								Object[] row = {datumi.get(j), "izlaz", izlazniLotovi.get(i).getBroj_lota(), kolicineIzlaznih.get(i), stanje };
+								model.addRow(row);
+								String[] all = {datumi.get(j), "izlaz",
+										izlazniLotovi.get(i).getBroj_lota(), Integer.toString(kolicineIzlaznih.get(i)), Integer.toString(stanje)};
+								iz.dodaj(all);
+								j++;
+							}
+							i++;
+						}
 
-					i=0;
-					while (i < otpisaniLotovi.size()){
-						int suma = iz.vratiKolicinuOtpisanog(otpisaniLotovi.get(i));
-						Object[] row = { otpisaniLotovi.get(i).getDatum_otpisa(), "otpis", otpisaniLotovi.get(i).getBroj_lota(), 
-								suma , 0 };
-						model.addRow(row);
-						String[] all = {Conversions.dateToString(otpisaniLotovi.get(i).getDatum_otpisa()), "otpis", 
-								otpisaniLotovi.get(i).getBroj_lota(), Integer.toString(suma), "0"};
-						iz.dodaj(all);
-						i++;
+						i=0;
+						while (i < otpisaniLotovi.size()){
+							int suma = iz.vratiKolicinuOtpisanog(otpisaniLotovi.get(i));
+							Object[] row = { otpisaniLotovi.get(i).getDatum_otpisa(), "otpis", otpisaniLotovi.get(i).getBroj_lota(), 
+									suma , 0 };
+							model.addRow(row);
+							String[] all = {Conversions.dateToString(otpisaniLotovi.get(i).getDatum_otpisa()), "otpis", 
+									otpisaniLotovi.get(i).getBroj_lota(), Integer.toString(suma), "0"};
+							iz.dodaj(all);
+							i++;
+						}
 					}
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (HibernateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (WrongInputException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				
 				
@@ -226,7 +241,7 @@ public class IzvjestajUlaziIzlazi {
 		
 	}
 	
-	private boolean validirajPolja() {
+	private boolean validirajPolja() throws WrongInputException {
 		String msg = "";
 		label_obavijest.setForeground(Color.RED);
 		
