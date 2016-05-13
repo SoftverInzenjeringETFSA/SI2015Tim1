@@ -1,5 +1,7 @@
 package ba.unsa.etf.si.app.SIDEVS.Model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "faktura_lot")
-public class FakturaLot {
+public class FakturaLot implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
     @GeneratedValue
 	private long id;
