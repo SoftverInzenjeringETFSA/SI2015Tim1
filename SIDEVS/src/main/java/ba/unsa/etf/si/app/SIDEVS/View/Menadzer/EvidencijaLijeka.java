@@ -19,7 +19,6 @@ public class EvidencijaLijeka {
 	private JFrame frmEvidencijaLijeka;
 	private JTextField textFieldNaziv;
 	private JTextField textFieldProizvodjac;
-	private JTextField textFieldID;
 	private JLabel labelObavijest;
 	private Sessions s;
 
@@ -68,31 +67,22 @@ public class EvidencijaLijeka {
 		frmEvidencijaLijeka.setLocationRelativeTo(null);
 
 		JLabel lblNazivProizvoda = new JLabel("Naziv proizvoda:");
-		lblNazivProizvoda.setBounds(10, 11, 106, 14);
+		lblNazivProizvoda.setBounds(31, 36, 94, 14);
 		frmEvidencijaLijeka.getContentPane().add(lblNazivProizvoda);
 
 		JLabel lblProizvoa = new JLabel("Proizvođač:");
-		lblProizvoa.setBounds(10, 36, 106, 14);
+		lblProizvoa.setBounds(31, 67, 82, 14);
 		frmEvidencijaLijeka.getContentPane().add(lblProizvoa);
 
-		JLabel lblId = new JLabel("ID:");
-		lblId.setBounds(10, 61, 106, 14);
-		frmEvidencijaLijeka.getContentPane().add(lblId);
-
 		textFieldNaziv = new JTextField();
-		textFieldNaziv.setBounds(126, 8, 181, 20);
+		textFieldNaziv.setBounds(126, 33, 181, 20);
 		frmEvidencijaLijeka.getContentPane().add(textFieldNaziv);
 		textFieldNaziv.setColumns(10);
 
 		textFieldProizvodjac = new JTextField();
-		textFieldProizvodjac.setBounds(126, 33, 181, 20);
+		textFieldProizvodjac.setBounds(126, 64, 181, 20);
 		frmEvidencijaLijeka.getContentPane().add(textFieldProizvodjac);
 		textFieldProizvodjac.setColumns(10);
-
-		textFieldID = new JTextField();
-		textFieldID.setBounds(126, 58, 181, 20);
-		frmEvidencijaLijeka.getContentPane().add(textFieldID);
-		textFieldID.setColumns(10);
 
 		labelObavijest = new JLabel("");
 		labelObavijest.setBounds(10, 141, 365, 14);
@@ -105,8 +95,7 @@ public class EvidencijaLijeka {
 				try {
 					if (validirajPolja()) {
 						LijekVM l = new LijekVM(s);
-						l.dodajLijek(Long.parseLong(textFieldID.getText()), textFieldNaziv.getText(),textFieldProizvodjac.getText());
-						textFieldID.setText("");
+						l.dodajLijek((long) 1, textFieldNaziv.getText(),textFieldProizvodjac.getText());
 						textFieldNaziv.setText("");
 						textFieldProizvodjac.setText("");
 						labelObavijest.setForeground(Color.green);
@@ -118,7 +107,7 @@ public class EvidencijaLijeka {
 				}
 			}
 		});
-		btnEvidentiraj.setBounds(126, 89, 181, 23);
+		btnEvidentiraj.setBounds(126, 107, 181, 23);
 		frmEvidencijaLijeka.getContentPane().add(btnEvidentiraj);
 	}
 
@@ -126,8 +115,7 @@ public class EvidencijaLijeka {
 		String msg = "";
 		labelObavijest.setForeground(Color.RED);
 		if(textFieldNaziv.getText().isEmpty()) msg = "Popunite naziv proizvoda";
-		else if(textFieldProizvodjac.getText().isEmpty()) msg = "Popunite naziv proizvođača proizvoda";
-		else if(textFieldID.getText().isEmpty()) msg ="Popunite ID proizvoda";
+		else if(textFieldProizvodjac.getText().isEmpty()) msg = "Popunite naziv proizvođača proizvoda";		
 		if(msg != ""){
 			labelObavijest.setText(msg);
 			return false;

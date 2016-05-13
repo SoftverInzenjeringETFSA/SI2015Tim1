@@ -22,17 +22,7 @@ public class PocetniEkran {
 
 	private JFrame frmMenadzerPocetniEkran;
 	private Sessions s;
-	private EvidencijaLijeka el;
-	private BrisanjeKupca bk;
-	private PretragaLijeka pl;
-	private OtpisLijeka ol;
-	private DodajKupca dk;
-	private IzvjestajNaOsnovuLota inol;
-	private TransakcijeKupca tk;
-	private IzvjestajUlaziIzlazi iui;
-	private IzvjestajZaOdredjeniPeriod iop;
 
-	
 	/**
 	 * Launch the application.
 	 */
@@ -107,7 +97,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(tk == null) tk = new TransakcijeKupca(s);
+					TransakcijeKupca tk = new TransakcijeKupca(s);
 					tk.prikazi();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -122,7 +112,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(el == null) el = new EvidencijaLijeka(s);
+					EvidencijaLijeka el = new EvidencijaLijeka(s);
 					el.prikazi();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -137,7 +127,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(pl == null) pl = new PretragaLijeka(s);
+					PretragaLijeka pl = new PretragaLijeka(s);
 					pl.frmPretragaLijeka.setVisible(true);
 				} catch (Exception c) {
 					c.printStackTrace();
@@ -167,7 +157,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(ol == null) ol = new OtpisLijeka(s);
+					OtpisLijeka ol = new OtpisLijeka(s);
 					ol.frmOtpisLijeka.setVisible(true);
 				} catch (Exception c) {
 					c.printStackTrace();
@@ -181,7 +171,7 @@ public class PocetniEkran {
 		btnDesavanjaZaOdredjeni.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(iop == null) iop = new IzvjestajZaOdredjeniPeriod(s);
+					IzvjestajZaOdredjeniPeriod iop = new IzvjestajZaOdredjeniPeriod(s);
 					iop.prikazi();
 				} catch (Exception c) {
 					c.printStackTrace();
@@ -196,7 +186,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					if(iui == null) iui = new IzvjestajUlaziIzlazi(s);
+					IzvjestajUlaziIzlazi iui = new IzvjestajUlaziIzlazi(s);
 					iui.prikazi();
 				} catch (Exception c) {
 					c.printStackTrace();
@@ -211,7 +201,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					if(inol == null) inol = new IzvjestajNaOsnovuLota(s);
+					IzvjestajNaOsnovuLota inol = new IzvjestajNaOsnovuLota(s);
 					inol.frmMenadzerIzvjestajNa.setVisible(true);
 				} catch (Exception c) {
 					c.printStackTrace();
@@ -226,7 +216,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(bk == null) bk = new BrisanjeKupca(s);
+					BrisanjeKupca bk = new BrisanjeKupca(s);
 					bk.frmBrisanjeKupca.setVisible(true);
 				} catch (Exception c) {
 					c.printStackTrace();
@@ -263,7 +253,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					if (dk==null) dk = new DodajKupca(s);				
+					DodajKupca dk = new DodajKupca(s);				
 					dk.frmDodajKupca.setVisible(true);
 				} catch (Exception c) {
 					c.printStackTrace();

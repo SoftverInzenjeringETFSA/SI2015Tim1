@@ -58,12 +58,13 @@ public class IzvjestajNaOsnovuLotaVM {
 		//izabrani lot
 		Criteria criteria = ses.getSession().createCriteria(ObrisanLot.class).add(Restrictions.eq("broj_lota", broj_lota));
 		List<ObrisanLot> listaObrisanihLotova = criteria.list();
+		if (listaObrisanihLotova.size()!=0) {
 		Date datum_otpisa = listaObrisanihLotova.get(0).getDatum_otpisa();
 		
 		//konverzija date to string
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 		String datum_otpisa_string=formatter.format(datum_otpisa);
-		return datum_otpisa_string;
+		return datum_otpisa_string;}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -77,6 +78,7 @@ public class IzvjestajNaOsnovuLotaVM {
 		{
 		Criteria criteria = ses.getSession().createCriteria(ObrisanLot.class).add(Restrictions.eq("broj_lota", broj_lota));
 		List<ObrisanLot> listaObrisanihLotova = criteria.list();
+		if (listaObrisanihLotova.size()==0) return "0";
 		int kolicina_otpisa = listaObrisanihLotova.get(0).getKolicina_tableta();
 		return String.valueOf(kolicina_otpisa);
 		}

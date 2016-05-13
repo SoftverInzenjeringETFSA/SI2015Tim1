@@ -93,9 +93,6 @@ public class TrenutnoStanjeVM {
 	public void createPDF(){
 		
 		String datum = Conversions.dateToString(new Date());
-		System.out.println(new Date());
-		System.out.println(datum);
-		
 		
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -158,10 +155,12 @@ public class TrenutnoStanjeVM {
 								if (lot.getLijek() == lijek && p.getSkladiste()==s){
 									imaLi=true;
 									
+									int kolicina = vratiTrenutnoStanje(lot);
+									
 									String[] podaciLota = {lot.getBroj_lota(),
 															Double.toString(lot.getUlazna_cijena()),
-															Integer.toString(p.getKolicina()),
-															Double.toString(lot.getUlazna_cijena() * p.getKolicina())
+															Integer.toString(kolicina),
+															Double.toString(lot.getUlazna_cijena() * kolicina)
 															};
 									for(int i=0; i<4; i++){
 									cell = new PdfPCell(new Paragraph( podaciLota[i] ));
@@ -173,7 +172,7 @@ public class TrenutnoStanjeVM {
 									tLotovi.addCell(cell);
 									}
 									
-									total += lot.getUlazna_cijena() * p.getKolicina();
+									total += lot.getUlazna_cijena() * kolicina;
 								}
 							}
 						}

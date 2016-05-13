@@ -1,8 +1,14 @@
 package ba.unsa.etf.si.app.SIDEVS.Validation;
 
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.hibernate.criterion.Restrictions;
+
+import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
+import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 
 public final class Validator {
 	private static Pattern VALID_TEXT = Pattern.compile("^[\\p{L}0-9]*$");
@@ -41,6 +47,19 @@ public final class Validator {
 		if (!(Character.isDigit(c)) || c==KeyEvent.VK_BACK_SPACE || c==KeyEvent.VK_DELETE) 
 			return true;
 		return false;
+	}
+	
+	public static String validirajLot(Sessions sesija, String brojLota){
+		String msg="";
+		if(!validirajString(brojLota)) msg = "Popunite broj lota(samo slova i brojevi)";
+		else if(brojLota.length() != 6) msg = "Broj lota mora biti dužine 6";
+		else {
+		List<Lot> lotovi = sesija.getSession().createCriteria(Lot.class).
+				add(Restrictions.eq("broj_lota", brojLota)).add(Restrictions.isNull("datum_otpisa")).list();
+
+		if (lotovi.size()==0) msg = "Uneseni broj lota ne postoji u sistemu";
+		}
+		return msg;
 	}
 
 }

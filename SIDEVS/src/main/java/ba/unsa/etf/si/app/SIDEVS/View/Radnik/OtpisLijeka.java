@@ -11,13 +11,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Validation.*;
-
-
+import ba.unsa.etf.si.app.SIDEVS.ViewModel.OtpisLijekovaVM;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 
 import javax.swing.JComboBox;
@@ -26,9 +27,11 @@ import javax.swing.JSplitPane;
 import javax.swing.JButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 public class OtpisLijeka {
 
+	private Sessions sesija;
 	public JFrame frmOtpisLijeka;
 	private JTextField kolicinaTextField;
 	private Sessions _sesija;
@@ -54,12 +57,12 @@ public class OtpisLijeka {
 	 * Create the application.
 	 */
 	public OtpisLijeka() {
-		initialize(_sesija);
+		initialize(sesija);
 	} 
 	
 	public OtpisLijeka(Sessions s) throws Exception {
-		_sesija = s;
-		initialize(_sesija);
+		sesija = s;
+		initialize(sesija);
 		frmOtpisLijeka.setVisible(true);
 		if(!s.daLiPostoji()){
 			throw new Exception("Sesija nije kreirana!");
@@ -69,8 +72,7 @@ public class OtpisLijeka {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(Sessions s) {
-		Transaction t = s.getSession().beginTransaction();
+	private void initialize(final Sessions sesija) {
 		
 		frmOtpisLijeka = new JFrame();
 		frmOtpisLijeka.setTitle("Otpis lijeka");
@@ -96,7 +98,7 @@ public class OtpisLijeka {
 		listaSkladista.setBounds(101, 8, 147, 20);
 		frmOtpisLijeka.getContentPane().add(listaSkladista);
 		
-		final AutoCompleteJComboBox  listaLijekova = new AutoCompleteJComboBox(s, Lijek.class, "naziv");
+		final AutoCompleteJComboBox  listaLijekova = new AutoCompleteJComboBox(sesija, Lijek.class, "naziv");
 		listaLijekova.setBounds(101, 33, 147, 20);
 		frmOtpisLijeka.getContentPane().add(listaLijekova);
 		
@@ -135,8 +137,9 @@ public class OtpisLijeka {
                    
                    double d = Double.parseDouble(kolicinaTextField.getText());
                    Integer kolicina = (int)d;
-									   
-                   boolean  otpisano = ba.unsa.etf.si.app.SIDEVS.ViewModel.OtpisLijekovaVM.otpisLijeka(_sesija, lijek, lot, skladiste,kolicina);
+					
+                   OtpisLijekovaVM vm = new OtpisLijekovaVM(sesija);
+                   boolean  otpisano = vm.otpisLijeka(lijek, lot, skladiste);
                    if(!otpisano) throw new Exception();
                    
                	noticeLabel.setForeground(Color.GREEN);
@@ -155,17 +158,23 @@ public class OtpisLijeka {
 		JButton btnOdaberi = new JButton("Odaberi");
 		btnOdaberi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try{
-					
-					listaLotova.removeAllItems();
-					
+				try{					
                    String lijek = listaLijekova.getSelectedItem().toString();
                    String skladiste = listaSkladista.getSelectedItem().toString();
-                    		   
-                  Object[]  nizLotova = ba.unsa.etf.si.app.SIDEVS.ViewModel.OtpisLijekovaVM.vracaLotove(_sesija, lijek,skladiste);
                    
-                   for(int i=0;i<nizLotova.length;i++){
-                	   listaLotova.addItem(nizLotova[i]);
+                   Lijek odabraniLijek = (Lijek) sesija.getSession().createCriteria(Lijek.class).
+   						add(Restrictions.eq("naziv",  listaLijekova.getSelectedItem().toString())).list().get(0);
+   				
+   					Skladiste odabranoSkladiste = sesija.getSession().get(Skladiste.class,
+   						Integer.parseInt(listaSkladista.getSelectedItem().toString()));
+                    		   
+                   OtpisLijekovaVM vm = new OtpisLijekovaVM(sesija);
+                   List<String> nizLotova = vm.vracaLotove(odabraniLijek, odabranoSkladiste);
+                   
+                   Object[] l = nizLotova.toArray();
+                   
+                   for(int i=0;i<l.length;i++){
+                	   listaLotova.addItem(l[i]);
                    }
 				}
 				catch(Exception ex){
