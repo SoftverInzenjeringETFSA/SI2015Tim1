@@ -1,5 +1,6 @@
 package ba.unsa.etf.si.app.SIDEVS.Model;
 
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -24,7 +25,11 @@ import javax.persistence.Id;
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = "email")
 })
-public abstract class Korisnik {
+public abstract class Korisnik implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
