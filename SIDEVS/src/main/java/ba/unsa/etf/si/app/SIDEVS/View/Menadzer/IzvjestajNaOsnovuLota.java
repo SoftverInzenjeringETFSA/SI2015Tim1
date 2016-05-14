@@ -116,7 +116,10 @@ public class IzvjestajNaOsnovuLota {
 					clearTable();
 					if (validirajPolja()){
 						 
-						   List<Lot> sviLotovi = GlavneMetode.vratiSveLotove(_sesija);
+						   //novi kod:
+						
+						
+						List<Lot> sviLotovi = GlavneMetode.vratiSveLotove(_sesija);
 						   List<Lot> otpisaniLotovi = GlavneMetode.vratiOtpisaneLotove(_sesija);
 						  
 						   Lot lotic = (Lot) _sesija.getSession().createCriteria(Lot.class).add(Restrictions.like("broj_lota", listaLotova.getSelectedItem().toString())).list().get(0);

@@ -1,3 +1,6 @@
+//klasa za sve metode koje koriste kontroleri
+
+
 package ba.unsa.etf.si.app.SIDEVS.ViewModel;
 
 

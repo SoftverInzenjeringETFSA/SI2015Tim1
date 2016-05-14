@@ -61,6 +61,7 @@ public class IzvjestajZaOdredjeniPeriodVM {
 
 		
 		public void createPDF(String datumOd, String datumDo){
+			//pdf
 			
 			JFileChooser chooser = new JFileChooser();
 			chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -136,5 +137,6 @@ public class IzvjestajZaOdredjeniPeriodVM {
 					}
 				}
 			}		
+		
 		}
 }

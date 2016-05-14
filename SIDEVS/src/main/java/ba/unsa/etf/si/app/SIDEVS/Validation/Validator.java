@@ -125,8 +125,11 @@ public final class Validator {
 		String msg="";
 		if(kupac.length() == 0) msg = "Morate unijeti lijek";
 		else {
-		List<Lot> lijekovi = s.getSession().createCriteria(Kupac.class).
-				add(Restrictions.eq("naziv", kupac)).list();
+			
+			
+			List<Lot> lijekovi = s.getSession().createCriteria(Kupac.class).
+					add(Restrictions.eq("naziv", kupac)).list();
+		
 
 		if (lijekovi.size()==0) msg = "Uneseni naziv kupca ne postoji u sistemu";
 		}

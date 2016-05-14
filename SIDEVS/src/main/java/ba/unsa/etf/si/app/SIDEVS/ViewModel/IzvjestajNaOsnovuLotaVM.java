@@ -81,6 +81,7 @@ public class IzvjestajNaOsnovuLotaVM {
 	
 	
 	public void createPDF(String lot){
+		//pdf
 		String datum = Conversions.dateToString(new Date());
 		JFileChooser chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

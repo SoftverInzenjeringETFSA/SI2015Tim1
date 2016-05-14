@@ -118,6 +118,9 @@ public class IzvjestajZaOdredjeniPeriod {
 				 
 				try {
 					if (validirajPolja()){
+						//novi izvjestaj:
+						
+						
 						label_obavijest.setText("");
 						iz = new IzvjestajZaOdredjeniPeriodVM(sesija);
 						
