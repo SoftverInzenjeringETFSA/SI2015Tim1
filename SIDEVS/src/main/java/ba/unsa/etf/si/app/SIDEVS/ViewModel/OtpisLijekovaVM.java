@@ -22,13 +22,13 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 
 public class OtpisLijekovaVM {
 	
-	private Sessions sesija;
+	private static Sessions sesija;
 	
 	public OtpisLijekovaVM(Sessions sesija){
 		this.sesija=sesija;
 	}
 	
-	public boolean otpisLijeka(String naziv,String broj_lota,String broj_skladista) throws NoSuchAlgorithmException,InvalidKeySpecException {
+	public static boolean otpisLijeka(String naziv,String broj_lota,String broj_skladista) throws NoSuchAlgorithmException,InvalidKeySpecException {
 		try{
 			Transaction t = sesija.getSession().beginTransaction();
 			
@@ -76,7 +76,7 @@ public class OtpisLijekovaVM {
 	}
 
 
-public List<String> vracaLotove(Lijek lijek, Skladiste skladiste){
+public static List<String> vracaLotove(Lijek lijek, Skladiste skladiste){
 
 	List<Lot> listaLotova = sesija.getSession().createCriteria(Lot.class).list();
 	
