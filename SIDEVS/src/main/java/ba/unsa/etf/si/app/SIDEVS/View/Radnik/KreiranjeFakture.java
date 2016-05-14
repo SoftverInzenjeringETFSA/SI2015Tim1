@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -36,6 +37,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class KreiranjeFakture {
+	final static Logger logger = Logger.getLogger(KreiranjeFakture.class);
 
 	private JFrame frmKreiranjeFakture;
 	private JTextField textField_kolicina;
@@ -103,7 +105,7 @@ public class KreiranjeFakture {
 					DodajKupca dk = new DodajKupca(s);
 					dk.prikazi();	
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
+					logger.error(e1);
 					e1.printStackTrace();
 				}
 			}
@@ -242,6 +244,7 @@ public class KreiranjeFakture {
 						label_obavijest.setText(msg);
 					}
 				} catch (Exception ex) {
+					logger.error(ex);
 					label_obavijest.setForeground(Color.RED);
 					label_obavijest.setText(ex.getMessage());
 				}

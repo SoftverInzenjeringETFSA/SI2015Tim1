@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
@@ -39,6 +40,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 public class OtpisLijeka {
+	final static Logger logger = Logger.getLogger(OtpisLijeka.class);
 
 	private Sessions sesija;
 	public JFrame frmOtpisLijeka;
@@ -62,6 +64,7 @@ public class OtpisLijeka {
 					OtpisLijeka window = new OtpisLijeka();
 					window.frmOtpisLijeka.setVisible(true);
 				} catch (Exception e) {
+					logger.error(e);
 					e.printStackTrace();
 				}
 			}
@@ -80,6 +83,7 @@ public class OtpisLijeka {
 		initialize(sesija);
 		frmOtpisLijeka.setVisible(true);
 		if(!s.daLiPostoji()){
+			
 			throw new Exception("Sesija nije kreirana!");
 		}	
 	}
@@ -150,6 +154,7 @@ public class OtpisLijeka {
                    }
 				}
 				catch(Exception ex){
+					logger.error(ex);
 					noticeLabel.setForeground(Color.RED);
 					noticeLabel.setText("Greška, lijek ne postoji");
 				}
@@ -207,6 +212,7 @@ public class OtpisLijeka {
 					
 				}
 				catch(Exception ex){
+					logger.error(ex);
 					System.out.println(ex.getMessage());
 					noticeLabel.setForeground(Color.RED);
 					noticeLabel.setText(ex.getMessage());

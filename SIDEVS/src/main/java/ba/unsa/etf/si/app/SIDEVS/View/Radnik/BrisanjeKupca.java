@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Transaction;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
@@ -16,12 +17,14 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Kupac;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
+import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
 public class BrisanjeKupca {
+	final static Logger logger = Logger.getLogger(BrisanjeKupca.class);
     
 	private Sessions _sesija;
 	public JFrame frmBrisanjeKupca;
@@ -37,6 +40,7 @@ public class BrisanjeKupca {
 					BrisanjeKupca window = new BrisanjeKupca();
 					window.frmBrisanjeKupca.setVisible(true);
 				} catch (Exception e) {
+					logger.error(e);
 					e.printStackTrace();
 				}
 			}
@@ -98,7 +102,7 @@ public class BrisanjeKupca {
 					}
 				}
 				catch(Exception ex){
-					
+					logger.error(ex);
 					noticeLabel.setForeground(Color.RED);
 					noticeLabel.setText(ex.getMessage());
 					

@@ -4,8 +4,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import org.apache.log4j.Logger;
+
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.View.Login;
+import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
 import ba.unsa.etf.si.app.SIDEVS.View.Radnik.EvidencijaLotova;
 import ba.unsa.etf.si.app.SIDEVS.View.Radnik.DodajKupca;
 
@@ -15,15 +18,9 @@ import java.awt.event.MouseEvent;
 
 public class PocetniEkran {
 
+	final static Logger logger = Logger.getLogger(PocetniEkran.class);
 	private JFrame frmPoetniEkran;
 	private Sessions s;
-	private EvidencijaLotova el;
-	private BrisanjeKupca bk;
-	private PretragaLijeka pl;
-    private OtpisLijeka ol;
-    private DodajKupca dk;
-    private DodajLotUSkladiste dlus;
-
 
 	/**
 	 * Create the application.
@@ -59,9 +56,10 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(el == null) el = new EvidencijaLotova(s);
+				    EvidencijaLotova el = new EvidencijaLotova(s);
 					el.prikazi();
 				} catch (Exception e) {
+					logger.error(e);
 					e.printStackTrace();
 				}
 			}
@@ -74,9 +72,10 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(pl == null) pl = new PretragaLijeka(s);
+					PretragaLijeka pl = new PretragaLijeka(s);
 					pl.frmPretragaLijeka.setVisible(true);
 				} catch (Exception c) {
+					logger.error(c);
 					c.printStackTrace();
 				}
 			}
@@ -92,6 +91,7 @@ public class PocetniEkran {
 					KreiranjeFakture kf = new KreiranjeFakture(s);
 					kf.prikazi();
 				} catch (Exception e) {
+					logger.error(e);
 					e.printStackTrace();
 				}
 			}
@@ -104,8 +104,9 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					ol = new OtpisLijeka(s);
+					OtpisLijeka ol = new OtpisLijeka(s);
 				} catch (Exception c) {
+					logger.error(c);
 					c.printStackTrace();
 				}
 			}
@@ -118,10 +119,11 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try{
-				if(dlus == null) dlus = new DodajLotUSkladiste(s);
+				DodajLotUSkladiste dlus = new DodajLotUSkladiste(s);
 				dlus.prikazi();
 				}
 				catch(Exception ex){
+					logger.error(ex);
 					ex.printStackTrace();
 				}
 			}
@@ -140,9 +142,10 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(bk == null) bk = new BrisanjeKupca(s);
+					BrisanjeKupca bk = new BrisanjeKupca(s);
 					bk.frmBrisanjeKupca.setVisible(true);
 				} catch (Exception c) {
+					logger.error(c);
 					c.printStackTrace();
 				}
 			}
@@ -155,9 +158,10 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					if (dk==null) dk = new DodajKupca(s);				
+					DodajKupca dk = new DodajKupca(s);				
 					dk.frmDodajKupca.setVisible(true);
 				} catch (Exception c) {
+					logger.error(e);
 					c.printStackTrace();
 				}
 			}
@@ -175,6 +179,7 @@ public class PocetniEkran {
 					frmPoetniEkran.dispose();
 					new Login().prikazi();
 				} catch (Exception e) {
+					logger.error(e);
 					//s.getTrasaction().rollback();
 					e.printStackTrace();
 				}

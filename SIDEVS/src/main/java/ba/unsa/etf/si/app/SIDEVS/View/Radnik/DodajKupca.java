@@ -3,6 +3,9 @@ package ba.unsa.etf.si.app.SIDEVS.View.Radnik;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import org.apache.log4j.Logger;
+
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -12,6 +15,7 @@ import ba.unsa.etf.si.app.SIDEVS.ViewModel.*;
 import java.awt.Color;
 
 public class DodajKupca {
+	final static Logger logger = Logger.getLogger(DodajKupca.class);
 
 	public JFrame frmDodajKupca;
 	private JTextField ime_txt;
@@ -84,6 +88,7 @@ public class DodajKupca {
 					}
 				}
 				catch(Exception e){
+					logger.error(e);
 					obavijest_lbl.setForeground(Color.red);
 					obavijest_lbl.setText(e.getMessage());
 				}
