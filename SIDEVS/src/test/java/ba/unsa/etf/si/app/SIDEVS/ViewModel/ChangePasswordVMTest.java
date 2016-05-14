@@ -1,13 +1,11 @@
 package ba.unsa.etf.si.app.SIDEVS.ViewModel;
 
+
 import static org.junit.Assert.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import ba.unsa.etf.si.app.SIDEVS.Model.*;
 import org.junit.Test;
 
 public class ChangePasswordVMTest {
