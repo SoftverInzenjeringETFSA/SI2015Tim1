@@ -20,7 +20,7 @@ public class PocetniEkran {
 
 	final static Logger logger = Logger.getLogger(PocetniEkran.class);
 	private JFrame frmPoetniEkran;
-<<<<<<< HEAD
+
 	private Sessions s;
 	private EvidencijaLotova el;
 	private BrisanjeKupca bk;
@@ -29,10 +29,6 @@ public class PocetniEkran {
     private DodajKupca dk;
     private DodajLotUSkladiste dlus;
     private KreiranjeFakture kf;
-
-=======
-	private Sessions s;
->>>>>>> branch 'master' of https://github.com/SoftverInzenjeringETFSA/SI2015Tim1.git
 
 	/**
 	 * Create the application.
@@ -113,11 +109,8 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-<<<<<<< HEAD
 					if(ol==null) ol = new OtpisLijeka(s);
-=======
 					OtpisLijeka ol = new OtpisLijeka(s);
->>>>>>> branch 'master' of https://github.com/SoftverInzenjeringETFSA/SI2015Tim1.git
 				} catch (Exception c) {
 					logger.error(c);
 				}
