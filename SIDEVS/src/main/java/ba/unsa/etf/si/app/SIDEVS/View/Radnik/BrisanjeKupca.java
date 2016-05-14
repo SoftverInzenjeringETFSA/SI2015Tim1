@@ -41,7 +41,6 @@ public class BrisanjeKupca {
 					window.frmBrisanjeKupca.setVisible(true);
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});

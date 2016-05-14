@@ -42,7 +42,6 @@ public class ChangePassword {
 					window.frmChangePassword.setVisible(true);
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});
@@ -105,7 +104,6 @@ public class ChangePassword {
 				} catch (Exception e){
 					JOptionPane.showMessageDialog(null, "Došlo je do greške", "InfoBox: " + "Error", JOptionPane.INFORMATION_MESSAGE);		
 					//_sesija.getTrasaction().rollback();
-					e.printStackTrace();
 					logger.error(e);
 				}
 				resetContent();

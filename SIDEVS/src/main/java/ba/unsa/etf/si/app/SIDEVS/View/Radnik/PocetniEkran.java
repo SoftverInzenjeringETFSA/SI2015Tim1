@@ -60,7 +60,6 @@ public class PocetniEkran {
 					el.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});
@@ -76,7 +75,6 @@ public class PocetniEkran {
 					pl.frmPretragaLijeka.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
-					c.printStackTrace();
 				}
 			}
 		});
@@ -92,7 +90,6 @@ public class PocetniEkran {
 					kf.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});
@@ -107,7 +104,6 @@ public class PocetniEkran {
 					OtpisLijeka ol = new OtpisLijeka(s);
 				} catch (Exception c) {
 					logger.error(c);
-					c.printStackTrace();
 				}
 			}
 		});
@@ -124,7 +120,6 @@ public class PocetniEkran {
 				}
 				catch(Exception ex){
 					logger.error(ex);
-					ex.printStackTrace();
 				}
 			}
 		});
@@ -146,7 +141,6 @@ public class PocetniEkran {
 					bk.frmBrisanjeKupca.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
-					c.printStackTrace();
 				}
 			}
 		});
@@ -162,7 +156,6 @@ public class PocetniEkran {
 					dk.frmDodajKupca.setVisible(true);
 				} catch (Exception c) {
 					logger.error(e);
-					c.printStackTrace();
 				}
 			}
 		});
@@ -181,7 +174,6 @@ public class PocetniEkran {
 				} catch (Exception e) {
 					logger.error(e);
 					//s.getTrasaction().rollback();
-					e.printStackTrace();
 				}
 			}
 		});

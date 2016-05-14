@@ -65,7 +65,6 @@ public class OtpisLijeka {
 					window.frmOtpisLijeka.setVisible(true);
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});

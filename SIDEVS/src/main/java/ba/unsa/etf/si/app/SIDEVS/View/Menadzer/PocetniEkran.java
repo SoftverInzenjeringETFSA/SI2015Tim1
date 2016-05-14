@@ -38,7 +38,6 @@ public class PocetniEkran {
 					window.frmMenadzerPocetniEkran.setVisible(true);
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});
@@ -106,7 +105,6 @@ public class PocetniEkran {
 					tk.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});
@@ -122,7 +120,6 @@ public class PocetniEkran {
 					el.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});
@@ -142,7 +139,6 @@ public class PocetniEkran {
 					pl.frmPretragaLijeka.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
-					c.printStackTrace();
 				}
 			}
 		});
@@ -158,7 +154,6 @@ public class PocetniEkran {
 					kf.prikazi();
 				} catch (Exception ex) {
 					logger.error(ex);
-					ex.printStackTrace();
 				}
 			}
 		});
@@ -174,7 +169,6 @@ public class PocetniEkran {
 					ol.frmOtpisLijeka.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
-					c.printStackTrace();
 				}
 			}
 		});
@@ -189,7 +183,6 @@ public class PocetniEkran {
 					iop.prikazi();
 				} catch (Exception c) {
 					logger.error(c);
-					c.printStackTrace();
 				}
 			}
 		});
@@ -205,7 +198,6 @@ public class PocetniEkran {
 					iui.prikazi();
 				} catch (Exception c) {
 					logger.error(c);
-					c.printStackTrace();
 				}
 			}
 		});
@@ -221,7 +213,6 @@ public class PocetniEkran {
 					inol.frmMenadzerIzvjestajNa.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
-					c.printStackTrace();
 				}
 			}
 		});
@@ -236,8 +227,6 @@ public class PocetniEkran {
 					BrisanjeKupca bk = new BrisanjeKupca(s);
 					bk.frmBrisanjeKupca.setVisible(true);
 				} catch (Exception c) {
-					logger.error(c);
-					c.printStackTrace();
 				}
 			}
 		});
@@ -257,7 +246,6 @@ public class PocetniEkran {
 				} catch (Exception e) {
 					logger.error(e);
 					//s.getTrasaction().rollback();
-					e.printStackTrace();
 				}
 			}
 		});
@@ -276,7 +264,6 @@ public class PocetniEkran {
 					dk.frmDodajKupca.setVisible(true);
 				} catch (Exception c) {
 					logger.error(e);
-					c.printStackTrace();
 				}
 			}
 		});

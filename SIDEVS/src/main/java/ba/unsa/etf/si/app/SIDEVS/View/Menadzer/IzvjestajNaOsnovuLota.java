@@ -53,7 +53,6 @@ public class IzvjestajNaOsnovuLota {
 					window.frmMenadzerIzvjestajNa.setVisible(true);
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});

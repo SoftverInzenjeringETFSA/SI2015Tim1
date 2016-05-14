@@ -106,7 +106,6 @@ public class KreiranjeFakture {
 					dk.prikazi();	
 				} catch (Exception e1) {
 					logger.error(e1);
-					e1.printStackTrace();
 				}
 			}
 		});

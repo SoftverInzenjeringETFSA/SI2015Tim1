@@ -85,7 +85,6 @@ public class PocetniEkran {
 					dk.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});
@@ -101,7 +100,6 @@ public class PocetniEkran {
 					mk.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});
@@ -117,7 +115,6 @@ public class PocetniEkran {
 					bk.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});
@@ -135,7 +132,6 @@ public class PocetniEkran {
 				} catch (Exception e) {
 					logger.error(e);
 					//_sesija.getTrasaction().rollback();
-					e.printStackTrace();
 				}
 			}
 		});

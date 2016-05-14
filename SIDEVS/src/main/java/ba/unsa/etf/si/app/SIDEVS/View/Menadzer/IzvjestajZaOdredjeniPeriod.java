@@ -49,7 +49,6 @@ public class IzvjestajZaOdredjeniPeriod {
 					window.frmMenadzerIzvjestajZa.setVisible(true);
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});

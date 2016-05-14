@@ -63,7 +63,6 @@ public class TransakcijeKupca {
 					window.frmMenadzerTransakcijeKupca.setVisible(true);
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});
@@ -188,7 +187,6 @@ public class TransakcijeKupca {
 					}
 				} catch (HibernateException e) {
 					logger.error(e);
-					e.printStackTrace();
 				} catch (WrongInputException e) {
 					logger.error(e);
 					label_obavijest.setText(e.getMessage());
