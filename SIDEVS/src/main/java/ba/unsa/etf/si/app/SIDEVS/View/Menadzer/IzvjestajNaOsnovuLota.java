@@ -16,17 +16,20 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
+import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajNaOsnovuLotaVM;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class IzvjestajNaOsnovuLota {
+	final static Logger logger = Logger.getLogger(IzvjestajNaOsnovuLota.class);
 	private Sessions _sesija;
 	private IzvjestajNaOsnovuLotaVM vm;
 	public JFrame frmMenadzerIzvjestajNa;
@@ -49,6 +52,7 @@ public class IzvjestajNaOsnovuLota {
 					IzvjestajNaOsnovuLota window = new IzvjestajNaOsnovuLota();
 					window.frmMenadzerIzvjestajNa.setVisible(true);
 				} catch (Exception e) {
+					logger.error(e);
 					e.printStackTrace();
 				}
 			}
@@ -148,6 +152,7 @@ public class IzvjestajNaOsnovuLota {
 				}
 				
 				catch(Exception ex){
+					logger.error(ex);
 					noticeLabel.setForeground(Color.RED);
 					noticeLabel.setText(ex.getMessage());
 				}

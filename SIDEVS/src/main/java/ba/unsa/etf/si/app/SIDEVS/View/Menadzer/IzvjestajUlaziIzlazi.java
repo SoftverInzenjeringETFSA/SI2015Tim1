@@ -15,6 +15,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.criterion.Restrictions;
 
@@ -29,6 +30,7 @@ import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 import ba.unsa.etf.si.app.SIDEVS.View.Masks;
+import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajUlaziIzlaziVM;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajZaKupcaVM;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajZaOdredjeniPeriodVM;
@@ -39,6 +41,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class IzvjestajUlaziIzlazi {
+	final static Logger logger = Logger.getLogger(IzvjestajUlaziIzlazi.class);
 	private Sessions sesija;
 	private IzvjestajUlaziIzlaziVM iz;
 	private JFrame frmMenadzerIzvjestaO;
@@ -60,6 +63,7 @@ public class IzvjestajUlaziIzlazi {
 					IzvjestajUlaziIzlazi window = new IzvjestajUlaziIzlazi();
 					window.frmMenadzerIzvjestaO.setVisible(true);
 				} catch (Exception e) {
+					logger.error(e);
 					e.printStackTrace();
 				}
 			}
@@ -212,12 +216,13 @@ public class IzvjestajUlaziIzlazi {
 							label_obavijest.setText("Nema podataka za taj vremenski period.");
 					}
 				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
+					logger.error(e);
 					e.printStackTrace();
 				} catch (HibernateException e) {
-					// TODO Auto-generated catch block
+					logger.error(e);
 					e.printStackTrace();
 				} catch (WrongInputException e) {
+					logger.error(e);
 					label_obavijest.setText(e.getMessage());
 				} 
 				

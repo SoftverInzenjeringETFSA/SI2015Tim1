@@ -16,6 +16,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Menadzer;
 import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
+import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
 import ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran;
 import ba.unsa.etf.si.app.SIDEVS.View.Radnik.EvidencijaLotova;
 
@@ -24,10 +25,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import org.apache.log4j.Logger;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 
 public class Login {
+	final static Logger logger = Logger.getLogger(Login.class);
 	private JFrame frmLogin;
 	private ChangePassword cp;
 	private JTextField korisnickoIme;
@@ -44,6 +48,7 @@ public class Login {
 					Login window = new Login();
 					window.frmLogin.setVisible(true);
 				} catch (Exception e) {
+					logger.error(e);
 					e.printStackTrace();
 				}
 			}
@@ -135,6 +140,7 @@ public class Login {
 					frmLogin.dispose();
 				}
 				catch(Exception ex){
+					logger.error(ex);
 					labelError.setText(ex.getMessage());
 				}
 			}

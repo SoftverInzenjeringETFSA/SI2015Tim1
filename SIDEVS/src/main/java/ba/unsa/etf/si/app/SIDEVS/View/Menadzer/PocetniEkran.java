@@ -5,9 +5,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-
+import org.apache.log4j.Logger;
 
 import ba.unsa.etf.si.app.SIDEVS.View.*;
+import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
 import ba.unsa.etf.si.app.SIDEVS.View.Radnik.*;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.*;
@@ -21,6 +22,7 @@ import java.awt.event.ActionEvent;
 
 
 public class PocetniEkran {
+	final static Logger logger = Logger.getLogger(PocetniEkran.class);
 
 	private JFrame frmMenadzerPocetniEkran;
 	private Sessions s;
@@ -35,6 +37,7 @@ public class PocetniEkran {
 					PocetniEkran window = new PocetniEkran();
 					window.frmMenadzerPocetniEkran.setVisible(true);
 				} catch (Exception e) {
+					logger.error(e);
 					e.printStackTrace();
 				}
 			}
@@ -102,6 +105,7 @@ public class PocetniEkran {
 					TransakcijeKupca tk = new TransakcijeKupca(s);
 					tk.prikazi();
 				} catch (Exception e) {
+					logger.error(e);
 					e.printStackTrace();
 				}
 			}
@@ -117,6 +121,7 @@ public class PocetniEkran {
 					EvidencijaLijeka el = new EvidencijaLijeka(s);
 					el.prikazi();
 				} catch (Exception e) {
+					logger.error(e);
 					e.printStackTrace();
 				}
 			}
@@ -136,6 +141,7 @@ public class PocetniEkran {
 					PretragaLijeka pl = new PretragaLijeka(s);
 					pl.frmPretragaLijeka.setVisible(true);
 				} catch (Exception c) {
+					logger.error(c);
 					c.printStackTrace();
 				}
 			}
@@ -151,6 +157,7 @@ public class PocetniEkran {
 					KreiranjeFakture kf = new KreiranjeFakture(s);
 					kf.prikazi();
 				} catch (Exception ex) {
+					logger.error(ex);
 					ex.printStackTrace();
 				}
 			}
@@ -166,6 +173,7 @@ public class PocetniEkran {
 					OtpisLijeka ol = new OtpisLijeka(s);
 					ol.frmOtpisLijeka.setVisible(true);
 				} catch (Exception c) {
+					logger.error(c);
 					c.printStackTrace();
 				}
 			}
@@ -180,6 +188,7 @@ public class PocetniEkran {
 					IzvjestajZaOdredjeniPeriod iop = new IzvjestajZaOdredjeniPeriod(s);
 					iop.prikazi();
 				} catch (Exception c) {
+					logger.error(c);
 					c.printStackTrace();
 				}
 			}
@@ -195,6 +204,7 @@ public class PocetniEkran {
 					IzvjestajUlaziIzlazi iui = new IzvjestajUlaziIzlazi(s);
 					iui.prikazi();
 				} catch (Exception c) {
+					logger.error(c);
 					c.printStackTrace();
 				}
 			}
@@ -210,6 +220,7 @@ public class PocetniEkran {
 					IzvjestajNaOsnovuLota inol = new IzvjestajNaOsnovuLota(s);
 					inol.frmMenadzerIzvjestajNa.setVisible(true);
 				} catch (Exception c) {
+					logger.error(c);
 					c.printStackTrace();
 				}
 			}
@@ -225,6 +236,7 @@ public class PocetniEkran {
 					BrisanjeKupca bk = new BrisanjeKupca(s);
 					bk.frmBrisanjeKupca.setVisible(true);
 				} catch (Exception c) {
+					logger.error(c);
 					c.printStackTrace();
 				}
 			}
@@ -243,6 +255,7 @@ public class PocetniEkran {
 					frmMenadzerPocetniEkran.dispose();
 					new Login().prikazi();
 				} catch (Exception e) {
+					logger.error(e);
 					//s.getTrasaction().rollback();
 					e.printStackTrace();
 				}
@@ -262,6 +275,7 @@ public class PocetniEkran {
 					DodajKupca dk = new DodajKupca(s);				
 					dk.frmDodajKupca.setVisible(true);
 				} catch (Exception c) {
+					logger.error(e);
 					c.printStackTrace();
 				}
 			}
