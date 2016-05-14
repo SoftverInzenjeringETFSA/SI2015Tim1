@@ -15,11 +15,11 @@ import org.hibernate.Criteria;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.proxy.HibernateProxy;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
-import ba.unsa.etf.si.app.SIDEVS.Model.ObrisanLot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Pakovanje;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
@@ -35,43 +35,21 @@ public class OtpisLijekovaVM {
 	
 	public static boolean otpisLijeka(String naziv,String broj_lota,String broj_skladista) throws NoSuchAlgorithmException,InvalidKeySpecException {
 		try{
-			Transaction t = sesija.getSession().beginTransaction();
 			
 			List<Lijek> lijekovi = sesija.getSession().createCriteria(Lijek.class).add(Restrictions.like("naziv", naziv)).list();
 			Lijek lijek = lijekovi.get(0);
 			
             List<Lot> lotovi = sesija.getSession().createCriteria(Lot.class).add(Restrictions.like("broj_lota", broj_lota)).list();
-			Lot lot = lotovi.get(0);
+			Lot brisiLot = lotovi.get(0);
 			
+			java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+
+			brisiLot.setDatum_otpisa(date);
 			
+			sesija.getSession().beginTransaction();
+			sesija.getSession().update(brisiLot);
+			sesija.getTrasaction().commit();
 			
-			Set<Pakovanje> pakovanja = lot.getPakovanja();
-			
-			
-			//lista kolicine svakog lijeka
-			Criteria criteria5 = sesija.getSession().createCriteria(Lot.class).setProjection(Projections.property("kolicina_tableta"));
-			List<Integer> listaKolicine = criteria5.list();
-			
-			Integer stanje = TrenutnoStanjePomocna.vratiTrenutnoStanje(lot);
-			
-		//	if (stanje > kolicina) 	throw Exception();
-		    
-			
-			/*
-			for(int i=0;i<listaLijekova.size();i++)
-			{   
-			
-				if(listaLijekova.get(i).getId()==id && (Integer.toString(listaSkladista.get(i).getBroj_skladista()).equals(broj_skladista)) && (listaLotova.get(i).equals(broj_lota)))
-				{	
-					//ovdje ispisujem da vidim jel fakat za selektovani lot umanjuje vrijednost, fali samo da se update baza
-					novaKolicina=listaKolicine.get(i)-kolicina_tableta;
-					JOptionPane.showMessageDialog(null, novaKolicina, "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);
-					listaKolicine.set(i, novaKolicina);
-					JOptionPane.showMessageDialog(null, listaKolicine.get(i), "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);
-				}
-			}*/
-		//FALI OVDJE UPDATE U BAZI
-			t.commit();	
 			
 		} catch (Exception e) {
 			logger.error(e);
@@ -86,7 +64,17 @@ public class OtpisLijekovaVM {
 		//Lot
 		List<Lot> lotovi = sesija.getSession().createCriteria(Lot.class).add(Restrictions.like("broj_lota", lotBrisanje)).list();
 		Lot lot = lotovi.get(0);		
-		ObrisanLot l = new ObrisanLot();
+		
+		
+		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+
+		lot.setDatum_otpisa(date);
+		
+		sesija.getSession().beginTransaction();
+		sesija.getSession().update(lot);
+		sesija.getTrasaction().commit();
+		
+		/*
 		l.setBroj_lota(lot.getBroj_lota());
 		l.setDatum_ulaza(lot.getDatum_ulaza());
 		l.setFaktureLotovi(lot.getFaktureLotovi());
@@ -106,7 +94,7 @@ public class OtpisLijekovaVM {
 		sesija.getSession().save(l);
 		
 		t.commit();
-		
+		*/
 	}
 
 
