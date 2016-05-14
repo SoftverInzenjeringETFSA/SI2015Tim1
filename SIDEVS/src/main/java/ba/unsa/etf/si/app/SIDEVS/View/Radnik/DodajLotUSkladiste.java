@@ -43,6 +43,10 @@ public class DodajLotUSkladiste {
 			throw new Exception("Sesija nije kreirana!");
 		}
 	}
+	
+	public void ugasi(){
+		frmDodajLotUSkladiste.dispose();
+	}
 
 	/**
 	 * Initialize the contents of the frame.

@@ -84,6 +84,10 @@ public class TransakcijeKupca {
 			throw new Exception("Sesija nije kreirana!");
 	}
 	
+	public void ugasi(){
+		frmMenadzerTransakcijeKupca.dispose();
+	}
+	
 
 	/**
 	 * Initialize the contents of the frame.

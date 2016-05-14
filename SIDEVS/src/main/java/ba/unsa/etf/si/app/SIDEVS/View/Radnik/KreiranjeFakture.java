@@ -62,6 +62,10 @@ public class KreiranjeFakture {
 			throw new Exception("Sesija nije kreirana!");
 		}
 	}
+	
+	public void ugasi(){
+		frmKreiranjeFakture.dispose();
+	}
 
 	/**
 	 * Initialize the contents of the frame.

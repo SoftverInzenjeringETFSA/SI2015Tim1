@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.transaction.Transaction;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Administrator;
 import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
@@ -31,7 +32,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
 
+<<<<<<< HEAD
+=======
 import org.apache.log4j.Logger;
+>>>>>>> branch 'master' of https://github.com/SoftverInzenjeringETFSA/SI2015Tim1.git
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 

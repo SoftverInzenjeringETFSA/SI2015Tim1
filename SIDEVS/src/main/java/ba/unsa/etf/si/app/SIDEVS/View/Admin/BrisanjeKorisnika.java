@@ -51,6 +51,10 @@ public class BrisanjeKorisnika {
 	/**
 	 * Create the application.
 	 */
+	
+	public void ugasi(){
+		frmAdministratorBrisanjeKorisnika.dispose();
+	}
 	public BrisanjeKorisnika() {
 		initialize(_sesija);
 	}

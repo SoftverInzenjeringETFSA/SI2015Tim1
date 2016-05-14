@@ -20,7 +20,19 @@ public class PocetniEkran {
 
 	final static Logger logger = Logger.getLogger(PocetniEkran.class);
 	private JFrame frmPoetniEkran;
+<<<<<<< HEAD
 	private Sessions s;
+	private EvidencijaLotova el;
+	private BrisanjeKupca bk;
+	private PretragaLijeka pl;
+    private OtpisLijeka ol;
+    private DodajKupca dk;
+    private DodajLotUSkladiste dlus;
+    private KreiranjeFakture kf;
+
+=======
+	private Sessions s;
+>>>>>>> branch 'master' of https://github.com/SoftverInzenjeringETFSA/SI2015Tim1.git
 
 	/**
 	 * Create the application.
@@ -86,7 +98,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					KreiranjeFakture kf = new KreiranjeFakture(s);
+					if(kf == null) kf = new KreiranjeFakture(s);
 					kf.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
@@ -101,7 +113,11 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
+<<<<<<< HEAD
+					if(ol==null) ol = new OtpisLijeka(s);
+=======
 					OtpisLijeka ol = new OtpisLijeka(s);
+>>>>>>> branch 'master' of https://github.com/SoftverInzenjeringETFSA/SI2015Tim1.git
 				} catch (Exception c) {
 					logger.error(c);
 				}
@@ -168,7 +184,14 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					s.ubijSesiju();
+					if(el!=null)el.ugasi();
+					if(bk!=null)bk.ugasi();
+					if(pl!=null)pl.ugasi();
+				    if(ol!=null)ol.ugasi();
+				    if(dk!=null)dk.ugasi();
+				    if(dlus!=null)dlus.ugasi();
+				    if(kf!=null)kf.ugasi();
+				    s.ubijSesiju();
 					frmPoetniEkran.dispose();
 					new Login().prikazi();
 				} catch (Exception e) {

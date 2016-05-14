@@ -26,6 +26,16 @@ public class PocetniEkran {
 
 	private JFrame frmMenadzerPocetniEkran;
 	private Sessions s;
+	private TransakcijeKupca tk;
+	private EvidencijaLijeka el;
+	private PretragaLijeka pl;
+	private KreiranjeFakture kf;
+	private OtpisLijeka ol;
+	private IzvjestajZaOdredjeniPeriod iop;
+	private IzvjestajUlaziIzlazi iui;
+	private IzvjestajNaOsnovuLota inol;
+	private DodajKupca dk;
+	private BrisanjeKupca bk;
 
 	/**
 	 * Launch the application.
@@ -101,7 +111,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					TransakcijeKupca tk = new TransakcijeKupca(s);
+					if(tk==null)tk = new TransakcijeKupca(s);
 					tk.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
@@ -116,7 +126,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					EvidencijaLijeka el = new EvidencijaLijeka(s);
+					if(el==null)el = new EvidencijaLijeka(s);
 					el.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
@@ -135,7 +145,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					PretragaLijeka pl = new PretragaLijeka(s);
+					if(pl==null)pl = new PretragaLijeka(s);
 					pl.frmPretragaLijeka.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
@@ -150,7 +160,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					KreiranjeFakture kf = new KreiranjeFakture(s);
+					if(kf==null)kf = new KreiranjeFakture(s);
 					kf.prikazi();
 				} catch (Exception ex) {
 					logger.error(ex);
@@ -165,7 +175,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					OtpisLijeka ol = new OtpisLijeka(s);
+					if(ol==null)ol = new OtpisLijeka(s);
 					ol.frmOtpisLijeka.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
@@ -179,7 +189,7 @@ public class PocetniEkran {
 		btnDesavanjaZaOdredjeni.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					IzvjestajZaOdredjeniPeriod iop = new IzvjestajZaOdredjeniPeriod(s);
+					if(iop==null)iop = new IzvjestajZaOdredjeniPeriod(s);
 					iop.prikazi();
 				} catch (Exception c) {
 					logger.error(c);
@@ -194,7 +204,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					IzvjestajUlaziIzlazi iui = new IzvjestajUlaziIzlazi(s);
+					if(iui==null)iui = new IzvjestajUlaziIzlazi(s);
 					iui.prikazi();
 				} catch (Exception c) {
 					logger.error(c);
@@ -209,7 +219,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					IzvjestajNaOsnovuLota inol = new IzvjestajNaOsnovuLota(s);
+					if(inol==null)inol = new IzvjestajNaOsnovuLota(s);
 					inol.frmMenadzerIzvjestajNa.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
@@ -224,7 +234,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					BrisanjeKupca bk = new BrisanjeKupca(s);
+					if(bk==null)bk = new BrisanjeKupca(s);
 					bk.frmBrisanjeKupca.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
@@ -241,6 +251,16 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
+					if(tk!=null)tk.ugasi();
+					if(el!=null)el.ugasi();
+					if(pl!=null)pl.ugasi();
+					if(kf!=null)kf.ugasi();
+					if(ol!=null)ol.ugasi();
+					if(iop!=null)iop.ugasi();
+					if(iui!=null)iui.ugasi();
+					if(inol!=null)inol.ugasi();
+					if(dk!=null)dk.ugasi();
+					if(bk!=null)bk.ugasi();
 					s.ubijSesiju();
 					frmMenadzerPocetniEkran.dispose();
 					new Login().prikazi();
@@ -261,7 +281,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					DodajKupca dk = new DodajKupca(s);				
+					if(dk==null)dk = new DodajKupca(s);				
 					dk.frmDodajKupca.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
