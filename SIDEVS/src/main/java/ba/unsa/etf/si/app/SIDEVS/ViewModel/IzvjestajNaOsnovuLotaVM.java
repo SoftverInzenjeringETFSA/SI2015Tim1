@@ -67,7 +67,6 @@ public class IzvjestajNaOsnovuLotaVM {
 		}
 		catch (Exception e) {
 			logger.error(e);
-			e.printStackTrace();
 		}
 		return "-";
 	}
@@ -84,7 +83,6 @@ public class IzvjestajNaOsnovuLotaVM {
 		}
 		catch (Exception e) {
 			logger.error(e);
-			e.printStackTrace();
 		}
 		return "0";
 	}
@@ -106,7 +104,6 @@ public class IzvjestajNaOsnovuLotaVM {
 		}
 		catch (Exception e) {
 			logger.error(e);
-			e.printStackTrace();
 		}
 		return "-";
 	}
@@ -123,7 +120,6 @@ public class IzvjestajNaOsnovuLotaVM {
 		}
 		catch (Exception e) {
 			logger.error(e);
-			e.printStackTrace();
 		}
 		return "0";
 	}
@@ -146,7 +142,6 @@ public class IzvjestajNaOsnovuLotaVM {
 		}
 		catch (Exception e) {
 			logger.error(e);
-			e.printStackTrace();
 		}
 		return Collections.emptyList();
 	}
@@ -168,7 +163,6 @@ public class IzvjestajNaOsnovuLotaVM {
 		}
 		catch (Exception e) {
 			logger.error(e);
-			e.printStackTrace();
 		}
 		return Collections.emptyList();
 	}

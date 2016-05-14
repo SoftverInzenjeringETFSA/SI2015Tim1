@@ -49,7 +49,6 @@ public class Login {
 					window.frmLogin.setVisible(true);
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});

@@ -166,10 +166,17 @@ public class DodavanjeKorisnika {
 						
 						//Baca izuzetak ukoliko ništa nije checkirano
 						String tipKorisnika;
-						if(menadzer.isSelected()) tipKorisnika = "Menadzer";
-						else if (radnik.isSelected()) tipKorisnika = "Radnik";
-						else throw new Exception();
-											String s = email.getText();
+						if(menadzer.isSelected()) {
+							tipKorisnika = "Menadzer";
+						}
+						else if (radnik.isSelected()) {
+							tipKorisnika = "Radnik";
+						}
+						else {
+							throw new Exception();
+						}
+						
+
 						//Ukoliko kreiranje nije prošlo, baca exception
 						boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.DodavanjeKorisnikaVM.KreirajKorisnika(
 								_sesija, 

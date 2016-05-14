@@ -300,7 +300,6 @@ public final class FakturaVM {
 
 		} catch (Exception ex) {
 			logger.error(ex);
-			ex.printStackTrace();
 		}
 
 	}

@@ -41,7 +41,6 @@ public class PocetniEkran {
 					window.frmAdministratorPocetniEkran.setVisible(true);
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});

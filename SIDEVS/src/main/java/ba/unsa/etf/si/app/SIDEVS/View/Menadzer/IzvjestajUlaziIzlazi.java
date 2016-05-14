@@ -64,7 +64,6 @@ public class IzvjestajUlaziIzlazi {
 					window.frmMenadzerIzvjestaO.setVisible(true);
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});
@@ -217,10 +216,8 @@ public class IzvjestajUlaziIzlazi {
 					}
 				} catch (NumberFormatException e) {
 					logger.error(e);
-					e.printStackTrace();
 				} catch (HibernateException e) {
 					logger.error(e);
-					e.printStackTrace();
 				} catch (WrongInputException e) {
 					logger.error(e);
 					label_obavijest.setText(e.getMessage());

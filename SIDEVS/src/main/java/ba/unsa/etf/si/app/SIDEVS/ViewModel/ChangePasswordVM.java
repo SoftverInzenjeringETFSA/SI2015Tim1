@@ -48,7 +48,6 @@ public class ChangePasswordVM {
 			s.ubijSesiju();
 		} catch (Exception e) {
 			logger.error(e);
-			e.printStackTrace();
 			return false;
 		}
 		return true;		
