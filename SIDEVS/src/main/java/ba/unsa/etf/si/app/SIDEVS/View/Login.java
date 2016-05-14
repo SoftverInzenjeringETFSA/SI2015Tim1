@@ -50,9 +50,8 @@ public class Login {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login window = new Login(); window.frmLogin.setVisible(true);
-
-					
+					Login window = new Login(); 
+				
 					window.frmLogin.setVisible(true);
 				} catch (Exception e) {
 					logger.error(e);
@@ -69,10 +68,10 @@ public class Login {
 	}
 	
 	public Login() {
-		Session s = HibernateUtil.getSessionFactory().openSession();
+	/*	Session s = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = (Transaction) s.beginTransaction();
 		try{
-			/*
+			
 			Korisnik a = new Administrator();
 			a.setAdresa("a");
 			a.setDatum_polaska_rada(new Date());
@@ -84,9 +83,9 @@ public class Login {
 			a.setRadno_mjesto("admin");
 			a.setTelefon("123456");
 			s.save(a);
-			t.commit();*/
+			t.commit();
 		}
-		catch(Exception ex){}	
+		catch(Exception ex){}	*/
 		initialize();
 	}
 
