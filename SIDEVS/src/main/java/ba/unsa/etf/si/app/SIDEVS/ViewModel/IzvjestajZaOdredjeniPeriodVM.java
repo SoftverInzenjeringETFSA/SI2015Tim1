@@ -18,11 +18,14 @@ import org.hibernate.criterion.Restrictions;
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 import javax.swing.JFileChooser;
+
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -32,35 +35,14 @@ public class IzvjestajZaOdredjeniPeriodVM {
 	final static Logger logger = Logger.getLogger(IzvjestajZaOdredjeniPeriodVM.class);
 	
 	private Sessions sesija;
+	private Document document;
+	private List<String[]> lista;
+	
 	
 	public IzvjestajZaOdredjeniPeriodVM(Sessions sesija){
 		this.sesija=sesija;
-	}
-	
-	public List<Lot> vratiUlazneLotove(String datumOd, String datumDo){
-		Date datum_od = Conversions.stringToDate(datumOd);
-		Date datum_do = Conversions.stringToDate(datumDo);
-		List<Lot> lotovi = sesija.getSession().createCriteria(Lot.class).
-				add(Restrictions.between("datum_ulaza", datum_od, datum_do)).list();
-		
-		return lotovi;
-	}
-	//OBRISAN
-	public List<Lot> vratiOtpisaneLotove(List<Lot> sviLotovi, String datumOd, String datumDo){
-		Date datum_od = Conversions.stringToDate(datumOd);
-		Date datum_do = Conversions.stringToDate(datumDo);
-		
-		List<Lot> obrisaniLotovi = sesija.getSession().createCriteria(Lot.class).list();
-		
-		List<Lot> otpisaniLotovi = new ArrayList<Lot>();
-		
-		for (Lot lot: sviLotovi){
-			for (Lot l: obrisaniLotovi)
-				if (lot.getBroj_lota() == l.getBroj_lota() && l.getDatum_otpisa().after(datum_od) && l.getDatum_otpisa().before(datum_do))
-					otpisaniLotovi.add(l);		
-		}
-				
-		return otpisaniLotovi;
+		document = new Document();
+		lista=new ArrayList<String[]>();
 	}
 	
 	
@@ -73,149 +55,68 @@ public class IzvjestajZaOdredjeniPeriodVM {
 		return skladista;
 	}
 	
-	public Integer vratiUkupniUlaz(Lot l, Skladiste s){
-		int suma = 0;
-		Set<Pakovanje> pakovanja = l.getPakovanja();
-		for (Pakovanje p: pakovanja){
-			suma += p.getKolicina();
-		}
-		return suma;	
+	public void dodaj(String[] celije){
+		lista.add(celije);
 	}
-	
-		public Integer vratiUkupniIzlaz(Lot l, Skladiste s, String datumOd, String datumDo){
-		int suma = 0;
-		Set<FakturaLot> fakture = l.getFaktureLotovi();
-		for (FakturaLot f: fakture){
-			suma += f.getKolicina();
-		}
-		List<Lot> lot_tmp = new ArrayList<Lot>(); lot_tmp.add(l);
-		List<Lot> obrisaniLotovi = vratiOtpisaneLotove(lot_tmp, datumOd, datumDo);
-		for (Lot otpisani: obrisaniLotovi)
-			suma += vratiKolicinuOtpisanog(otpisani);
-		return suma;	
-	}
-		
-		public Integer vratiKolicinuOtpisanog(Lot lot){
-			return vratiStanjePomocna((Lot)lot);
-		}
-		
-		public Integer vratiTrenutnoStanje(Lot lot){
-			return vratiStanjePomocna(lot);
-		}
-		
-		public Integer vratiStanjePomocna(Lot lot){
-			List<Lot> lotovi= new ArrayList<Lot>();
-			lotovi.add(lot);
-			int suma = 0;	
-			List<Integer> ul = vratiKolicine(lotovi, true);
-			for (int i: ul){
-				suma+=i;
-			}
-			List<Integer> izlazi = vratiKolicine(lotovi, false);
-			for (int i: izlazi){
-				suma-=i;
-			}
-			return suma;
-		}
-		
-		public List<Integer> vratiKolicine(List<Lot> lotovi, Boolean ulazni){
-			List<Integer> kolicine = new ArrayList<Integer>();
-			if (ulazni){
-				for (Lot l: lotovi){
-					Set<Pakovanje> pakovanja = l.getPakovanja();
-					for (Pakovanje p: pakovanja)
-						kolicine.add(p.getKolicina());
-				}
-					
-			}
-			else{
-				for (Lot l:lotovi){
-					Set<FakturaLot> fakture = l.getFaktureLotovi();
-					for (FakturaLot f: fakture)
-						kolicine.add(f.getKolicina());
-				}
-			}
-			
-			return kolicine;
-		}
-		
 
 		
-		public void createPDF(List<Lot> lotovi, String datumOd, String datumDo){
-			
+		public void createPDF(String datumOd, String datumDo){
+			//pdf
 			
 			JFileChooser chooser = new JFileChooser();
 			chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			int option = chooser.showSaveDialog(null);
 			if (option == JFileChooser.APPROVE_OPTION) {
-				DateFormat df = new SimpleDateFormat("ddMMyy-HHmmss");
-				Date dateobj = new Date();
 
 				String new_file_path = chooser.getSelectedFile().getAbsolutePath().toString() + "\\Izvjestaj_"
 						+ datumOd + "_" + datumDo + ".pdf";
 
 				Document document = new Document();
 				try {
-
+					Font font = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
 					Font boldFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
-
+					Font obicni = new Font(Font.FontFamily.HELVETICA, 12);
+					
 					PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new_file_path));
 					document.open();
 					
 					PdfPTable table = new PdfPTable(3);
-					table.setWidthPercentage(100);
-					table.setSpacingBefore(10f);
-					table.setSpacingAfter(10f);
 					
-					String[] top = {"SIDEVS", "Od: "+datumOd, "Do: "+datumDo};					
+					String[] top = {"Izvještaj: ", "od " +datumOd, "do "+datumDo};					
 					for (String s: top){
-						PdfPCell cell = new PdfPCell(new Paragraph(s, boldFont));
+						PdfPCell cell = new PdfPCell(new Paragraph(s, font));
 						cell.setPadding(10);
+						cell.setBorder(Rectangle.NO_BORDER);
 						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 						table.addCell(cell);
 					}
 					document.add(table);
+					document.add(new Phrase("\n"));
 					
-					PdfPTable headerTable = new PdfPTable(5);
-					headerTable.setWidthPercentage(100);
-					headerTable.setSpacingBefore(10f);
-					headerTable.setSpacingAfter(10f);
-					
+					PdfPTable headerTable = new PdfPTable(5);		
 					String[] header = {"Proizvod", "Lot", "Skladište", "Ulazi", "Izlazi"};
 					
 					for (int i=0; i<header.length; i++){
 						PdfPCell cell = new PdfPCell(new Paragraph(header[i], boldFont));
+						cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
 						cell.setPadding(10);
 						headerTable.addCell(cell);
 					}
 
-					
 					document.add(headerTable);
 
-					PdfPTable table_lot = new PdfPTable(5);		
-					table_lot.setWidthPercentage(100);
-					table_lot.setSpacingBefore(10f);
-					table_lot.setSpacingAfter(10f);
-						for (Lot lot: lotovi){
-							for (Skladiste s: vratiSkladista(lot)){
-								
-								String [] kolone = {lot.getLijek().getNaziv(), 
-													lot.getBroj_lota(),
-													Integer.toString(s.getBroj_skladista()),
-													Integer.toString(vratiUkupniUlaz(lot, s)),
-													Integer.toString(vratiUkupniIzlaz(lot, s, datumOd, datumDo))
-													};
-								
-								for (String celija: kolone){
-									PdfPCell cell = new PdfPCell(new Paragraph(celija));
-									cell.setPadding(16);
-									cell.setBorder(Rectangle.NO_BORDER);
-									table_lot.addCell(cell);
-								}								
-							}
+					PdfPTable t = new PdfPTable(5);
+					for (String[] stringovi: lista){
+						for (String ss: stringovi){
+							PdfPCell cell = new PdfPCell(new Paragraph(ss,obicni));
+							cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+							cell.setPadding(6);
+							t.addCell(cell);
 						}
-						document.add(table_lot);
+					}
+					document.add(t);
+					
 
 					document.close();
 					writer.close();
@@ -236,5 +137,6 @@ public class IzvjestajZaOdredjeniPeriodVM {
 					}
 				}
 			}		
+		
 		}
 }

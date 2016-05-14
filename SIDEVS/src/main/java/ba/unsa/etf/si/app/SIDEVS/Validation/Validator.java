@@ -98,7 +98,7 @@ public final class Validator {
 		else if(brojLota.length() < 6 && brojLota.length()>15) msg = "Broj lota mora biti između 6 i 15";
 		else {
 		List<Lot> lotovi = sesija.getSession().createCriteria(Lot.class).
-				add(Restrictions.eq("broj_lota", brojLota)).add(Restrictions.isNull("datum_otpisa")).list();
+				add(Restrictions.eq("broj_lota", brojLota)).list();
 
 		if (lotovi.size()==0) msg = "Uneseni broj lota ne postoji u sistemu";
 		}
@@ -125,8 +125,11 @@ public final class Validator {
 		String msg="";
 		if(kupac.length() == 0) msg = "Morate unijeti lijek";
 		else {
-		List<Lot> lijekovi = s.getSession().createCriteria(Kupac.class).
-				add(Restrictions.eq("naziv", kupac)).list();
+			
+			
+			List<Lot> lijekovi = s.getSession().createCriteria(Kupac.class).
+					add(Restrictions.eq("naziv", kupac)).list();
+		
 
 		if (lijekovi.size()==0) msg = "Uneseni naziv kupca ne postoji u sistemu";
 		}

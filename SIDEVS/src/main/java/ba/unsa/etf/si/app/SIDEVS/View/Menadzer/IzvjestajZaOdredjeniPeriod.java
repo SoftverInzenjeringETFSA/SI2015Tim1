@@ -20,6 +20,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 import ba.unsa.etf.si.app.SIDEVS.View.Masks;
 import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
+import ba.unsa.etf.si.app.SIDEVS.ViewModel.GlavneMetode;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajZaOdredjeniPeriodVM;
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
 
@@ -37,6 +38,7 @@ public class IzvjestajZaOdredjeniPeriod {
 	private JLabel label_obavijest;
 	private JFormattedTextField datumOd;
 	private JFormattedTextField datumDo;
+	private IzvjestajZaOdredjeniPeriodVM iz;
 	
 	/**
 	 * Launch the application.
@@ -116,19 +118,32 @@ public class IzvjestajZaOdredjeniPeriod {
 				 
 				try {
 					if (validirajPolja()){
+						//novi izvjestaj:
+						
+						
 						label_obavijest.setText("");
-						IzvjestajZaOdredjeniPeriodVM iz = new IzvjestajZaOdredjeniPeriodVM(sesija);
-						List<Lot> ulazniLotovi = iz.vratiUlazneLotove(datumOd.getText(), datumDo.getText());
+						iz = new IzvjestajZaOdredjeniPeriodVM(sesija);
+						
+						List<Lot> ulazniLotovi = GlavneMetode.vratiSveLotoveOdDo(sesija, datumOd.getText(), datumDo.getText());
 						
 						for (Lot lot: ulazniLotovi){
 							for (Skladiste s: iz.vratiSkladista(lot)){
-								Object[] row = { lot.getLijek().getNaziv(), 
-										lot.getBroj_lota(), 
-										s.getBroj_skladista(), 
-										iz.vratiUkupniUlaz(lot, s),
-										iz.vratiUkupniIzlaz(lot, s, datumOd.getText(), datumDo.getText())
+								Integer izlaz = GlavneMetode.vratiKolicinuIzlazaOdDo(lot, s, datumOd.getText(), datumDo.getText());
+								izlaz += GlavneMetode.vratiKolicinuOtpisanogOdDo(lot, s, datumOd.getText(), datumDo.getText());
+								Object[] row = {lot.getLijek().getNaziv(), 
+												lot.getBroj_lota(), 
+												s.getBroj_skladista(), 
+												GlavneMetode.vratiKolicinuUlaza(lot, s).toString(),
+												izlaz.toString()
 								};
 								model.addRow(row);
+								String[] celije = {lot.getLijek().getNaziv(), 
+										lot.getBroj_lota(), 
+										Integer.toString(s.getBroj_skladista()), 
+										GlavneMetode.vratiKolicinuUlaza(lot, s).toString(),
+										izlaz.toString()
+										};
+								iz.dodaj(celije);
 							}
 						}
 						if (model.getRowCount()==0) 
@@ -154,9 +169,12 @@ public class IzvjestajZaOdredjeniPeriod {
 					label_obavijest.setText("Nije moguce generisati PDF jer nema podataka.");
 				}
 				else{
-				IzvjestajZaOdredjeniPeriodVM iz = new IzvjestajZaOdredjeniPeriodVM(sesija);
-				List<Lot> lotovi = iz.vratiUlazneLotove(datumOd.getText(), datumDo.getText());
-				iz.createPDF(lotovi, datumOd.getText(), datumDo.getText());
+				iz.createPDF(datumOd.getText(), datumDo.getText());
+				while (model.getRowCount()>0){
+					model.removeRow(0);
+				}
+				datumDo.setValue(null);
+				datumOd.setValue(null);
 				frmMenadzerIzvjestajZa.dispose();
 				}
 			}

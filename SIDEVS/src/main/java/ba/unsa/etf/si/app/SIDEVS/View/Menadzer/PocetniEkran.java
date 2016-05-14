@@ -111,7 +111,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(tk==null)tk = new TransakcijeKupca(s);
+					tk = new TransakcijeKupca(s);
 					tk.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
@@ -126,7 +126,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(el==null)el = new EvidencijaLijeka(s);
+					el = new EvidencijaLijeka(s);
 					el.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
@@ -145,7 +145,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(pl==null)pl = new PretragaLijeka(s);
+					pl = new PretragaLijeka(s);
 					pl.frmPretragaLijeka.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
@@ -160,7 +160,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					if(kf==null)kf = new KreiranjeFakture(s);
+					kf = new KreiranjeFakture(s);
 					kf.prikazi();
 				} catch (Exception ex) {
 					logger.error(ex);
@@ -175,7 +175,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(ol==null)ol = new OtpisLijeka(s);
+					ol = new OtpisLijeka(s);
 					ol.frmOtpisLijeka.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
@@ -189,7 +189,7 @@ public class PocetniEkran {
 		btnDesavanjaZaOdredjeni.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(iop==null)iop = new IzvjestajZaOdredjeniPeriod(s);
+					iop = new IzvjestajZaOdredjeniPeriod(s);
 					iop.prikazi();
 				} catch (Exception c) {
 					logger.error(c);
@@ -204,7 +204,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					if(iui==null)iui = new IzvjestajUlaziIzlazi(s);
+					iui = new IzvjestajUlaziIzlazi(s);
 					iui.prikazi();
 				} catch (Exception c) {
 					logger.error(c);
@@ -219,7 +219,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					if(inol==null)inol = new IzvjestajNaOsnovuLota(s);
+					inol = new IzvjestajNaOsnovuLota(s);
 					inol.frmMenadzerIzvjestajNa.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
@@ -234,7 +234,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(bk==null)bk = new BrisanjeKupca(s);
+					bk = new BrisanjeKupca(s);
 					bk.frmBrisanjeKupca.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
