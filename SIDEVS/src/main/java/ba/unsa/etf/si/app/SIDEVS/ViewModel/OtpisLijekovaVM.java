@@ -2,7 +2,9 @@ package ba.unsa.etf.si.app.SIDEVS.ViewModel;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
@@ -16,9 +18,11 @@ import org.hibernate.criterion.Restrictions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
+import ba.unsa.etf.si.app.SIDEVS.Model.ObrisanLot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Pakovanje;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
+import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 
 public class OtpisLijekovaVM {
 	
@@ -74,6 +78,35 @@ public class OtpisLijekovaVM {
 		}
 		return true;
 	}
+	
+	public static void otpisiLijek(String lotBrisanje){
+
+		Transaction t = sesija.getSession().beginTransaction();
+		//Lot
+		List<Lot> lotovi = sesija.getSession().createCriteria(Lot.class).add(Restrictions.like("broj_lota", lotBrisanje)).list();
+		Lot lot = lotovi.get(0);		
+		ObrisanLot l = new ObrisanLot();
+		l.setBroj_lota(lot.getBroj_lota());
+		l.setDatum_ulaza(lot.getDatum_ulaza());
+		l.setFaktureLotovi(lot.getFaktureLotovi());
+		l.setKolicina_tableta(l.getKolicina_tableta());
+		l.setLijek(lot.getLijek());
+		l.setPakovanja(lot.getPakovanja());
+		l.setRok_trajanja(lot.getRok_trajanja());
+		l.setTezina(lot.getTezina());
+		l.setUlazna_cijena(lot.getUlazna_cijena());
+		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+
+		l.setDatum_otpisa(date  );
+
+		sesija.getSession().delete(lot);
+		t.commit();
+		t = sesija.getSession().beginTransaction();
+		sesija.getSession().save(l);
+		
+		t.commit();
+		
+	}
 
 
 public static List<String> vracaLotove(Lijek lijek, Skladiste skladiste){
@@ -89,8 +122,7 @@ public static List<String> vracaLotove(Lijek lijek, Skladiste skladiste){
 				lotovi.add(lot.getBroj_lota());
 		}
 	}
-	
-	//return lotovi.toArray();
+
 	return lotovi;
 }
 }

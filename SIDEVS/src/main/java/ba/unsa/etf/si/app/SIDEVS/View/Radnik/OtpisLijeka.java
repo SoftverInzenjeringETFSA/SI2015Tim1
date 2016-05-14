@@ -42,11 +42,16 @@ public class OtpisLijeka {
 
 	private Sessions sesija;
 	public JFrame frmOtpisLijeka;
-	private JTextField kolicinaTextField;
 	private JLabel noticeLabel;
 	private JTable table;
-	private DefaultTableModel model = new DefaultTableModel();
+	
+	private DefaultTableModel model = new DefaultTableModel() {
 
+	    public boolean isCellEditable(int row, int column) {
+	       return false;
+	    }
+	};
+	
 	/**
 	 * Launch the application.
 	 */
@@ -86,7 +91,7 @@ public class OtpisLijeka {
 		
 		frmOtpisLijeka = new JFrame();
 		frmOtpisLijeka.setTitle("Otpis lijeka");
-		frmOtpisLijeka.setBounds(100, 100, 278, 520);
+		frmOtpisLijeka.setBounds(100, 100, 278, 395);
 		frmOtpisLijeka.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmOtpisLijeka.getContentPane().setLayout(null);
 		frmOtpisLijeka.setLocationRelativeTo(null);
@@ -100,7 +105,7 @@ public class OtpisLijeka {
 		frmOtpisLijeka.getContentPane().add(lblProizvod);
 		
 		JLabel lblLot = new JLabel("LOT:");
-		lblLot.setBounds(10, 106, 81, 14);
+		lblLot.setBounds(10, 98, 81, 14);
 		frmOtpisLijeka.getContentPane().add(lblLot);
 		
 		final JComboBox listaSkladista = new JComboBox();
@@ -113,71 +118,28 @@ public class OtpisLijeka {
 		frmOtpisLijeka.getContentPane().add(listaLijekova);
 		
 		final JComboBox listaLotova = new JComboBox();
-		listaLotova.setBounds(101, 103, 147, 20);
+		listaLotova.setBounds(101, 95, 147, 20);
 		frmOtpisLijeka.getContentPane().add(listaLotova);
 		
 		JLabel label = new JLabel("________________________________________");
-		label.setBounds(10, 131, 272, 14);
+		label.setBounds(10, 116, 272, 14);
 		frmOtpisLijeka.getContentPane().add(label);
-		
-		JLabel lblKoliina = new JLabel("Količina (kom):");
-		lblKoliina.setBounds(10, 156, 118, 14);
-		frmOtpisLijeka.getContentPane().add(lblKoliina);
-		
-		kolicinaTextField = new JTextField();
-		kolicinaTextField.addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent evt) {
-				if (Validator.daLiJeBroj(evt.getKeyChar()))
-					evt.consume();
-					
-			}
-		});
-		kolicinaTextField.setBounds(138, 153, 110, 20);
-		frmOtpisLijeka.getContentPane().add(kolicinaTextField);
-		kolicinaTextField.setColumns(10);
-		
-		JButton btnOtpisi = new JButton("Otpiši");
-		btnOtpisi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try{
-					
-                   String lijek = listaLijekova.getSelectedItem().toString();
-                   String skladiste = listaSkladista.getSelectedItem().toString();
-                   String lot = listaLotova.getSelectedItem().toString();
-                   
-                   double d = Double.parseDouble(kolicinaTextField.getText());
-                   Integer kolicina = (int)d;
-					
-                   OtpisLijekovaVM vm = new OtpisLijekovaVM(sesija);
-                   boolean  otpisano = vm.otpisLijeka(lijek, lot, skladiste);
-                   if(!otpisano) throw new Exception();
-                   
-               	noticeLabel.setForeground(Color.GREEN);
-				noticeLabel.setText("Lijek je uspješno otpisan");
-					
-				}
-				catch(Exception ex){
-					noticeLabel.setForeground(Color.RED);
-					noticeLabel.setText(ex.getMessage());
-				}
-			}
-		});
-		btnOtpisi.setBounds(10, 184, 238, 23);
-		frmOtpisLijeka.getContentPane().add(btnOtpisi);
 		
 		JButton btnOdaberi = new JButton("Odaberi");
 		btnOdaberi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try{					
+				try{		
+					
+					System.out.println("OVDJE");
                    String lijek = listaLijekova.getSelectedItem().toString();
                    String skladiste = listaSkladista.getSelectedItem().toString();
                    
                    Lijek odabraniLijek = (Lijek) sesija.getSession().createCriteria(Lijek.class).
    						add(Restrictions.eq("naziv",  listaLijekova.getSelectedItem().toString())).list().get(0);
-   				
-   					Skladiste odabranoSkladiste = sesija.getSession().get(Skladiste.class,
-   						Integer.parseInt(listaSkladista.getSelectedItem().toString()));
-                    		   
+
+   					Skladiste odabranoSkladiste = (Skladiste) sesija.getSession().createCriteria(Skladiste.class).
+   	   						add(Restrictions.eq("broj_skladista",  Integer.parseInt(listaSkladista.getSelectedItem().toString()) )).list().get(0);
+
                    OtpisLijekovaVM vm = new OtpisLijekovaVM(sesija);
                    List<String> nizLotova = vm.vracaLotove(odabraniLijek, odabranoSkladiste);
                    
@@ -197,12 +159,13 @@ public class OtpisLijeka {
 		frmOtpisLijeka.getContentPane().add(btnOdaberi);
 		
 	    noticeLabel = new JLabel("");
-		noticeLabel.setBounds(10, 218, 238, 14);
+		noticeLabel.setBounds(10, 340, 238, 14);
 		frmOtpisLijeka.getContentPane().add(noticeLabel);
 		
 		table = new JTable(model);
+		
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
-		table.setBounds(10, 274, 238, 150);
+		table.setBounds(10, 176, 238, 118);
 		model.addColumn("Lijek"); 
 		model.addColumn("Lot");
 		popuniTabelu();
@@ -210,39 +173,38 @@ public class OtpisLijeka {
 		frmOtpisLijeka.getContentPane().add(table);
 		
 		JLabel lblLotoviKojimaIstie = new JLabel("Lotovi kojima ističe ili je istekao rok:");
-		lblLotoviKojimaIstie.setBounds(10, 245, 238, 16);
+		lblLotoviKojimaIstie.setBounds(10, 156, 238, 16);
 		frmOtpisLijeka.getContentPane().add(lblLotoviKojimaIstie);
 		
-		JButton btnOtpisTabela = new JButton("Otpiši iz tabele");
-		btnOtpisTabela.setBounds(10, 437, 238, 25);
+		JButton btnOtpisTabela = new JButton("Otpiši");
+		btnOtpisTabela.setBounds(10, 305, 238, 25);
 		btnOtpisTabela.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{	
+					OtpisLijekovaVM vm = new OtpisLijekovaVM(sesija);
 					int a = table.getSelectedRow();
 					int	b =	table.getSelectedColumn();
-					if(a==0) return;
-					if(b==0)b=1;
-					String lotBrisanje = table.getValueAt(a, b).toString();
-					Transaction t = sesija.getSession().beginTransaction();
+					if(a==-1){
 						
-					//Lot
-					List<Lot> lotovi = sesija.getSession().createCriteria(Lot.class).add(Restrictions.like("broj_lota", lotBrisanje)).list();
-					Lot lot = lotovi.get(0);		
-					
-					//pakovanje
-					List<Pakovanje> pakovanja = sesija.getSession().createCriteria(Pakovanje.class).add(Restrictions.like("lot", lot)).list();
-					Pakovanje pakovanje = pakovanja.get(0);
-					
-					sesija.getSession().delete(pakovanje);
-					sesija.getSession().delete(lot);
-					
-					t.commit();
+						 String lijek = listaLijekova.getSelectedItem().toString();
+		                   String skladiste = listaSkladista.getSelectedItem().toString();
+		                   String lot = listaLotova.getSelectedItem().toString();
+						
+		                   boolean  otpisano = vm.otpisLijeka(lijek, lot, skladiste);
+		                   if(!otpisano) throw new Exception();
+					}
+					else
+					{				
+					if(b==0)b=1;
+										
+					vm.otpisiLijek(table.getValueAt(a, b).toString());
 					
 					//Osvježi tabelu
 	                popuniTabelu();
-					
-	               	noticeLabel.setForeground(Color.GREEN);
+					}
+					noticeLabel.setForeground(Color.GREEN);
 					noticeLabel.setText("Lijek je uspješno otpisan");
+					
 				}
 				catch(Exception ex){
 					System.out.println(ex.getMessage());
@@ -252,6 +214,10 @@ public class OtpisLijeka {
 			}
 		});
 		frmOtpisLijeka.getContentPane().add(btnOtpisTabela);
+		
+		JLabel lblIliOdaberiteLot = new JLabel("Ili odaberite lot iz tabele:");
+		lblIliOdaberiteLot.setBounds(64, 131, 147, 14);
+		frmOtpisLijeka.getContentPane().add(lblIliOdaberiteLot);
 	}
 	
 	public void popuniTabelu(){

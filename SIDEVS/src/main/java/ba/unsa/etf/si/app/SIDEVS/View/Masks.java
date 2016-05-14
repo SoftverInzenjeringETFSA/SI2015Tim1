@@ -44,4 +44,15 @@ public final class Masks {
 		return maskaJMBG;
 	}
 	
+	public static MaskFormatter vratiMaskuZaTelefon(){
+		MaskFormatter maskaJMBG = new MaskFormatter();
+		try {
+			maskaJMBG = new MaskFormatter("###/###-###");
+			maskaJMBG.setPlaceholderCharacter('_');
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return maskaJMBG;
+	}
 }

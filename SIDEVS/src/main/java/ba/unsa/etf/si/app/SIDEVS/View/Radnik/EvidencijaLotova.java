@@ -207,7 +207,6 @@ public class EvidencijaLotova {
 		label_obavijest.setForeground(Color.RED);
 
 		String brojLota = textFieldBroj_lota.getText();
-		System.out.println(brojLota);
 
 		if (brojLota.length()==0) msg = "Morate unijeti broj lota";
 		else if(brojLota.length() < 6 || brojLota.length()>15) msg = "Broj lota mora biti duzine između 6 i 15";

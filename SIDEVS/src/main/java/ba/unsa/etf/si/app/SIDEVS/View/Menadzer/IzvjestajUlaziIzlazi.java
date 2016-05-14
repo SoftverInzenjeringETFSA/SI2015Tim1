@@ -251,13 +251,13 @@ public class IzvjestajUlaziIzlazi {
 	
 	private boolean validirajPolja() throws WrongInputException {
 		String msg = "";
-		label_obavijest.setForeground(Color.RED);
-		
+		label_obavijest.setForeground(Color.RED);		
 		if ( !Validator.isDateValid( datumOd.getText()) ) msg="Prvi datum nije ispravan";
 		else if ( !Validator.isDateValid( datumDo.getText()) ) msg="Drugi datum nije ispravan";
 		else if (!Validator.veciStringDatum(datumOd.getText() , datumDo.getText()) ) msg="Drugi datum mora biti veci od prvog";
 		else if (listaLijekova.getSelectedItem()==null) msg="Morate unijeti lijek";
 		else msg = Validator.validirajLijek(sesija, listaLijekova.getSelectedItem().toString());
+		
 		if(msg != ""){
 			label_obavijest.setText(msg);
 			return false;
