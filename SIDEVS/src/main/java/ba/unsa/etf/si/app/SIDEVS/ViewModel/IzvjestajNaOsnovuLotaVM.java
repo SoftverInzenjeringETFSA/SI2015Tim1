@@ -13,6 +13,7 @@ import java.util.*;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
@@ -33,6 +34,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.*;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 
 public class IzvjestajNaOsnovuLotaVM {
+	final static Logger logger = Logger.getLogger(IzvjestajNaOsnovuLotaVM.class);
 	
 	private Sessions sesija;
 	private Document document;
@@ -64,6 +66,7 @@ public class IzvjestajNaOsnovuLotaVM {
 		return datum_ulaza_string;
 		}
 		catch (Exception e) {
+			logger.error(e);
 			e.printStackTrace();
 		}
 		return "-";
@@ -80,6 +83,7 @@ public class IzvjestajNaOsnovuLotaVM {
 		return String.valueOf(kolicina_ulaza);
 		}
 		catch (Exception e) {
+			logger.error(e);
 			e.printStackTrace();
 		}
 		return "0";
@@ -101,6 +105,7 @@ public class IzvjestajNaOsnovuLotaVM {
 		return datum_otpisa_string;}
 		}
 		catch (Exception e) {
+			logger.error(e);
 			e.printStackTrace();
 		}
 		return "-";
@@ -117,6 +122,7 @@ public class IzvjestajNaOsnovuLotaVM {
 		return String.valueOf(kolicina_otpisa);
 		}
 		catch (Exception e) {
+			logger.error(e);
 			e.printStackTrace();
 		}
 		return "0";
@@ -139,6 +145,7 @@ public class IzvjestajNaOsnovuLotaVM {
 		return lista_datuma_izlaza;
 		}
 		catch (Exception e) {
+			logger.error(e);
 			e.printStackTrace();
 		}
 		return Collections.emptyList();
@@ -160,6 +167,7 @@ public class IzvjestajNaOsnovuLotaVM {
 		return lista_kolicine_izlaza;
 		}
 		catch (Exception e) {
+			logger.error(e);
 			e.printStackTrace();
 		}
 		return Collections.emptyList();
@@ -235,8 +243,10 @@ public class IzvjestajNaOsnovuLotaVM {
 				document.close();
 				writer.close();
 			} catch (DocumentException e) {
+				logger.error(e);
 				System.out.println(e.getMessage());
 			} catch (FileNotFoundException e) {
+				logger.error(e);
 				System.out.println(e.getMessage());
 			}
 
@@ -245,7 +255,7 @@ public class IzvjestajNaOsnovuLotaVM {
 					File myFile = new File(new_file_path);
 					Desktop.getDesktop().open(myFile);
 				} catch (IOException ex) {
-					// no application registered for PDFs
+					logger.error(ex);
 				}
 			}
 		}		

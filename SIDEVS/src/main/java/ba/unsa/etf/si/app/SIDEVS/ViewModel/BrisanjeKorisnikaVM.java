@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -23,8 +24,11 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SIDEVS.View.Login;
+import ba.unsa.etf.si.app.SIDEVS.View.Radnik.BrisanjeKupca;
 
 public class BrisanjeKorisnikaVM {
+	
+	final static Logger logger = Logger.getLogger(BrisanjeKorisnikaVM.class);
 
 	public static boolean BrisiKorisnika(Sessions ses, String ime, String prezime) throws NoSuchAlgorithmException,InvalidKeySpecException {
 		try{
@@ -37,6 +41,7 @@ public class BrisanjeKorisnikaVM {
 			ses.getSession().delete(k);
 			t.commit();
 		} catch (Exception e) {
+			logger.error(e);
 			e.printStackTrace();
 			return false;
 		}

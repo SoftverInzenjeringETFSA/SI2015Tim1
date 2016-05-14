@@ -14,6 +14,7 @@ import java.util.Set;
 
 import javax.swing.JFileChooser;
 
+import org.apache.log4j.Logger;
 import org.hibernate.criterion.Restrictions;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -30,6 +31,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.*;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 
 public class IzvjestajUlaziIzlaziVM {
+	final static Logger logger = Logger.getLogger(IzvjestajUlaziIzlaziVM.class);
 
 	
 	private Sessions sesija;
@@ -241,8 +243,10 @@ public class IzvjestajUlaziIzlaziVM {
 				document.close();
 				writer.close();
 			} catch (DocumentException e) {
+				logger.error(e);
 				System.out.println(e.getMessage());
 			} catch (FileNotFoundException e) {
+				logger.error(e);
 				System.out.println(e.getMessage());
 			}
 
@@ -251,7 +255,7 @@ public class IzvjestajUlaziIzlaziVM {
 					File myFile = new File(new_file_path);
 					Desktop.getDesktop().open(myFile);
 				} catch (IOException ex) {
-					// no application registered for PDFs
+					logger.error(ex);
 				}
 			}
 		}		

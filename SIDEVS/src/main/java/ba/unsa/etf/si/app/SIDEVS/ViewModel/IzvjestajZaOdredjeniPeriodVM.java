@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.log4j.Logger;
 import org.hibernate.criterion.Restrictions;
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
@@ -27,6 +29,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 public class IzvjestajZaOdredjeniPeriodVM {
+	final static Logger logger = Logger.getLogger(IzvjestajZaOdredjeniPeriodVM.class);
 	
 	private Sessions sesija;
 	
@@ -217,8 +220,10 @@ public class IzvjestajZaOdredjeniPeriodVM {
 					document.close();
 					writer.close();
 				} catch (DocumentException e) {
+					logger.error(e);
 					System.out.println(e.getMessage());
 				} catch (FileNotFoundException e) {
+					logger.error(e);
 					System.out.println(e.getMessage());
 				}
 
@@ -227,7 +232,7 @@ public class IzvjestajZaOdredjeniPeriodVM {
 						File myFile = new File(new_file_path);
 						Desktop.getDesktop().open(myFile);
 					} catch (IOException ex) {
-						// no application registered for PDFs
+						logger.error(ex);
 					}
 				}
 			}		

@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
@@ -25,7 +26,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 
 public class OtpisLijekovaVM {
-	
+	final static Logger logger = Logger.getLogger(OtpisLijekovaVM.class);
 	private static Sessions sesija;
 	
 	public OtpisLijekovaVM(Sessions sesija){
@@ -73,6 +74,7 @@ public class OtpisLijekovaVM {
 			t.commit();	
 			
 		} catch (Exception e) {
+			logger.error(e);
 			e.printStackTrace();
 			return false;
 		}

@@ -18,6 +18,7 @@ import java.util.Set;
 
 import javax.swing.JFileChooser;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -36,6 +37,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.*;
 import ba.unsa.etf.si.app.SIDEVS.Validation.*;
 
 public final class IzvjestajZaKupcaVM {
+	final static Logger logger = Logger.getLogger(IzvjestajZaKupcaVM.class);
 	
 	//URADITI PDF
 	

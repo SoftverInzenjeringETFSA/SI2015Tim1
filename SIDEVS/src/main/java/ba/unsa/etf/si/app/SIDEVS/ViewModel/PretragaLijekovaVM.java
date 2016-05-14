@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -17,6 +18,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 
 public class PretragaLijekovaVM {
+	final static Logger logger = Logger.getLogger(PretragaLijekovaVM.class);
 	private static Sessions s;
 	
 	public PretragaLijekovaVM(Sessions s){

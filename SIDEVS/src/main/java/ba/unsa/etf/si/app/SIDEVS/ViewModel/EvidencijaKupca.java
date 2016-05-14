@@ -2,15 +2,17 @@ package ba.unsa.etf.si.app.SIDEVS.ViewModel;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Kupac;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.View.Radnik.BrisanjeKupca;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.*;
 
 public final class EvidencijaKupca {
-	
+	final static Logger logger = Logger.getLogger(EvidencijaKupca.class);
 
 	
 	private static Sessions s;
@@ -54,6 +56,7 @@ public final class EvidencijaKupca {
 				else throw new Exception("Kupac kojeg ste unijeli već postoji");
 			}
 			catch(Exception e){
+				logger.error(e);
 				throw e;
 			}
 		}
