@@ -23,7 +23,6 @@ import Exceptions.WrongInputException;
 import ba.unsa.etf.si.app.SIDEVS.Model.Kupac;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
-import ba.unsa.etf.si.app.SIDEVS.Model.ObrisanLot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
@@ -166,7 +165,7 @@ public class IzvjestajUlaziIzlazi {
 						List<Lot> sviLotovi= iz.vratiSveLotove(odabraniLijek, odabranoSkladiste);	
 						List<Lot> ulazniLotovi = iz.vratiUlazneLotove(sviLotovi, datum_od, datum_do);		
 						List<Lot> izlazniLotovi = iz.vratiIzlazneLotove(sviLotovi, datum_od, datum_do);			
-						List<ObrisanLot> otpisaniLotovi = iz.vratiOtpisaneLotove(sviLotovi, datum_od, datum_do);
+						List<Lot> otpisaniLotovi = iz.vratiOtpisaneLotove(sviLotovi, datum_od, datum_do);//obrisan
 						
 						List<Integer> kolicineUlaznih = iz.vratiKolicine(ulazniLotovi, true);
 						List<Integer> kolicineIzlaznih = iz.vratiKolicine(izlazniLotovi, false);

@@ -92,8 +92,9 @@ public class IzvjestajNaOsnovuLotaVM {
 		try
 		{
 		//izabrani lot
-		Criteria criteria = ses.getSession().createCriteria(ObrisanLot.class).add(Restrictions.eq("broj_lota", broj_lota));
-		List<ObrisanLot> listaObrisanihLotova = criteria.list();
+			//obrisani
+		Criteria criteria = ses.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", broj_lota));
+		List<Lot> listaObrisanihLotova = criteria.list();
 		if (listaObrisanihLotova.size()!=0) {
 		Date datum_otpisa = listaObrisanihLotova.get(0).getDatum_otpisa();
 		
@@ -110,10 +111,11 @@ public class IzvjestajNaOsnovuLotaVM {
 	
 	public static String kolicina_otpisa (Sessions ses, String broj_lota) throws NoSuchAlgorithmException,InvalidKeySpecException
 	{
+		//	obrisan
 		try
 		{
-		Criteria criteria = ses.getSession().createCriteria(ObrisanLot.class).add(Restrictions.eq("broj_lota", broj_lota));
-		List<ObrisanLot> listaObrisanihLotova = criteria.list();
+		Criteria criteria = ses.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", broj_lota));
+		List<Lot> listaObrisanihLotova = criteria.list();
 		if (listaObrisanihLotova.size()==0) return "0";
 		int kolicina_otpisa = listaObrisanihLotova.get(0).getKolicina_tableta();
 		return String.valueOf(kolicina_otpisa);

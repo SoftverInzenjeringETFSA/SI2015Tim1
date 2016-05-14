@@ -8,23 +8,28 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.transaction.Transaction;
 
 import org.hibernate.Session;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Administrator;
+import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Menadzer;
 import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
+import ba.unsa.etf.si.app.SIDEVS.View.Admin.DodavanjeKorisnika;
 import ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran;
 import ba.unsa.etf.si.app.SIDEVS.View.Radnik.EvidencijaLotova;
+import ba.unsa.etf.si.app.SIDEVS.ViewModel.DodavanjeKorisnikaVM;
 
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
@@ -45,7 +50,9 @@ public class Login {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login window = new Login();
+					Login window = new Login(); window.frmLogin.setVisible(true);
+
+					
 					window.frmLogin.setVisible(true);
 				} catch (Exception e) {
 					logger.error(e);
@@ -62,7 +69,24 @@ public class Login {
 	}
 	
 	public Login() {
-		HibernateUtil.getSessionFactory().openSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = (Transaction) s.beginTransaction();
+		try{
+			/*
+			Korisnik a = new Administrator();
+			a.setAdresa("a");
+			a.setDatum_polaska_rada(new Date());
+			a.setEmail("admin");
+			a.setIme("admin");
+			a.setPrezime("admin");
+			a.setJmbg("1234567890123");
+			a.setLozinka("password");
+			a.setRadno_mjesto("admin");
+			a.setTelefon("123456");
+			s.save(a);
+			t.commit();*/
+		}
+		catch(Exception ex){}	
 		initialize();
 	}
 

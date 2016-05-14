@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.FakturaLot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
-import ba.unsa.etf.si.app.SIDEVS.Model.ObrisanLot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Pakovanje;
 
 public final class TrenutnoStanjePomocna {
@@ -35,7 +34,7 @@ public final class TrenutnoStanjePomocna {
 		return kolicine;
 	}
 	
-	public static Integer vratiKolicinuOtpisanog(ObrisanLot lot){
+	public static Integer vratiKolicinuOtpisanog(Lot lot){
 		return vratiStanjePomocna((Lot)lot);
 	}
 	

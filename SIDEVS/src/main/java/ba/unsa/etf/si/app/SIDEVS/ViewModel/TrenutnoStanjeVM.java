@@ -65,7 +65,8 @@ public class TrenutnoStanjeVM {
 		return kolicine;
 	}
 	
-	public Integer vratiKolicinuOtpisanog(ObrisanLot lot){
+	//OBRISAN
+	public Integer vratiKolicinuOtpisanog(Lot lot){
 		return vratiStanjePomocna((Lot)lot);
 	}
 	

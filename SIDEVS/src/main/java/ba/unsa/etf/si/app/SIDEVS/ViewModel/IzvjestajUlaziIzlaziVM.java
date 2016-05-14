@@ -101,16 +101,17 @@ public class IzvjestajUlaziIzlaziVM {
 		return izlazniLotovi;
 	}
 	
-	public List<ObrisanLot> vratiOtpisaneLotove(List<Lot> sviLotovi, String datumOd, String datumDo){
+	//obrisan lot
+	public List<Lot> vratiOtpisaneLotove(List<Lot> sviLotovi, String datumOd, String datumDo){
 		Date datum_od = Conversions.stringToDate(datumOd);
 		Date datum_do = Conversions.stringToDate(datumDo);
 		
-		List<ObrisanLot> obrisaniLotovi = sesija.getSession().createCriteria(ObrisanLot.class).list();
+		List<Lot> obrisaniLotovi = sesija.getSession().createCriteria(Lot.class).list();
 		
-		List<ObrisanLot> otpisaniLotovi = new ArrayList<ObrisanLot>();
+		List<Lot> otpisaniLotovi = new ArrayList<Lot>();
 		
 		for (Lot lot: sviLotovi){
-			for (ObrisanLot l: obrisaniLotovi)
+			for (Lot l: obrisaniLotovi)
 				if (lot.getBroj_lota() == l.getBroj_lota() && l.getDatum_otpisa().after(datum_od) && l.getDatum_otpisa().before(datum_do))
 					otpisaniLotovi.add(l);		
 		}
@@ -156,7 +157,7 @@ public class IzvjestajUlaziIzlaziVM {
 		return kolicine;
 	}
 	
-	public Integer vratiKolicinuOtpisanog(ObrisanLot lot){
+	public Integer vratiKolicinuOtpisanog(Lot lot){
 		return vratiStanjePomocna((Lot)lot);
 	}
 	

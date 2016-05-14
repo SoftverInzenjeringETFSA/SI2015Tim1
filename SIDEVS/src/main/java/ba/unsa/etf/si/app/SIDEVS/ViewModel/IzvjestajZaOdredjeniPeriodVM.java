@@ -45,17 +45,17 @@ public class IzvjestajZaOdredjeniPeriodVM {
 		
 		return lotovi;
 	}
-	
-	public List<ObrisanLot> vratiOtpisaneLotove(List<Lot> sviLotovi, String datumOd, String datumDo){
+	//OBRISAN
+	public List<Lot> vratiOtpisaneLotove(List<Lot> sviLotovi, String datumOd, String datumDo){
 		Date datum_od = Conversions.stringToDate(datumOd);
 		Date datum_do = Conversions.stringToDate(datumDo);
 		
-		List<ObrisanLot> obrisaniLotovi = sesija.getSession().createCriteria(ObrisanLot.class).list();
+		List<Lot> obrisaniLotovi = sesija.getSession().createCriteria(Lot.class).list();
 		
-		List<ObrisanLot> otpisaniLotovi = new ArrayList<ObrisanLot>();
+		List<Lot> otpisaniLotovi = new ArrayList<Lot>();
 		
 		for (Lot lot: sviLotovi){
-			for (ObrisanLot l: obrisaniLotovi)
+			for (Lot l: obrisaniLotovi)
 				if (lot.getBroj_lota() == l.getBroj_lota() && l.getDatum_otpisa().after(datum_od) && l.getDatum_otpisa().before(datum_do))
 					otpisaniLotovi.add(l);		
 		}
@@ -89,13 +89,13 @@ public class IzvjestajZaOdredjeniPeriodVM {
 			suma += f.getKolicina();
 		}
 		List<Lot> lot_tmp = new ArrayList<Lot>(); lot_tmp.add(l);
-		List<ObrisanLot> obrisaniLotovi = vratiOtpisaneLotove(lot_tmp, datumOd, datumDo);
-		for (ObrisanLot otpisani: obrisaniLotovi)
+		List<Lot> obrisaniLotovi = vratiOtpisaneLotove(lot_tmp, datumOd, datumDo);
+		for (Lot otpisani: obrisaniLotovi)
 			suma += vratiKolicinuOtpisanog(otpisani);
 		return suma;	
 	}
 		
-		public Integer vratiKolicinuOtpisanog(ObrisanLot lot){
+		public Integer vratiKolicinuOtpisanog(Lot lot){
 			return vratiStanjePomocna((Lot)lot);
 		}
 		
