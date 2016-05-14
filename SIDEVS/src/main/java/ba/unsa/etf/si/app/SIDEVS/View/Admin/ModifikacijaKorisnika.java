@@ -227,7 +227,7 @@ public class ModifikacijaKorisnika {
 					logger.error(ex);
 					
 				}
-				resetContent();
+				//resetContent();
 				listaKorisnikaModifikacija.setSelectedItem("");
 				radnikModifikacija.setSelected(false);
 				menadzerModifikacija.setSelected(false);
