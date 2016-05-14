@@ -203,7 +203,8 @@ public final class FakturaVM {
 									double cijena = BigDecimal.valueOf(cijene.get(index) * 0.17 + cijene.get(index))
 											.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 									cijena_po_lijeku += cijena;
-									cell = new PdfPCell(new Paragraph(Double.toString(cijena) + " KM"));
+									String cijena_string = Double.toString(cijena);
+									cell = new PdfPCell(new Paragraph(String.format("%.2f",cijena) + " KM"));
 									cell.setPadding(10);
 									cell.setBorder(Rectangle.NO_BORDER);
 									table_lot.addCell(cell);
@@ -219,7 +220,7 @@ public final class FakturaVM {
 									
 									total += cijena*kolicine.get(index);
 									
-									cell = new PdfPCell(new Paragraph(Double.toString(cijena*kolicine.get(index))+ " KM"));
+									cell = new PdfPCell(new Paragraph(Double.toString(Math.round((cijena*kolicine.get(index)*100)/100))+ " KM"));
 									cell.setPadding(10);
 									cell.setBorder(Rectangle.NO_BORDER);
 									table_lot.addCell(cell);
@@ -238,7 +239,7 @@ public final class FakturaVM {
 								cell.setBorder(Rectangle.BOTTOM | Rectangle.TOP);
 								table_lot.addCell(cell);
 
-								cell = new PdfPCell(new Paragraph(Double.toString(cijena_po_lijeku) + " KM", boldFont));
+								cell = new PdfPCell(new Paragraph(String.format("%.2f", cijena_po_lijeku) + " KM", boldFont));
 								cell.setPadding(10);
 								cell.setBorder(Rectangle.BOTTOM | Rectangle.TOP);
 								table_lot.addCell(cell);
@@ -297,6 +298,7 @@ public final class FakturaVM {
 					}
 				}
 			}
+			
 
 		} catch (Exception ex) {
 			logger.error(ex);
