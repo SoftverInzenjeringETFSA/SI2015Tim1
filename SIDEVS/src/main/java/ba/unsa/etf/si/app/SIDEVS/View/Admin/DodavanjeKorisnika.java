@@ -78,11 +78,11 @@ public class DodavanjeKorisnika {
 	public void resetContent(){
 		ime.setText("");
 		prezime.setText("");
-		maticniBroj.setText("");
-		brojTelefona.setText("");
-		email.setText("");
+		maticniBroj.setValue(null);
+		brojTelefona.setValue(null);
+		email.setValue(null);
 		radnoMjesto.setText("");
-		datumPocetkaRada.setText(""); 
+		datumPocetkaRada.setValue(null); 
 		adresa.setText("");
 	}
 
