@@ -22,8 +22,10 @@ import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
+import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
+import ba.unsa.etf.si.app.SIDEVS.ViewModel.GlavneMetode;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajNaOsnovuLotaVM;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -113,42 +115,47 @@ public class IzvjestajNaOsnovuLota {
 				try{
 					clearTable();
 					if (validirajPolja()){
-						
-						 String lot = listaLotova.getSelectedItem().toString();
-		                   //ulaz
-		                   String datum_ulaza = ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajNaOsnovuLotaVM.datum_ulaza(_sesija, lot);
-		                   String kolicina_ulaza = ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajNaOsnovuLotaVM.kolicina_ulaza(_sesija, lot);
-						   if (datum_ulaza!="-")
-						   {   
-							   String[] s = {datum_ulaza,kolicina_ulaza,"ulaz"};
-							   Object[] row = {datum_ulaza,kolicina_ulaza,"ulaz"};
-							   model.addRow(row);
-							   vm.dodaj(s);
-						   }
-						   //izlazi
-						   List<String> lista_Datuma_izlaza = ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajNaOsnovuLotaVM.lista_datumi_izlaza(_sesija, lot);
-						   List<String> lista_Kolicina_izlaza = ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajNaOsnovuLotaVM.lista_kolicine_izlaza(_sesija, lot);
-						   if (lista_Datuma_izlaza.size()!=0 && lista_Datuma_izlaza.size()==lista_Kolicina_izlaza.size())
-						   {
-							   for (int i=0; i<lista_Datuma_izlaza.size();i++)
-							   {
-								   String[] s = {lista_Datuma_izlaza.get(i),lista_Kolicina_izlaza.get(i),"izlaz"};
-								   Object[] row1={lista_Datuma_izlaza.get(i),lista_Kolicina_izlaza.get(i),"izlaz"};
-								   model.addRow(row1);
-								   vm.dodaj(s);
+						 
+						   List<Lot> sviLotovi = GlavneMetode.vratiSveLotove(_sesija);
+						   List<Lot> otpisaniLotovi = GlavneMetode.vratiOtpisaneLotove(_sesija);
+						  
+						   Lot lotic = (Lot) _sesija.getSession().createCriteria(Lot.class).add(Restrictions.like("broj_lota", listaLotova.getSelectedItem().toString())).list().get(0);
+
+						   //ulazi
+						   for (Lot l: sviLotovi){
+							   if (l.getBroj_lota() == lotic.getBroj_lota()){
+								   System.out.println("ovdje");
+								   String[] s = {Conversions.dateToString(l.getDatum_ulaza()),GlavneMetode.vratiKolicinuUlaza(l).toString(),"ulaz"};
+								   Object[] row = {Conversions.dateToString(l.getDatum_ulaza()),GlavneMetode.vratiKolicinuUlaza(l).toString(),"ulaz"};
+								   model.addRow(row);
+								   vm.dodaj(s); 
 							   }
 						   }
 						   
-						   //otpis
-						   String kolicina_otpisa=ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajNaOsnovuLotaVM.kolicina_otpisa(_sesija,lot);
-						   String datum_otpisa=ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajNaOsnovuLotaVM.datum_otpisa(_sesija, lot);
-						   if (datum_otpisa!="-")
-						   {
-							   String[] s = {datum_otpisa, kolicina_otpisa, "otpis"};
-							   Object[] row2= {datum_otpisa, kolicina_otpisa, "otpis"};
-							   model.addRow(row2);
-							   vm.dodaj(s);
+						   //izlazi
+						   for (Lot l: sviLotovi){
+							   if (l.getBroj_lota() == lotic.getBroj_lota()){
+								   List<String> datumiIzlaza = vm.lista_datumi_izlaza(_sesija, l.getBroj_lota());
+								   for (String d: datumiIzlaza){
+									   String[] s = {d,GlavneMetode.vratiKolicinuIzlaza(l).toString(),"izlaz"};
+									   Object[] row = {d,GlavneMetode.vratiKolicinuIzlaza(l).toString(),"izlaz"};
+									   model.addRow(row);
+									   vm.dodaj(s);
+								   }
+							   }
+							  
 						   }
+
+						   //otpis	
+						   for (Lot l: otpisaniLotovi){
+							   if (l.getBroj_lota() == lotic.getBroj_lota()){
+								   String[] s = {Conversions.dateToString(l.getDatum_otpisa()),GlavneMetode.vratiKolicinuOtpisanog(l).toString(),"otpis"};
+								   Object[] row = {Conversions.dateToString(l.getDatum_otpisa()),GlavneMetode.vratiKolicinuOtpisanog(l).toString(),"otpis"};
+								   model.addRow(row);
+								   vm.dodaj(s);
+							   }   
+						   }
+						   
 						   if (model.getRowCount()==0) 
 								label_obavijest.setText("Nema podataka za taj vremenski period.");
 					}
@@ -171,8 +178,8 @@ public class IzvjestajNaOsnovuLota {
 					label_obavijest.setText("Nije moguce generisati PDF jer nema podataka.");
 				}
 				else{
-				vm.createPDF(listaLotova.getSelectedItem().toString());
-				frmMenadzerIzvjestajNa.dispose();
+					vm.createPDF(listaLotova.getSelectedItem().toString());
+					frmMenadzerIzvjestajNa.dispose();
 				}
 			}
 		});

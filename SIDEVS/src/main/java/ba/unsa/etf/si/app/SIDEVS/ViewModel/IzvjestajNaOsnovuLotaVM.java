@@ -50,81 +50,7 @@ public class IzvjestajNaOsnovuLotaVM {
 		tableData.setSpacingBefore(10f);
 		tableData.setSpacingAfter(10f);
 	}
-	
-	public static String datum_ulaza (Sessions ses, String broj)throws NoSuchAlgorithmException,InvalidKeySpecException
-	{
-		try
-		{
-		//izabrani lot
-		Criteria criteria = ses.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", broj));
-		List<Lot> listaLotova = criteria.list();
-		Date datum_ulaza = listaLotova.get(0).getDatum_ulaza();
-		
-		//konverzija date to string
-		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-		String datum_ulaza_string=formatter.format(datum_ulaza);
-		return datum_ulaza_string;
-		}
-		catch (Exception e) {
-			logger.error(e);
-		}
-		return "-";
-	}
-	
-	public static String kolicina_ulaza (Sessions ses, String broj)throws NoSuchAlgorithmException,InvalidKeySpecException
-	{
-		try
-		{
-		//izabrani lot
-		Criteria criteria = ses.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", broj));
-		List<Lot> listaLotova = criteria.list();
-		int kolicina_ulaza=listaLotova.get(0).getKolicina_tableta();
-		return String.valueOf(kolicina_ulaza);
-		}
-		catch (Exception e) {
-			logger.error(e);
-		}
-		return "0";
-	}
-	
-	public static String datum_otpisa (Sessions ses, String broj_lota) throws NoSuchAlgorithmException,InvalidKeySpecException
-	{
-		try
-		{
-		//izabrani lot
-			//obrisani
-		Criteria criteria = ses.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", broj_lota));
-		List<Lot> listaObrisanihLotova = criteria.list();
-		if (listaObrisanihLotova.size()!=0) {
-		Date datum_otpisa = listaObrisanihLotova.get(0).getDatum_otpisa();
-		
-		//konverzija date to string
-		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-		String datum_otpisa_string=formatter.format(datum_otpisa);
-		return datum_otpisa_string;}
-		}
-		catch (Exception e) {
-			logger.error(e);
-		}
-		return "-";
-	}
-	
-	public static String kolicina_otpisa (Sessions ses, String broj_lota) throws NoSuchAlgorithmException,InvalidKeySpecException
-	{
-		//	obrisan
-		try
-		{
-		Criteria criteria = ses.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", broj_lota));
-		List<Lot> listaObrisanihLotova = criteria.list();
-		if (listaObrisanihLotova.size()==0) return "0";
-		int kolicina_otpisa = listaObrisanihLotova.get(0).getKolicina_tableta();
-		return String.valueOf(kolicina_otpisa);
-		}
-		catch (Exception e) {
-			logger.error(e);
-		}
-		return "0";
-	}
+
 	
 	public static List<String> lista_datumi_izlaza (Sessions ses, String broj_lota)throws NoSuchAlgorithmException,InvalidKeySpecException
 	{
@@ -148,26 +74,6 @@ public class IzvjestajNaOsnovuLotaVM {
 		return Collections.emptyList();
 	}
 	
-	public static List<String> lista_kolicine_izlaza (Sessions ses, String broj_lota)throws NoSuchAlgorithmException,InvalidKeySpecException
-	{
-		try
-		{
-		Criteria criteria = ses.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", broj_lota));
-		List<Lot> listaLotova = criteria.list();
-		List<FakturaLot> listaFakturaLot = new ArrayList<FakturaLot> (listaLotova.get(0).getFaktureLotovi());
-		List<String> lista_kolicine_izlaza = new ArrayList<String>();
-		for (int i=0;i<listaFakturaLot.size();i++)
-		{
-			String kolicina_izlaza_string=String.valueOf(listaFakturaLot.get(i).getKolicina());
-			lista_kolicine_izlaza.add(kolicina_izlaza_string);
-		}
-		return lista_kolicine_izlaza;
-		}
-		catch (Exception e) {
-			logger.error(e);
-		}
-		return Collections.emptyList();
-	}
 	
 	public void dodaj(String[] celije){
 		lista.add(celije);
@@ -194,7 +100,7 @@ public class IzvjestajNaOsnovuLotaVM {
 				
 				PdfPTable table = new PdfPTable(2);
 				
-				String[] top = {"SIDEVS", "Datum: " + datum};					
+				String[] top = {"IZVJESTAJ ", "Lot broj: " + lot};					
 				for (String s: top){
 					PdfPCell cell = new PdfPCell(new Paragraph(s, titleFont));
 					cell.setPadding(10);
@@ -229,8 +135,9 @@ public class IzvjestajNaOsnovuLotaVM {
 				PdfPTable t = new PdfPTable(3);
 				for (String[] stringovi: lista){
 					for (String ss: stringovi){
-						 cell = new PdfPCell(new Paragraph(ss));
-						cell.setPadding(10);
+						cell = new PdfPCell(new Paragraph(ss));
+						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+						cell.setPadding(6);
 						t.addCell(cell);
 					}
 				}

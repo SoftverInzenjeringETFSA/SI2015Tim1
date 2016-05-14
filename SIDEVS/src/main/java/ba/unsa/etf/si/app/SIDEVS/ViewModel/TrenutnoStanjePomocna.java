@@ -13,6 +13,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Pakovanje;
 public final class TrenutnoStanjePomocna {
 
 	final static Logger logger = Logger.getLogger(TrenutnoStanjePomocna.class);
+	
 	public static List<Integer> vratiKolicine(List<Lot> lotovi, Boolean ulazni){
 		List<Integer> kolicine = new ArrayList<Integer>();
 		if (ulazni){

@@ -2,6 +2,7 @@ package ba.unsa.etf.si.app.SIDEVS.ViewModel;
 
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.hibernate.criterion.Restrictions;
@@ -10,11 +11,31 @@ import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 
 public final class GlavneMetode {
 	
+	public static Set<Skladiste> vratiSkladista(Lot lot){
+		Set<Pakovanje> pakovanja = lot.getPakovanja();
+		Set<Skladiste> skladista = new HashSet<Skladiste>();
+		for (Pakovanje p: pakovanja){
+			skladista.add(p.getSkladiste());
+		}
+		return skladista;
+	}
 	
 	public static List<Lot> vratiSveLotove(Sessions sesija){
 		List<Lot> lotovi = sesija.getSession().createCriteria(Lot.class).list();
 		return lotovi;
 	}
+	
+
+	public static List<Lot> vratiOtpisaneLotove(Sessions sesija){
+		List<Lot> lotovi = sesija.getSession().createCriteria(Lot.class).add(Restrictions.isNotNull("datum_otpisa")).list();
+		return lotovi;
+	}
+	
+	public static List<Lot> vratiNeotpisaneLotove(Sessions sesija){
+		List<Lot> lotovi = sesija.getSession().createCriteria(Lot.class).add(Restrictions.isNull("datum_otpisa")).list();
+		return lotovi;
+	}
+	
 	
 	public static List<Lot> vratiSveLotoveOdDo(Sessions sesija, String datumOd, String datumDo){
 		Date datum_od = Conversions.stringToDate(datumOd);
@@ -52,7 +73,14 @@ public final class GlavneMetode {
 		return kolicina;
 	}
 	
-
+	public static Integer vratiKolicinuIzlaza(Lot lot){
+		Integer kolicina = 0;
+		Set<Skladiste> skladista = vratiSkladista(lot);
+		for (Skladiste s: skladista){
+			kolicina += vratiKolicinuIzlaza(lot, s);
+		}
+		return kolicina;
+	}
 	
 	public static Integer vratiKolicinuUlaza(Lot lot, Skladiste skladiste){
 		Set<Pakovanje> pakovanja = lot.getPakovanja();
@@ -63,11 +91,29 @@ public final class GlavneMetode {
 		return kolicina;
 	}
 	
+	public static Integer vratiKolicinuUlaza(Lot lot){
+		Integer kolicina = 0;
+		Set<Skladiste> skladista = vratiSkladista(lot);
+		for (Skladiste s: skladista){
+			kolicina += vratiKolicinuUlaza(lot, s);
+		}
+		return kolicina;
+	}
+	
 	public static Integer vratiKolicinuOtpisanog(Lot lot, Skladiste skladiste){
 		Set<FakturaLot> fakture = lot.getFaktureLotovi();
 		Integer kolicina = vratiKolicinuUlaza(lot, skladiste);
 		for (FakturaLot f: fakture){
 			kolicina -= f.getKolicina();
+		}
+		return kolicina;
+	}
+	
+	public static Integer vratiKolicinuOtpisanog(Lot lot){
+		Integer kolicina = 0;
+		Set<Skladiste> skladista = vratiSkladista(lot);
+		for (Skladiste s: skladista){
+			kolicina += vratiKolicinuOtpisanog(lot, s);
 		}
 		return kolicina;
 	}

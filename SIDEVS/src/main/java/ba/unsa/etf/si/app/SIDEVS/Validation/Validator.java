@@ -98,7 +98,7 @@ public final class Validator {
 		else if(brojLota.length() < 6 && brojLota.length()>15) msg = "Broj lota mora biti između 6 i 15";
 		else {
 		List<Lot> lotovi = sesija.getSession().createCriteria(Lot.class).
-				add(Restrictions.eq("broj_lota", brojLota)).add(Restrictions.isNull("datum_otpisa")).list();
+				add(Restrictions.eq("broj_lota", brojLota)).list();
 
 		if (lotovi.size()==0) msg = "Uneseni broj lota ne postoji u sistemu";
 		}
