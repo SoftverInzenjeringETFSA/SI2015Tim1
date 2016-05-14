@@ -78,7 +78,7 @@ public class BrisanjeKupca {
 		frmBrisanjeKupca.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmBrisanjeKupca.getContentPane().setLayout(null);
 		frmBrisanjeKupca.setLocationRelativeTo(null);
-		
+		frmBrisanjeKupca.setResizable(false);
 		JLabel lblKupac = new JLabel("Kupac:");
 		lblKupac.setBounds(10, 11, 69, 14);
 		frmBrisanjeKupca.getContentPane().add(lblKupac);

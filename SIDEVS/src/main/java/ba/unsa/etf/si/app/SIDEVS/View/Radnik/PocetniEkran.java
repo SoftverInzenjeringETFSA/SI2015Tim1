@@ -35,7 +35,6 @@ public class PocetniEkran {
     private DodajLotUSkladiste dlus;
     private KreiranjeFakture kf;
 
-
 	/**
 	 * Create the application.
 	 */
@@ -116,9 +115,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-
 					if(ol==null) ol = new OtpisLijeka(s);
-					OtpisLijeka ol = new OtpisLijeka(s);
 				} catch (Exception c) {
 					logger.error(c);
 				}

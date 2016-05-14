@@ -13,16 +13,12 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Administrator;
-import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Menadzer;
 import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
-import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
-import ba.unsa.etf.si.app.SIDEVS.View.Admin.DodavanjeKorisnika;
 import ba.unsa.etf.si.app.SIDEVS.View.Admin.PocetniEkran;
 import ba.unsa.etf.si.app.SIDEVS.View.Radnik.EvidencijaLotova;
-import ba.unsa.etf.si.app.SIDEVS.ViewModel.DodavanjeKorisnikaVM;
 
 import javax.swing.JButton;
 import java.awt.Color;
@@ -32,13 +28,12 @@ import java.awt.event.MouseEvent;
 import java.util.Date;
 
 
-import org.apache.log4j.Logger;
 
+import org.apache.log4j.Logger;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 
 public class Login {
-	final static Logger logger = Logger.getLogger(Login.class);
 	private JFrame frmLogin;
 	private ChangePassword cp;
 	private JTextField korisnickoIme;
@@ -73,12 +68,10 @@ public class Login {
 					} catch (Exception ex) {
 						System.out.println(ex);
 					}*/
-					
 					Login window = new Login(); 
-				
 					window.frmLogin.setVisible(true);
 				} catch (Exception e) {
-					logger.error(e);
+					e.printStackTrace();
 				}
 			}
 		});
@@ -92,6 +85,7 @@ public class Login {
 	}
 	
 	public Login() {
+
 	/*	Session s = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = (Transaction) s.beginTransaction();
 		try{
@@ -110,6 +104,7 @@ public class Login {
 			t.commit();
 		}
 		catch(Exception ex){}	*/
+		HibernateUtil.getSessionFactory().openSession();
 		initialize();
 	}
 
@@ -186,7 +181,6 @@ public class Login {
 					frmLogin.dispose();
 				}
 				catch(Exception ex){
-					logger.error(ex);
 					labelError.setText(ex.getMessage());
 				}
 			}

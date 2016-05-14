@@ -32,6 +32,9 @@ public class BrisanjeKorisnikaVM {
 
 	public static boolean BrisiKorisnika(Sessions ses, String ime, String prezime) throws NoSuchAlgorithmException,InvalidKeySpecException {
 		try{
+			Korisnik a = ses.getKorisnik();
+			if(a.getIme() == ime && a.getPrezime() == prezime) return false;
+			
 			Transaction t = ses.getSession().beginTransaction();
 			Criteria criteria = ses.getSession().createCriteria(Korisnik.class).add(Restrictions.like("ime", ime).ignoreCase()).add(Restrictions.like("prezime", prezime).ignoreCase());
 			

@@ -102,7 +102,7 @@ public class OtpisLijeka {
 		frmOtpisLijeka.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmOtpisLijeka.getContentPane().setLayout(null);
 		frmOtpisLijeka.setLocationRelativeTo(null);
-		
+		frmOtpisLijeka.setResizable(false);
 		JLabel lblSkladite = new JLabel("Skladište:");
 		lblSkladite.setBounds(10, 11, 81, 14);
 		frmOtpisLijeka.getContentPane().add(lblSkladite);

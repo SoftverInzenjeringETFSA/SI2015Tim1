@@ -102,7 +102,7 @@ public class BrisanjeKorisnika {
 								add(Restrictions.eq("email", listaKorisnikaBrisanje.getSelectedItem())).list().get(0);
 						
 						boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.BrisanjeKorisnikaVM.BrisiKorisnika(_sesija, k.getIme(), k.getPrezime());		
-						if(!state) throw new Exception();
+						if(!state) throw new Exception("Brisanje nije uspjelo");
 
 									
 						noticeLabel.setForeground(Color.decode("#008000"));
