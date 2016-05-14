@@ -199,8 +199,8 @@ public final class FakturaVM {
 									cell.setBorder(Rectangle.NO_BORDER);
 									table_lot.addCell(cell);
 									
-									//3
-									double cijena = new BigDecimal(cijene.get(index) * 0.17 + cijene.get(index))
+									//3BigDecimal bd1 = BigDecimal.valueOf(d);
+									double cijena = BigDecimal.valueOf(cijene.get(index) * 0.17 + cijene.get(index))
 											.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 									cijena_po_lijeku += cijena;
 									cell = new PdfPCell(new Paragraph(Double.toString(cijena) + " KM"));
@@ -267,7 +267,7 @@ public final class FakturaVM {
 					PdfPCell cell = new PdfPCell(
 							new Paragraph("Total: "
 									+ Double.toString(
-											new BigDecimal(total).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue())
+											BigDecimal.valueOf(total).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue())
 									+ " KM", boldFont));
 					cell.setPadding(10);
 					cell.setColspan(5);

@@ -227,6 +227,7 @@ public class PocetniEkran {
 					BrisanjeKupca bk = new BrisanjeKupca(s);
 					bk.frmBrisanjeKupca.setVisible(true);
 				} catch (Exception c) {
+					logger.error(c);
 				}
 			}
 		});
@@ -263,7 +264,7 @@ public class PocetniEkran {
 					DodajKupca dk = new DodajKupca(s);				
 					dk.frmDodajKupca.setVisible(true);
 				} catch (Exception c) {
-					logger.error(e);
+					logger.error(c);
 				}
 			}
 		});

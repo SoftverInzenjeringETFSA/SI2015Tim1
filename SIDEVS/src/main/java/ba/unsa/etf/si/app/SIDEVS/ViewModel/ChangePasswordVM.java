@@ -36,7 +36,7 @@ public class ChangePasswordVM {
 			try{
 				s = Sessions.getInstance(username, p);
 			}catch(Exception e){
-				e.printStackTrace();
+				logger.error(e);
 				return false;
 			}
 			Transaction t = s.getSession().beginTransaction();
