@@ -23,6 +23,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Menadzer;
 import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
+import ba.unsa.etf.si.app.SIDEVS.Validation.EmailFormatter;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 import ba.unsa.etf.si.app.SIDEVS.View.Masks;
 import javax.swing.JLabel;
@@ -40,9 +41,9 @@ public class ModifikacijaKorisnika {
 	private JFrame frmAdministratormodifikacijaKorisnika;
 	private JTextField imeModifikacija;
 	private JTextField prezimeModifikacija;
-	private JTextField maticniBrojModifikacija;
-	private JTextField brojTelefonaModifikacija;
-	private JTextField emailModifikacija;
+	private JFormattedTextField maticniBrojModifikacija;
+	private JFormattedTextField brojTelefonaModifikacija;
+	private JFormattedTextField emailModifikacija;
 	private JTextField radnoMjestoModifikacija;
 	private JTextField adresa;
 	private JFormattedTextField datumPocetkaRadaModifikacija;
@@ -53,6 +54,7 @@ public class ModifikacijaKorisnika {
 
 	private JRadioButton menadzerModifikacija;
 	private JLabel label_obavijest;
+	private JLabel lblNameexamplecom;
 
 	/**
 	 * Launch the application.
@@ -93,11 +95,11 @@ public class ModifikacijaKorisnika {
 	public void resetContent(){
 		imeModifikacija.setText("");
 		prezimeModifikacija.setText("");
-		maticniBrojModifikacija.setText("");
-		brojTelefonaModifikacija.setText("");
-		emailModifikacija.setText("");
+		maticniBrojModifikacija.setValue(null);
+		brojTelefonaModifikacija.setValue(null);
+		emailModifikacija.setValue(null);
 		radnoMjestoModifikacija.setText("");
-		datumPocetkaRadaModifikacija.setText("");
+		datumPocetkaRadaModifikacija.setValue(null);
 		adresa.setText("");
 	}
 
@@ -125,17 +127,17 @@ public class ModifikacijaKorisnika {
 		prezimeModifikacija.setBounds(51, 139, 260, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(prezimeModifikacija);
 		
-		maticniBrojModifikacija = new JTextField();
+		maticniBrojModifikacija = new JFormattedTextField(Masks.vratiMaskuZaJMBG());
 		maticniBrojModifikacija.setColumns(10);
 		maticniBrojModifikacija.setBounds(51, 189, 260, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(maticniBrojModifikacija);
 		
-		brojTelefonaModifikacija = new JTextField();
+		brojTelefonaModifikacija = new JFormattedTextField(Masks.vratiMaskuZaTelefon());
 		brojTelefonaModifikacija.setColumns(10);
 		brojTelefonaModifikacija.setBounds(51, 239, 260, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(brojTelefonaModifikacija);
 		
-		emailModifikacija = new JTextField();
+		emailModifikacija = new JFormattedTextField(new EmailFormatter());
 		emailModifikacija.setColumns(10);
 		emailModifikacija.setBounds(51, 339, 260, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(emailModifikacija);
@@ -162,7 +164,7 @@ public class ModifikacijaKorisnika {
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(label_3);
 		
 		JLabel label_4 = new JLabel("Email");
-		label_4.setBounds(51, 324, 119, 14);
+		label_4.setBounds(51, 324, 73, 14);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(label_4);
 		
 		JLabel label_5 = new JLabel("Radno mjesto");
@@ -189,7 +191,7 @@ public class ModifikacijaKorisnika {
 		listaKorisnikaModifikacija.setBounds(50, 40, 159, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(listaKorisnikaModifikacija);
 		
-	    JButton btnModifikacija = new JButton("Azuriraj");
+	    JButton btnModifikacija = new JButton("Ažuriraj");
 		btnModifikacija.setBounds(222, 479, 86, 23);
 		btnModifikacija.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -225,7 +227,7 @@ public class ModifikacijaKorisnika {
 					logger.error(ex);
 					
 				}
-				resetContent();
+				//resetContent();
 				listaKorisnikaModifikacija.setSelectedItem("");
 				radnikModifikacija.setSelected(false);
 				menadzerModifikacija.setSelected(false);
@@ -264,6 +266,11 @@ public class ModifikacijaKorisnika {
 		label_obavijest = new JLabel("");
 		label_obavijest.setBounds(10, 521, 320, 25);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(label_obavijest);
+		
+		lblNameexamplecom = new JLabel("name@example.com");
+		lblNameexamplecom.setForeground(Color.DARK_GRAY);
+		lblNameexamplecom.setBounds(212, 324, 128, 14);
+		frmAdministratormodifikacijaKorisnika.getContentPane().add(lblNameexamplecom);
 		
 		
 		btnUcitaj.addActionListener(new ActionListener() {

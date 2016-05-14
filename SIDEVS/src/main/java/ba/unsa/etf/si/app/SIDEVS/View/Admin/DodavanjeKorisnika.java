@@ -39,6 +39,7 @@ public class DodavanjeKorisnika {
 	private JRadioButton radnik;
 	private JRadioButton menadzer;
 	private JFormattedTextField email;
+	private JLabel lblNameexamplecom;
 	/**
 	 * Launch the application.
 	 */
@@ -96,6 +97,7 @@ public class DodavanjeKorisnika {
 		frmAdministratorDodavanjeKorisnika.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmAdministratorDodavanjeKorisnika.getContentPane().setLayout(null);
 		frmAdministratorDodavanjeKorisnika.setLocationRelativeTo(null);
+		frmAdministratorDodavanjeKorisnika.setResizable(false);
 		
 		ime = new JTextField();
 		ime.setBounds(45, 41, 140, 20);
@@ -244,6 +246,11 @@ public class DodavanjeKorisnika {
 		email = new JFormattedTextField(new EmailFormatter());
 		email.setBounds(45, 289, 140, 23);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(email);
+		
+		lblNameexamplecom = new JLabel("name@example.com");
+		lblNameexamplecom.setForeground(Color.DARK_GRAY);
+		lblNameexamplecom.setBounds(87, 276, 142, 14);
+		frmAdministratorDodavanjeKorisnika.getContentPane().add(lblNameexamplecom);
 		
 	}
 	public Boolean validirajPolja() throws WrongInputException{
