@@ -220,7 +220,7 @@ public final class FakturaVM {
 									
 									total += cijena*kolicine.get(index);
 									
-									cell = new PdfPCell(new Paragraph(Double.toString(Math.round((cijena*kolicine.get(index)*100)/100))+ " KM"));
+									cell = new PdfPCell(new Paragraph(Double.toString(cijena*kolicine.get(index))+ " KM"));
 									cell.setPadding(10);
 									cell.setBorder(Rectangle.NO_BORDER);
 									table_lot.addCell(cell);
