@@ -182,7 +182,9 @@ public class DodavanjeKorisnika {
 								datumPocetkaRada.getText(), 
 								adresa.getText(), 
 								tipKorisnika);
-						if(!state) throw new Exception();
+						if(!state) {
+							throw new Exception();
+						}
 						
 						//Javlja da je korisnik kreiran ukoliko je sve prošlo ok
 						label_obavijest.setForeground(Color.decode("#008000"));

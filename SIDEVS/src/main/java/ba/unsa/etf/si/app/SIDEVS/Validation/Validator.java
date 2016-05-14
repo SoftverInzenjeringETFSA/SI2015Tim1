@@ -160,21 +160,24 @@ public final class Validator {
 	
 	public static boolean validirajMaticniBroj(String text) {
 		String regex = "[0-9]+";
-		if (text.matches(regex))
+		if (text.matches(regex)){
 		return true;
+		}
 		return false;
 	}
 	public static boolean validirajTelefonskiBroj(String text) {
 		String regex = "[0-9]+";
 		if (text.substring(0,3).matches(regex) && text.substring(4,7).matches(regex) && text.substring(8,11).matches(regex))
-		return true;
+		{return true;
+		}
 		return false;
 	}
 	public static boolean validirajEmail(String text) {
 		Pattern regex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 		 Matcher matcher = regex.matcher(text);
 	        if (matcher.matches())
-		return true;
+		{return true;
+		}
 		return false;
 	}
 
