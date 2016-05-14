@@ -49,6 +49,10 @@ public class IzvjestajUlaziIzlaziVM {
 		tableData.setSpacingAfter(10f);
 	}
 	
+	public int samoTest(String s){
+		return 5;
+	}
+	
 	//funkcija vraca sve evidentirane lotove za odabrani lijek i skladiste
 	public List<Lot> vratiSveLotove(Lijek odabraniLijek, Skladiste odabranoSkladiste){
 		
