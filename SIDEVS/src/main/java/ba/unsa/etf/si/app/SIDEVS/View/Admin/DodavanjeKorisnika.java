@@ -97,6 +97,7 @@ public class DodavanjeKorisnika {
 		frmAdministratorDodavanjeKorisnika.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmAdministratorDodavanjeKorisnika.getContentPane().setLayout(null);
 		frmAdministratorDodavanjeKorisnika.setLocationRelativeTo(null);
+		frmAdministratorDodavanjeKorisnika.setResizable(false);
 		
 		ime = new JTextField();
 		ime.setBounds(45, 41, 140, 20);

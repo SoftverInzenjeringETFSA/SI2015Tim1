@@ -80,6 +80,7 @@ public class BrisanjeKorisnika {
 		frmAdministratorBrisanjeKorisnika.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmAdministratorBrisanjeKorisnika.getContentPane().setLayout(null);
 		frmAdministratorBrisanjeKorisnika.setLocationRelativeTo(null);
+		frmAdministratorBrisanjeKorisnika.setResizable(false);
 		
 		JLabel label = new JLabel("Odaberi korisnika");
 		label.setBounds(117, 26, 169, 14);
