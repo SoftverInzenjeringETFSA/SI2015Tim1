@@ -31,8 +31,7 @@ import ba.unsa.etf.si.app.SIDEVS.View.Login;
 public class ModifikacijaKorisnikaVM {
 	final static Logger logger = Logger.getLogger(ModifikacijaKorisnikaVM.class);
 	public static boolean ModifikujKorisnika(Sessions ses, String ime, String prezime, String maticniBroj, String brojTelefona, String email, String radnoMjesto, String datumPocetkaRada, String adresa, String tipKorisnika, String imeTxt, String prezimeTxt) throws NoSuchAlgorithmException,InvalidKeySpecException {
-		try{
-			
+		try{			
 			Transaction t = ses.getSession().beginTransaction();
 			Criteria criteria = ses.getSession().createCriteria(Korisnik.class).add(Restrictions.like("ime", imeTxt).ignoreCase()).add(Restrictions.like("prezime", prezimeTxt).ignoreCase());
 			

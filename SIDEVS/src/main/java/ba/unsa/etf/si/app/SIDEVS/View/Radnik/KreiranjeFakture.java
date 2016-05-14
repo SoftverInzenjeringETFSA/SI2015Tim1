@@ -17,8 +17,10 @@ import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Kupac;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
@@ -77,6 +79,7 @@ public class KreiranjeFakture {
 		frmKreiranjeFakture.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmKreiranjeFakture.getContentPane().setLayout(null);
 		frmKreiranjeFakture.setLocationRelativeTo(null);
+		frmKreiranjeFakture.setResizable(false);
 
 		final JPanel panel_kupac = new JPanel();
 		panel_kupac.setBounds(10, 11, 201, 109);
@@ -260,7 +263,7 @@ public class KreiranjeFakture {
 				textField_cijena.setText("");
 			}
 
-			private boolean validriajUnosStavke() {
+			private boolean validriajUnosStavke() {				
 				String msg = "";
 				if (comboBox_kupac.getSelectedItem() == null)
 					msg = "Odaberite kupca";
@@ -269,7 +272,21 @@ public class KreiranjeFakture {
 				else if (comboBox_lot.getSelectedItem() == null)
 					msg = "Odaberite lot";
 				else if (textField_kolicina.getText().isEmpty())
-					msg = "Unesite kolicinu";
+					msg = "Unesite količinu";
+				
+				//provjera kolicine				
+				else if (comboBox_lot.getSelectedItem()!=null)
+	            {
+	            	List<Lot> lotovi = s.getSession().createCriteria(Lot.class).add(Restrictions.like("broj_lota", (String) comboBox_lot.getSelectedItem())).list();
+					Lot izabraniLot = lotovi.get(0);
+					Integer kol=izabraniLot.getKolicina_tableta();
+					System.out.println(kol.toString());
+					System.out.println(textField_kolicina.getText());
+					if (izabraniLot.getDatum_otpisa()!=null) { msg = "Izabrani lot je otpisan";
+					}
+					else if (Integer.parseInt(textField_kolicina.getText())>kol)
+						msg="Nemate dovoljnu količinu lijeka na skladištu!";
+	            }
 				label_obavijest.setText(msg);
 				if (msg != "") {
 					label_obavijest.setForeground(Color.RED);
