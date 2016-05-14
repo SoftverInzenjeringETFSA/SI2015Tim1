@@ -11,6 +11,9 @@ import ba.unsa.etf.si.app.SIDEVS.ViewModel.SkladisteVM;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import org.apache.log4j.Logger;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
@@ -21,6 +24,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class DodajLotUSkladiste {
+	final static Logger logger = Logger.getLogger(DodajLotUSkladiste.class);
 
 	private JFrame frmDodajLotUSkladiste;
 	private Sessions s;
@@ -105,6 +109,7 @@ public class DodajLotUSkladiste {
 						label_obavijest.setText(text);
 						refreshPolja();
 					} catch (Exception exc) {
+						logger.error(exc);
 						label_obavijest.setForeground(Color.RED);
 						label_obavijest.setText(exc.getMessage());
 					}

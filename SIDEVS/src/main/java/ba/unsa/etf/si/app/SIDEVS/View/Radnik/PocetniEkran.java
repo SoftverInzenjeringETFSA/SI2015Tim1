@@ -4,8 +4,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import org.apache.log4j.Logger;
+
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.View.Login;
+import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
 import ba.unsa.etf.si.app.SIDEVS.View.Radnik.EvidencijaLotova;
 import ba.unsa.etf.si.app.SIDEVS.View.Radnik.DodajKupca;
 
@@ -15,7 +18,9 @@ import java.awt.event.MouseEvent;
 
 public class PocetniEkran {
 
+	final static Logger logger = Logger.getLogger(PocetniEkran.class);
 	private JFrame frmPoetniEkran;
+<<<<<<< HEAD
 	private Sessions s;
 	private EvidencijaLotova el;
 	private BrisanjeKupca bk;
@@ -25,6 +30,9 @@ public class PocetniEkran {
     private DodajLotUSkladiste dlus;
     private KreiranjeFakture kf;
 
+=======
+	private Sessions s;
+>>>>>>> branch 'master' of https://github.com/SoftverInzenjeringETFSA/SI2015Tim1.git
 
 	/**
 	 * Create the application.
@@ -60,10 +68,10 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(el == null) el = new EvidencijaLotova(s);
+				    EvidencijaLotova el = new EvidencijaLotova(s);
 					el.prikazi();
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -75,10 +83,10 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(pl == null) pl = new PretragaLijeka(s);
+					PretragaLijeka pl = new PretragaLijeka(s);
 					pl.frmPretragaLijeka.setVisible(true);
 				} catch (Exception c) {
-					c.printStackTrace();
+					logger.error(c);
 				}
 			}
 		});
@@ -93,7 +101,7 @@ public class PocetniEkran {
 					if(kf == null) kf = new KreiranjeFakture(s);
 					kf.prikazi();
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -105,9 +113,13 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
+<<<<<<< HEAD
 					if(ol==null) ol = new OtpisLijeka(s);
+=======
+					OtpisLijeka ol = new OtpisLijeka(s);
+>>>>>>> branch 'master' of https://github.com/SoftverInzenjeringETFSA/SI2015Tim1.git
 				} catch (Exception c) {
-					c.printStackTrace();
+					logger.error(c);
 				}
 			}
 		});
@@ -119,11 +131,11 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try{
-				if(dlus == null) dlus = new DodajLotUSkladiste(s);
+				DodajLotUSkladiste dlus = new DodajLotUSkladiste(s);
 				dlus.prikazi();
 				}
 				catch(Exception ex){
-					ex.printStackTrace();
+					logger.error(ex);
 				}
 			}
 		});
@@ -141,10 +153,10 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(bk == null) bk = new BrisanjeKupca(s);
+					BrisanjeKupca bk = new BrisanjeKupca(s);
 					bk.frmBrisanjeKupca.setVisible(true);
 				} catch (Exception c) {
-					c.printStackTrace();
+					logger.error(c);
 				}
 			}
 		});
@@ -156,10 +168,10 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					if (dk==null) dk = new DodajKupca(s);				
+					DodajKupca dk = new DodajKupca(s);				
 					dk.frmDodajKupca.setVisible(true);
 				} catch (Exception c) {
-					c.printStackTrace();
+					logger.error(c);
 				}
 			}
 		});
@@ -183,8 +195,8 @@ public class PocetniEkran {
 					frmPoetniEkran.dispose();
 					new Login().prikazi();
 				} catch (Exception e) {
+					logger.error(e);
 					//s.getTrasaction().rollback();
-					e.printStackTrace();
 				}
 			}
 		});

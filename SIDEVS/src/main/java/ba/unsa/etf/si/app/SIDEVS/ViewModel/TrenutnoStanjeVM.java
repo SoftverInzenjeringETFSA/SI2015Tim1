@@ -12,6 +12,7 @@ import java.util.Set;
 
 import javax.swing.JFileChooser;
 
+import org.apache.log4j.Logger;
 import org.hibernate.criterion.Restrictions;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -28,7 +29,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.*;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 
 public class TrenutnoStanjeVM {
-	
+	final static Logger logger = Logger.getLogger(TrenutnoStanjeVM.class);
 	private Sessions sesija;
 	private Document document;
 	private List<Lot> lotovi;
@@ -64,7 +65,8 @@ public class TrenutnoStanjeVM {
 		return kolicine;
 	}
 	
-	public Integer vratiKolicinuOtpisanog(ObrisanLot lot){
+	//OBRISAN
+	public Integer vratiKolicinuOtpisanog(Lot lot){
 		return vratiStanjePomocna((Lot)lot);
 	}
 	
@@ -210,8 +212,10 @@ public class TrenutnoStanjeVM {
 				document.close();
 				writer.close();
 			} catch (DocumentException e) {
+				logger.error(e);
 				System.out.println(e.getMessage());
 			} catch (FileNotFoundException e) {
+				logger.error(e);
 				System.out.println(e.getMessage());
 			}
 
@@ -220,7 +224,7 @@ public class TrenutnoStanjeVM {
 					File myFile = new File(new_file_path);
 					Desktop.getDesktop().open(myFile);
 				} catch (IOException ex) {
-					// no application registered for PDFs
+					logger.error(ex);
 				}
 			}
 		}	

@@ -132,6 +132,19 @@ public final class Validator {
 		}
 		return msg;
 	}
+	
+	public static String validirajKorisnika(Sessions s, String email) {
+		String msg="";
+		if(email.length() == 0) msg = "Morate unijeti korisnika";
+		else {
+		List<Lot> korisnici = s.getSession().createCriteria(Korisnik.class).
+				add(Restrictions.eq("email", email)).list();
+
+		if (korisnici.size()==0) msg = "Uneseni korisnik ne postoji u sistemu";
+		}
+		return msg;
+	}
+	
 	public static boolean validirajCijenu(String cijena) throws WrongInputException {
 		
 		try{
@@ -143,6 +156,29 @@ public final class Validator {
 		}
 		
 		return true;
+	}
+	
+	public static boolean validirajMaticniBroj(String text) {
+		String regex = "[0-9]+";
+		if (text.matches(regex)){
+		return true;
+		}
+		return false;
+	}
+	public static boolean validirajTelefonskiBroj(String text) {
+		String regex = "[0-9]+";
+		if (text.substring(0,3).matches(regex) && text.substring(4,7).matches(regex) && text.substring(8,11).matches(regex))
+		{return true;
+		}
+		return false;
+	}
+	public static boolean validirajEmail(String text) {
+		Pattern regex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+		 Matcher matcher = regex.matcher(text);
+	        if (matcher.matches())
+		{return true;
+		}
+		return false;
 	}
 
 }

@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import ba.unsa.etf.si.app.SIDEVS.Model.FakturaLot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
-import ba.unsa.etf.si.app.SIDEVS.Model.ObrisanLot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Pakovanje;
 
 public final class TrenutnoStanjePomocna {
 
-	
+	final static Logger logger = Logger.getLogger(TrenutnoStanjePomocna.class);
 	public static List<Integer> vratiKolicine(List<Lot> lotovi, Boolean ulazni){
 		List<Integer> kolicine = new ArrayList<Integer>();
 		if (ulazni){
@@ -33,7 +34,7 @@ public final class TrenutnoStanjePomocna {
 		return kolicine;
 	}
 	
-	public static Integer vratiKolicinuOtpisanog(ObrisanLot lot){
+	public static Integer vratiKolicinuOtpisanog(Lot lot){
 		return vratiStanjePomocna((Lot)lot);
 	}
 	

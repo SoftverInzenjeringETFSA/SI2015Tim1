@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -15,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Lot implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -30,7 +27,7 @@ public class Lot implements Serializable{
 	private double ulazna_cijena;
 	private int kolicina_tableta;
 	private Date datum_ulaza;
-	//private Date datum_otpisa;
+	private Date datum_otpisa;
 	@OneToMany(mappedBy = "lot")
 	private Set<FakturaLot> fakture_lotovi = new HashSet<FakturaLot>(0);
 	@OneToMany(mappedBy = "lot")
@@ -79,6 +76,12 @@ public class Lot implements Serializable{
 		this.datum_ulaza = date;
 	}
 
+	public Date getDatum_otpisa() {
+		return datum_otpisa;
+	}
+	public void setDatum_otpisa(Date datum_otpisa) {
+		this.datum_otpisa = datum_otpisa;
+	}
 	public Set<FakturaLot> getFaktureLotovi() {
 		return fakture_lotovi;
 	}

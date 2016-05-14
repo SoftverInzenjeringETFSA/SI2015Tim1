@@ -14,6 +14,7 @@ import java.util.Set;
 
 import javax.swing.JFileChooser;
 
+import org.apache.log4j.Logger;
 import org.hibernate.criterion.Restrictions;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -30,6 +31,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.*;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 
 public class IzvjestajUlaziIzlaziVM {
+	final static Logger logger = Logger.getLogger(IzvjestajUlaziIzlaziVM.class);
 
 	
 	private Sessions sesija;
@@ -45,6 +47,10 @@ public class IzvjestajUlaziIzlaziVM {
 		tableData.setWidthPercentage(100);
 		tableData.setSpacingBefore(10f);
 		tableData.setSpacingAfter(10f);
+	}
+	
+	public int samoTest(String s){
+		return 5;
 	}
 	
 	//funkcija vraca sve evidentirane lotove za odabrani lijek i skladiste
@@ -95,16 +101,17 @@ public class IzvjestajUlaziIzlaziVM {
 		return izlazniLotovi;
 	}
 	
-	public List<ObrisanLot> vratiOtpisaneLotove(List<Lot> sviLotovi, String datumOd, String datumDo){
+	//obrisan lot
+	public List<Lot> vratiOtpisaneLotove(List<Lot> sviLotovi, String datumOd, String datumDo){
 		Date datum_od = Conversions.stringToDate(datumOd);
 		Date datum_do = Conversions.stringToDate(datumDo);
 		
-		List<ObrisanLot> obrisaniLotovi = sesija.getSession().createCriteria(ObrisanLot.class).list();
+		List<Lot> obrisaniLotovi = sesija.getSession().createCriteria(Lot.class).list();
 		
-		List<ObrisanLot> otpisaniLotovi = new ArrayList<ObrisanLot>();
+		List<Lot> otpisaniLotovi = new ArrayList<Lot>();
 		
 		for (Lot lot: sviLotovi){
-			for (ObrisanLot l: obrisaniLotovi)
+			for (Lot l: obrisaniLotovi)
 				if (lot.getBroj_lota() == l.getBroj_lota() && l.getDatum_otpisa().after(datum_od) && l.getDatum_otpisa().before(datum_do))
 					otpisaniLotovi.add(l);		
 		}
@@ -150,7 +157,7 @@ public class IzvjestajUlaziIzlaziVM {
 		return kolicine;
 	}
 	
-	public Integer vratiKolicinuOtpisanog(ObrisanLot lot){
+	public Integer vratiKolicinuOtpisanog(Lot lot){
 		return vratiStanjePomocna((Lot)lot);
 	}
 	
@@ -241,8 +248,10 @@ public class IzvjestajUlaziIzlaziVM {
 				document.close();
 				writer.close();
 			} catch (DocumentException e) {
+				logger.error(e);
 				System.out.println(e.getMessage());
 			} catch (FileNotFoundException e) {
+				logger.error(e);
 				System.out.println(e.getMessage());
 			}
 
@@ -251,7 +260,7 @@ public class IzvjestajUlaziIzlaziVM {
 					File myFile = new File(new_file_path);
 					Desktop.getDesktop().open(myFile);
 				} catch (IOException ex) {
-					// no application registered for PDFs
+					logger.error(ex);
 				}
 			}
 		}		

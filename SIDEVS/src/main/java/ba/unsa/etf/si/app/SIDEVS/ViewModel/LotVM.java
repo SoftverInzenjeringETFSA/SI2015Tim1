@@ -3,6 +3,7 @@ package ba.unsa.etf.si.app.SIDEVS.ViewModel;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -16,7 +17,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 
 public class LotVM {
-
+	final static Logger logger = Logger.getLogger(LotVM.class);
 	private static Sessions s;
 
 	public Sessions getSessions() {
@@ -68,6 +69,7 @@ public class LotVM {
 					kreirajPakovanje(l, skladiste, kolicina_pakovanja);
 				}
 			} catch (Exception e) {
+				logger.error(e);
 				throw e;
 			}
 		}

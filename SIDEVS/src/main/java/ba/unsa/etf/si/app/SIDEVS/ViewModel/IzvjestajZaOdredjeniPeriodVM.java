@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.log4j.Logger;
 import org.hibernate.criterion.Restrictions;
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
@@ -27,6 +29,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 public class IzvjestajZaOdredjeniPeriodVM {
+	final static Logger logger = Logger.getLogger(IzvjestajZaOdredjeniPeriodVM.class);
 	
 	private Sessions sesija;
 	
@@ -42,17 +45,17 @@ public class IzvjestajZaOdredjeniPeriodVM {
 		
 		return lotovi;
 	}
-	
-	public List<ObrisanLot> vratiOtpisaneLotove(List<Lot> sviLotovi, String datumOd, String datumDo){
+	//OBRISAN
+	public List<Lot> vratiOtpisaneLotove(List<Lot> sviLotovi, String datumOd, String datumDo){
 		Date datum_od = Conversions.stringToDate(datumOd);
 		Date datum_do = Conversions.stringToDate(datumDo);
 		
-		List<ObrisanLot> obrisaniLotovi = sesija.getSession().createCriteria(ObrisanLot.class).list();
+		List<Lot> obrisaniLotovi = sesija.getSession().createCriteria(Lot.class).list();
 		
-		List<ObrisanLot> otpisaniLotovi = new ArrayList<ObrisanLot>();
+		List<Lot> otpisaniLotovi = new ArrayList<Lot>();
 		
 		for (Lot lot: sviLotovi){
-			for (ObrisanLot l: obrisaniLotovi)
+			for (Lot l: obrisaniLotovi)
 				if (lot.getBroj_lota() == l.getBroj_lota() && l.getDatum_otpisa().after(datum_od) && l.getDatum_otpisa().before(datum_do))
 					otpisaniLotovi.add(l);		
 		}
@@ -86,13 +89,13 @@ public class IzvjestajZaOdredjeniPeriodVM {
 			suma += f.getKolicina();
 		}
 		List<Lot> lot_tmp = new ArrayList<Lot>(); lot_tmp.add(l);
-		List<ObrisanLot> obrisaniLotovi = vratiOtpisaneLotove(lot_tmp, datumOd, datumDo);
-		for (ObrisanLot otpisani: obrisaniLotovi)
+		List<Lot> obrisaniLotovi = vratiOtpisaneLotove(lot_tmp, datumOd, datumDo);
+		for (Lot otpisani: obrisaniLotovi)
 			suma += vratiKolicinuOtpisanog(otpisani);
 		return suma;	
 	}
 		
-		public Integer vratiKolicinuOtpisanog(ObrisanLot lot){
+		public Integer vratiKolicinuOtpisanog(Lot lot){
 			return vratiStanjePomocna((Lot)lot);
 		}
 		
@@ -217,8 +220,10 @@ public class IzvjestajZaOdredjeniPeriodVM {
 					document.close();
 					writer.close();
 				} catch (DocumentException e) {
+					logger.error(e);
 					System.out.println(e.getMessage());
 				} catch (FileNotFoundException e) {
+					logger.error(e);
 					System.out.println(e.getMessage());
 				}
 
@@ -227,7 +232,7 @@ public class IzvjestajZaOdredjeniPeriodVM {
 						File myFile = new File(new_file_path);
 						Desktop.getDesktop().open(myFile);
 					} catch (IOException ex) {
-						// no application registered for PDFs
+						logger.error(ex);
 					}
 				}
 			}		

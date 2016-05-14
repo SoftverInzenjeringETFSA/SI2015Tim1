@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
+import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -12,11 +14,15 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTextField;
+
+import org.apache.log4j.Logger;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.*;
 
 public class ChangePassword {
+	
+	final static Logger logger = Logger.getLogger(ChangePassword.class);
 
 	private JFrame frmChangePassword;
 	private Sessions sesija;
@@ -35,7 +41,7 @@ public class ChangePassword {
 					ChangePassword window = new ChangePassword();
 					window.frmChangePassword.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -98,7 +104,7 @@ public class ChangePassword {
 				} catch (Exception e){
 					JOptionPane.showMessageDialog(null, "Došlo je do greške", "InfoBox: " + "Error", JOptionPane.INFORMATION_MESSAGE);		
 					//_sesija.getTrasaction().rollback();
-					e.printStackTrace();
+					logger.error(e);
 				}
 				resetContent();
 			}

@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -31,11 +32,12 @@ import ba.unsa.etf.si.app.SIDEVS.Model.*;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 import ba.unsa.etf.si.app.SIDEVS.View.Masks;
+import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajZaKupcaVM;
 import javax.swing.JFormattedTextField;
 
 public class TransakcijeKupca {
-
+	final static Logger logger = Logger.getLogger(TransakcijeKupca.class);
 	private Sessions s;
 	
 	private JFrame frmMenadzerTransakcijeKupca;
@@ -60,7 +62,7 @@ public class TransakcijeKupca {
 					TransakcijeKupca window = new TransakcijeKupca();
 					window.frmMenadzerTransakcijeKupca.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -188,9 +190,9 @@ public class TransakcijeKupca {
 							label_obavijest.setText("Nema podataka za taj vremenski period.");
 					}
 				} catch (HibernateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.error(e);
 				} catch (WrongInputException e) {
+					logger.error(e);
 					label_obavijest.setText(e.getMessage());
 				} 
 				

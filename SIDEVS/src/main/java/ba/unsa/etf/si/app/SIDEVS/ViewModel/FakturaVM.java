@@ -15,6 +15,8 @@ import java.util.Set;
 
 import javax.swing.JFileChooser;
 
+import org.apache.log4j.Logger;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -33,8 +35,10 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
+import ba.unsa.etf.si.app.SIDEVS.View.Radnik.BrisanjeKupca;
 
 public final class FakturaVM {
+	final static Logger logger = Logger.getLogger(FakturaVM.class);
 	private Sessions s;
 
 	public FakturaVM(Sessions s) {
@@ -195,8 +199,8 @@ public final class FakturaVM {
 									cell.setBorder(Rectangle.NO_BORDER);
 									table_lot.addCell(cell);
 									
-									//3
-									double cijena = new BigDecimal(cijene.get(index) * 0.17 + cijene.get(index))
+									//3BigDecimal bd1 = BigDecimal.valueOf(d);
+									double cijena = BigDecimal.valueOf(cijene.get(index) * 0.17 + cijene.get(index))
 											.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 									cijena_po_lijeku += cijena;
 									cell = new PdfPCell(new Paragraph(Double.toString(cijena) + " KM"));
@@ -263,7 +267,7 @@ public final class FakturaVM {
 					PdfPCell cell = new PdfPCell(
 							new Paragraph("Total: "
 									+ Double.toString(
-											new BigDecimal(total).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue())
+											BigDecimal.valueOf(total).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue())
 									+ " KM", boldFont));
 					cell.setPadding(10);
 					cell.setColspan(5);
@@ -276,8 +280,10 @@ public final class FakturaVM {
 					document.close();
 					writer.close();
 				} catch (DocumentException e) {
+					logger.error(e);
 					System.out.println(e.getMessage());
 				} catch (FileNotFoundException e) {
+					logger.error(e);
 					System.out.println(e.getMessage());
 				}
 
@@ -287,13 +293,13 @@ public final class FakturaVM {
 						File myFile = new File(new_file_path);
 						Desktop.getDesktop().open(myFile);
 					} catch (IOException ex) {
-						// no application registered for PDFs
+						logger.error(ex);
 					}
 				}
 			}
 
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error(ex);
 		}
 
 	}

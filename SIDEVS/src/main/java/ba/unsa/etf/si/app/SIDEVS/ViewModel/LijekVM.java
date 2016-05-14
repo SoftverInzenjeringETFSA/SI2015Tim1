@@ -1,5 +1,6 @@
 package ba.unsa.etf.si.app.SIDEVS.ViewModel;
 
+import org.apache.log4j.Logger;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
@@ -7,6 +8,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 
 public final class LijekVM {
+	final static Logger logger = Logger.getLogger(LijekVM.class);
 
 	private static Sessions s;
 
@@ -37,6 +39,7 @@ public final class LijekVM {
 				} else
 					throw new Exception("Lijek sa ovim ID ili nazivom već postoji");
 			} catch (Exception ex) {
+				logger.error(ex);
 				throw ex;
 			}
 

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -17,13 +18,14 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 
 public class PretragaLijekovaVM {
-	private Sessions s;
+	final static Logger logger = Logger.getLogger(PretragaLijekovaVM.class);
+	private static Sessions s;
 	
 	public PretragaLijekovaVM(Sessions s){
 		this.s = s;
 	}
 	
-	public Map<Integer, Integer> dajKolicinuLijekaUSkladistu(String naziv_lijeka) throws Exception{
+	public static Map<Integer, Integer> dajKolicinuLijekaUSkladistu(String naziv_lijeka) throws Exception{
 		Map<Integer, Integer> mapa = new HashMap<Integer, Integer>();
 		//Lijek
 		Lijek lijek = (Lijek) s.getSession().createCriteria(Lijek.class).add(Restrictions.eq("naziv", naziv_lijeka))

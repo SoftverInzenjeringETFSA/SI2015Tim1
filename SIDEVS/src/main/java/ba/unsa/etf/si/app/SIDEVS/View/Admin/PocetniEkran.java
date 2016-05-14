@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Administrator;
@@ -21,6 +22,8 @@ import ba.unsa.etf.si.app.SIDEVS.View.Menadzer.EvidencijaLijeka;
 import javax.swing.JButton;
 
 public class PocetniEkran {
+	
+	final static Logger logger = Logger.getLogger(PocetniEkran.class);
 	private Sessions _sesija;
 	private JFrame frmAdministratorPocetniEkran;
 	private DodavanjeKorisnika dk;
@@ -37,7 +40,7 @@ public class PocetniEkran {
 					PocetniEkran window = new PocetniEkran();
 					window.frmAdministratorPocetniEkran.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -80,7 +83,7 @@ public class PocetniEkran {
 					if(dk == null) dk = new DodavanjeKorisnika(_sesija);
 					dk.prikazi();
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -95,7 +98,7 @@ public class PocetniEkran {
 					if(mk == null) mk = new ModifikacijaKorisnika(_sesija);
 					mk.prikazi();
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -110,7 +113,7 @@ public class PocetniEkran {
 					if(bk == null) bk = new BrisanjeKorisnika(_sesija);
 					bk.prikazi();
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -129,8 +132,8 @@ public class PocetniEkran {
 					frmAdministratorPocetniEkran.dispose();
 					new Login().prikazi();
 				} catch (Exception e) {
+					logger.error(e);
 					//_sesija.getTrasaction().rollback();
-					e.printStackTrace();
 				}
 			}
 		});

@@ -1,5 +1,6 @@
 package ba.unsa.etf.si.app.SIDEVS.View.Admin;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,8 +19,11 @@ import Exceptions.WrongInputException;
 import java.util.Date;
 import java.util.List;
 import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
+import ba.unsa.etf.si.app.SIDEVS.Model.Menadzer;
+import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
+import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 import ba.unsa.etf.si.app.SIDEVS.View.Masks;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -42,6 +46,13 @@ public class ModifikacijaKorisnika {
 	private JTextField radnoMjestoModifikacija;
 	private JTextField adresa;
 	private JFormattedTextField datumPocetkaRadaModifikacija;
+
+	private AutoCompleteJComboBox listaKorisnikaModifikacija;
+
+	private JRadioButton radnikModifikacija;
+
+	private JRadioButton menadzerModifikacija;
+	private JLabel label_obavijest;
 
 	/**
 	 * Launch the application.
@@ -162,21 +173,19 @@ public class ModifikacijaKorisnika {
 		label_6.setBounds(51, 422, 119, 14);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(label_6);
 		
-		final JRadioButton radnikModifikacija = new JRadioButton("Radnik");
+		radnikModifikacija = new JRadioButton("Radnik");
 		radnikModifikacija.setBounds(51, 479, 73, 23);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(radnikModifikacija);
 		
-		final JRadioButton menadzerModifikacija = new JRadioButton("Menadzer");
+		menadzerModifikacija = new JRadioButton("Menadzer");
 		menadzerModifikacija.setBounds(128, 479, 86, 23);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(menadzerModifikacija);
 		
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(radnikModifikacija);
 		bg.add(menadzerModifikacija);
-		radnikModifikacija.setEnabled(false);
-		menadzerModifikacija.setEnabled(false);
 		
-		final AutoCompleteJComboBox  listaKorisnikaModifikacija = new AutoCompleteJComboBox(s, Korisnik.class, "ime");
+		listaKorisnikaModifikacija = new AutoCompleteJComboBox(s, Korisnik.class, "email");
 		listaKorisnikaModifikacija.setBounds(50, 40, 159, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(listaKorisnikaModifikacija);
 		
@@ -185,37 +194,36 @@ public class ModifikacijaKorisnika {
 		btnModifikacija.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{				
-					//Ubaciti validaciju, bacanje exceptiona ukoliko je unos prazan
-					
-					//Baca izuzetak ukoliko ništa nije checkirano
-					String tipKorisnika=null;
-					/*if(menadzerModifikacija.isSelected()) tipKorisnika = "Menadzer";
-					else if (radnikModifikacija.isSelected()) tipKorisnika = "Radnik";
-					else throw new Exception();*/
-					
-					String txt = listaKorisnikaModifikacija.getSelectedItem().toString();	
-					String[] parts = txt.split(" ");
-					String part1 = parts[0];
-					String part2 = parts[1];				
-					
-					//Ukoliko kreiranje nije prošlo, baca exception
-					boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.ModifikacijaKorisnikaVM.ModifikujKorisnika(
-							_sesija, 
-							imeModifikacija.getText(), 
-							prezimeModifikacija.getText(), 
-							maticniBrojModifikacija.getText(), 
-							brojTelefonaModifikacija.getText(), 
-							emailModifikacija.getText(), 
-							radnoMjestoModifikacija.getText(), 
-							datumPocetkaRadaModifikacija.getText(), 
-							adresa.getText(), tipKorisnika, part1, part2);
-					if(!state) throw new Exception();
-					
-					JOptionPane.showMessageDialog(null, "Korisnik uspješno ažuriran", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);
-				}
+					if (validirajPolja()){					
+						String tipKorisnika="Administrator";
+						if (radnikModifikacija.isSelected()) tipKorisnika = "Radnik";
+						else tipKorisnika = "Menadzer";
+						//Ukoliko kreiranje nije prošlo, baca exception
+						boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.ModifikacijaKorisnikaVM.ModifikujKorisnika(
+								_sesija, 
+								imeModifikacija.getText(), 
+								prezimeModifikacija.getText(), 
+								maticniBrojModifikacija.getText(), 
+								brojTelefonaModifikacija.getText(), 
+								emailModifikacija.getText(), 
+								radnoMjestoModifikacija.getText(), 
+								datumPocetkaRadaModifikacija.getText(), 
+								adresa.getText(), 
+								tipKorisnika,
+								imeModifikacija.getText(), 
+								prezimeModifikacija.getText());
+						if(!state) throw new Exception();
+						
+						label_obavijest.setForeground(Color.decode("#008000"));
+						label_obavijest.setText("Korisnik je uspješno ažuriran");
+						resetContent();
+						}
+					}
 				catch(Exception ex){
+					label_obavijest.setForeground(Color.decode("#008000"));
+					label_obavijest.setText(ex.getMessage());
 					logger.error(ex);
-					JOptionPane.showMessageDialog(null, "Došlo je do greške u dodavanju", "InfoBox: " + "Error", JOptionPane.INFORMATION_MESSAGE);		
+					
 				}
 				resetContent();
 				listaKorisnikaModifikacija.setSelectedItem("");
@@ -253,49 +261,90 @@ public class ModifikacijaKorisnika {
 		datumPocetkaRadaModifikacija.setBounds(50, 440, 102, 20);
 		frmAdministratormodifikacijaKorisnika.getContentPane().add(datumPocetkaRadaModifikacija);
 		
+		label_obavijest = new JLabel("");
+		label_obavijest.setBounds(10, 521, 320, 25);
+		frmAdministratormodifikacijaKorisnika.getContentPane().add(label_obavijest);
+		
 		
 		btnUcitaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{					
-					String txt = listaKorisnikaModifikacija.getSelectedItem().toString();	
-					String[] parts = txt.split(" ");
-					String part1 = parts[0];
-					String part2 = parts[1];
-					
-					Criteria criteria = _sesija.getSession().createCriteria(Korisnik.class).add(Restrictions.like("ime", part1).ignoreCase()).add(Restrictions.like("prezime", part2).ignoreCase());
-					List<Korisnik> k = criteria.list();
-					
-					String ime2 = k.get(0).getIme();
-					String prezime2 = k.get(0).getPrezime();
-					String maticniBroj2 = k.get(0).getJmbg();
-					String adresa2 = k.get(0).getAdresa();
-					String email2 = k.get(0).getEmail();
-					String brojTelefona2 = k.get(0).getTelefon();
-					String radnoMjesto2 = k.get(0).getRadno_mjesto();
-					String datumPocetkaRada2 = k.get(0).getDatum_polaska_rada().toString();
-					
-					//Dodati checkiranje menadzer/radnik radio buttona, preko DTYPE(?!)
-					
-					imeModifikacija.setText(ime2);
-					prezimeModifikacija.setText(prezime2);
-					maticniBrojModifikacija.setText(maticniBroj2);
-					brojTelefonaModifikacija.setText(brojTelefona2);
-					emailModifikacija.setText(email2);
-					radnoMjestoModifikacija.setText(radnoMjesto2);
-					
-					datumPocetkaRada2 = datumPocetkaRada2.substring(0,datumPocetkaRada2.length()-11);
-					DateFormat originalFormat = new SimpleDateFormat("yyyy-mm-dd");
-					DateFormat targetFormat = new SimpleDateFormat("dd.mm.yyyy");
-					Date date = originalFormat.parse(datumPocetkaRada2);
-					String formattedDate = targetFormat.format(date);  	
-					datumPocetkaRadaModifikacija.setText(formattedDate.toString());
-					adresa.setText(adresa2);
+					if (validirajOdabir()){
+						String txt = listaKorisnikaModifikacija.getSelectedItem().toString();	
+
+						
+						Criteria criteria = _sesija.getSession().createCriteria(Korisnik.class).add(Restrictions.like("email", txt).ignoreCase());
+						List<Korisnik> k = criteria.list();
+						
+						
+						String ime2 = k.get(0).getIme();
+						String prezime2 = k.get(0).getPrezime();
+						System.out.println(ime2);
+						System.out.println(prezime2);
+						String maticniBroj2 = k.get(0).getJmbg();
+						String adresa2 = k.get(0).getAdresa();
+						String email2 = k.get(0).getEmail();
+						String brojTelefona2 = k.get(0).getTelefon();
+						String radnoMjesto2 = k.get(0).getRadno_mjesto();
+						String datumPocetkaRada2 = k.get(0).getDatum_polaska_rada().toString();
+						
+						Object obj = k.get(0);
+						if (obj.getClass().equals(Menadzer.class))
+							menadzerModifikacija.setSelected(true);
+						else radnikModifikacija.setSelected(true);
+						
+						imeModifikacija.setText(ime2);
+						prezimeModifikacija.setText(prezime2);
+						maticniBrojModifikacija.setText(maticniBroj2);
+						brojTelefonaModifikacija.setText(brojTelefona2);
+						emailModifikacija.setText(email2);
+						radnoMjestoModifikacija.setText(radnoMjesto2);
+						
+						datumPocetkaRada2 = datumPocetkaRada2.substring(0,datumPocetkaRada2.length()-11);
+						DateFormat originalFormat = new SimpleDateFormat("yyyy-mm-dd");
+						DateFormat targetFormat = new SimpleDateFormat("dd.mm.yyyy");
+						Date date = originalFormat.parse(datumPocetkaRada2);
+						String formattedDate = targetFormat.format(date);  	
+						datumPocetkaRadaModifikacija.setText(formattedDate.toString());
+						adresa.setText(adresa2);
+					}
 				}
 				catch(Exception ex){
 					logger.error(ex);
 				}
 			}
 		});
+	}
+	
+	public Boolean validirajPolja() throws WrongInputException{
+		String msg = "";
+		label_obavijest.setForeground(Color.red);
+		if (imeModifikacija.getText().isEmpty()) msg = "Morate unijeti ime";
+		else if (prezimeModifikacija.getText().isEmpty()) msg = "Morate unijeti prezime";
+		else if (!Validator.validirajMaticniBroj(maticniBrojModifikacija.getText())) msg = "Uneseni JMBG nije ispravan";
+		else if (!Validator.validirajTelefonskiBroj(brojTelefonaModifikacija.getText())) msg = "Telefonski broj nije ispravan";
+		else if (adresa.getText().isEmpty()) msg = "Morate unijeti adresu";
+		else if (!Validator.validirajEmail(emailModifikacija.getText())) msg = "Neispravan email";
+		else if (radnoMjestoModifikacija.getText().isEmpty()) msg = "Morate unijeti radno mjesto";
+		else if (!Validator.isDateValid(datumPocetkaRadaModifikacija.getText())) msg = "Datum nije validan";
+		else if (!radnikModifikacija.isSelected() && !menadzerModifikacija.isSelected()) msg = "Morate odabrati radnu poziciju";
+		if(msg != ""){
+			label_obavijest.setText(msg);
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean validirajOdabir() {
+		String msg = "";
+		if (listaKorisnikaModifikacija.getSelectedItem()==null) msg="Morate unijeti kupca";
+		else msg = Validator.validirajKorisnika(_sesija, listaKorisnikaModifikacija.getSelectedItem().toString());
+		if(msg != ""){
+			label_obavijest.setForeground(Color.red);
+			label_obavijest.setText(msg);
+			return false;
+		}
+		return true;
 	}
 	
 	public void prikazi() {

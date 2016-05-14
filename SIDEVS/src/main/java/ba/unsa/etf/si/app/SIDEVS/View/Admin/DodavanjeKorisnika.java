@@ -1,5 +1,6 @@
 package ba.unsa.etf.si.app.SIDEVS.View.Admin;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,8 @@ import org.apache.log4j.Logger;
 
 import Exceptions.WrongInputException;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.Validation.EmailFormatter;
+import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 import ba.unsa.etf.si.app.SIDEVS.View.Masks;
 
 import javax.swing.JLabel;
@@ -27,12 +30,15 @@ public class DodavanjeKorisnika {
 	private JFrame frmAdministratorDodavanjeKorisnika;
 	private JTextField ime;
 	private JTextField prezime;
-	private JTextField brojTelefona;
-	private JTextField email;
 	private JTextField radnoMjesto;
 	private JTextField adresa;
 	private JFormattedTextField datumPocetkaRada;
 	private JFormattedTextField maticniBroj;
+	private JFormattedTextField brojTelefona;
+	private JLabel label_obavijest;
+	private JRadioButton radnik;
+	private JRadioButton menadzer;
+	private JFormattedTextField email;
 	/**
 	 * Launch the application.
 	 */
@@ -86,7 +92,7 @@ public class DodavanjeKorisnika {
 	private void initialize() {
 		frmAdministratorDodavanjeKorisnika = new JFrame();
 		frmAdministratorDodavanjeKorisnika.setTitle("Dodavanje korisnika");
-		frmAdministratorDodavanjeKorisnika.setBounds(100, 100, 255, 581);
+		frmAdministratorDodavanjeKorisnika.setBounds(100, 100, 255, 560);
 		frmAdministratorDodavanjeKorisnika.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmAdministratorDodavanjeKorisnika.getContentPane().setLayout(null);
 		frmAdministratorDodavanjeKorisnika.setLocationRelativeTo(null);
@@ -100,16 +106,6 @@ public class DodavanjeKorisnika {
 		prezime.setBounds(45, 89, 140, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(prezime);
 		prezime.setColumns(10);
-		
-		brojTelefona = new JTextField();
-		brojTelefona.setBounds(45, 186, 140, 20);
-		frmAdministratorDodavanjeKorisnika.getContentPane().add(brojTelefona);
-		brojTelefona.setColumns(10);
-		
-		email = new JTextField();
-		email.setBounds(45, 292, 140, 20);
-		frmAdministratorDodavanjeKorisnika.getContentPane().add(email);
-		email.setColumns(10);
 		
 		radnoMjesto = new JTextField();
 		radnoMjesto.setBounds(45, 339, 140, 20);
@@ -151,11 +147,11 @@ public class DodavanjeKorisnika {
 		
 		
 		
-		final JRadioButton radnik = new JRadioButton("Radnik");
+		radnik = new JRadioButton("Radnik");
 		radnik.setBounds(29, 417, 72, 23);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(radnik);
 		
-		final JRadioButton menadzer = new JRadioButton("Menadzer");
+		menadzer = new JRadioButton("Menadzer");
 		menadzer.setBounds(105, 417, 86, 23);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(menadzer);
 		
@@ -168,38 +164,52 @@ public class DodavanjeKorisnika {
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					
-					//Ubaciti validaciju, bacanje exceptiona ukoliko je unos prazan
-					
-					//Baca izuzetak ukoliko ništa nije checkirano
-					String tipKorisnika;
-					if(menadzer.isSelected()) tipKorisnika = "Menadzer";
-					else if (radnik.isSelected()) tipKorisnika = "Radnik";
-					else throw new Exception();
-										
-					//Ukoliko kreiranje nije prošlo, baca exception
-					boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.DodavanjeKorisnikaVM.KreirajKorisnika(
-							_sesija, 
-							ime.getText(), 
-							prezime.getText(), 
-							maticniBroj.getText(), 
-							brojTelefona.getText(), 
-							email.getText(), 
-							radnoMjesto.getText(), 
-							datumPocetkaRada.getText(), 
-							adresa.getText(), 
-							tipKorisnika);
-					if(!state) throw new Exception();
-					
-					//Javlja da je korisnik kreiran ukoliko je sve prošlo ok
-					JOptionPane.showMessageDialog(null, "Korisnik uspješno dodan", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);	
-				}
+					if (validirajPolja()){
+						
+						label_obavijest.setText("");
+						
+						//Baca izuzetak ukoliko ništa nije checkirano
+						String tipKorisnika;
+						if(menadzer.isSelected()) {
+							tipKorisnika = "Menadzer";
+						}
+						else if (radnik.isSelected()) {
+							tipKorisnika = "Radnik";
+						}
+						else {
+							throw new Exception();
+						}
+						
+
+						//Ukoliko kreiranje nije prošlo, baca exception
+						boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.DodavanjeKorisnikaVM.KreirajKorisnika(
+								_sesija, 
+								ime.getText(), 
+								prezime.getText(), 
+								maticniBroj.getText(), 
+								brojTelefona.getText(), 
+								email.getText(), 
+								radnoMjesto.getText(), 
+								datumPocetkaRada.getText(), 
+								adresa.getText(), 
+								tipKorisnika);
+						if(!state) {
+							throw new Exception();
+						}
+						
+						//Javlja da je korisnik kreiran ukoliko je sve prošlo ok
+						label_obavijest.setForeground(Color.decode("#008000"));
+						label_obavijest.setText("Korisnik je uspješno dodan");
+						resetContent();
+						}
+					}
 				catch(Exception ex){
+					label_obavijest.setForeground(Color.decode("#008000"));
+					label_obavijest.setText(ex.getMessage());
 					logger.error(ex);
-					JOptionPane.showMessageDialog(null, "Došlo je do greške u dodavanju", "InfoBox: " + "Error", JOptionPane.INFORMATION_MESSAGE);		
+					
 				}
-				//Brisanje vrijednosti iz boxova
-				resetContent();
+
 			}
 		});
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(btnDodaj);
@@ -223,10 +233,40 @@ public class DodavanjeKorisnika {
 		maticniBroj.setBounds(45, 139, 140, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(maticniBroj);
 		
+		label_obavijest = new JLabel("");
+		label_obavijest.setBounds(10, 498, 189, 20);
+		frmAdministratorDodavanjeKorisnika.getContentPane().add(label_obavijest);
+		
+		brojTelefona = new JFormattedTextField(Masks.vratiMaskuZaTelefon());
+		brojTelefona.setBounds(45, 195, 140, 20);
+		frmAdministratorDodavanjeKorisnika.getContentPane().add(brojTelefona);
+		
+		email = new JFormattedTextField(new EmailFormatter());
+		email.setBounds(45, 289, 140, 23);
+		frmAdministratorDodavanjeKorisnika.getContentPane().add(email);
+		
 	}
+	public Boolean validirajPolja() throws WrongInputException{
+		String msg = "";
+		label_obavijest.setForeground(Color.red);
+		if (ime.getText().isEmpty()) msg = "Morate unijeti ime";
+		else if (prezime.getText().isEmpty()) msg = "Morate unijeti prezime";
+		else if (!Validator.validirajMaticniBroj(maticniBroj.getText())) msg = "Uneseni JMBG nije ispravan";
+		else if (!Validator.validirajTelefonskiBroj(brojTelefona.getText())) msg = "Telefonski broj nije ispravan";
+		else if (adresa.getText().isEmpty()) msg = "Morate unijeti adresu";
+		else if (!Validator.validirajEmail(email.getText())) msg = "Neispravan email";
+		else if (radnoMjesto.getText().isEmpty()) msg = "Morate unijeti radno mjesto";
+		else if (!Validator.isDateValid(datumPocetkaRada.getText())) msg = "Datum nije validan";
+		else if (!radnik.isSelected() && !menadzer.isSelected()) msg = "Morate odabrati radnu poziciju";
+		if(msg != ""){
+			label_obavijest.setText(msg);
+			return false;
+		}
+		return true;
+	}
+
 	
 	public void prikazi() {
 		frmAdministratorDodavanjeKorisnika.setVisible(true);
 	}
-	
 }

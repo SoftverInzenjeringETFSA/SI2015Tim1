@@ -16,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Transaction;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Kupac;
@@ -33,6 +34,7 @@ import java.awt.event.MouseEvent;
 import java.util.Map;
 
 public class PretragaLijeka {
+	final static Logger logger = Logger.getLogger(PretragaLijeka.class);
 
 	public JFrame frmPretragaLijeka;
 	private JTable table;
@@ -95,6 +97,7 @@ public class PretragaLijeka {
 					scrollPane.setViewportView(table);
 
 				} catch (Exception ex) {
+					logger.error(ex);
 					label_obavijest.setForeground(Color.RED);
 					label_obavijest.setText(ex.getMessage());
 				}

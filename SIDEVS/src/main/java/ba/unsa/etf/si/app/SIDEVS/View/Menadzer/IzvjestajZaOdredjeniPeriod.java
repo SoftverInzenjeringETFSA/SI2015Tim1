@@ -13,10 +13,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
+import org.apache.log4j.Logger;
+
 import Exceptions.WrongInputException;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 import ba.unsa.etf.si.app.SIDEVS.View.Masks;
+import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajZaOdredjeniPeriodVM;
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
 
@@ -25,6 +28,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class IzvjestajZaOdredjeniPeriod {
+	final static Logger logger = Logger.getLogger(IzvjestajZaOdredjeniPeriod.class);
 	private Sessions sesija;
 	private JFrame frmMenadzerIzvjestajZa;
 	private JTable IzvjestajZaodredjeniPeriodTable;
@@ -44,7 +48,7 @@ public class IzvjestajZaOdredjeniPeriod {
 					IzvjestajZaOdredjeniPeriod window = new IzvjestajZaOdredjeniPeriod();
 					window.frmMenadzerIzvjestajZa.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -132,6 +136,7 @@ public class IzvjestajZaOdredjeniPeriod {
 						
 					}
 				} catch (WrongInputException e) {
+					logger.error(e);
 					label_obavijest.setText(e.getMessage());
 				} 
 				

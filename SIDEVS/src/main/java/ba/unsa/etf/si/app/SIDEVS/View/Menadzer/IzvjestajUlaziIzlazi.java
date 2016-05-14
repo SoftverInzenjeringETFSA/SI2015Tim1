@@ -15,6 +15,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.criterion.Restrictions;
 
@@ -22,13 +23,13 @@ import Exceptions.WrongInputException;
 import ba.unsa.etf.si.app.SIDEVS.Model.Kupac;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
-import ba.unsa.etf.si.app.SIDEVS.Model.ObrisanLot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 import ba.unsa.etf.si.app.SIDEVS.View.Masks;
+import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajUlaziIzlaziVM;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajZaKupcaVM;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajZaOdredjeniPeriodVM;
@@ -39,6 +40,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class IzvjestajUlaziIzlazi {
+	final static Logger logger = Logger.getLogger(IzvjestajUlaziIzlazi.class);
 	private Sessions sesija;
 	private IzvjestajUlaziIzlaziVM iz;
 	private JFrame frmMenadzerIzvjestaO;
@@ -60,7 +62,7 @@ public class IzvjestajUlaziIzlazi {
 					IzvjestajUlaziIzlazi window = new IzvjestajUlaziIzlazi();
 					window.frmMenadzerIzvjestaO.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -167,7 +169,7 @@ public class IzvjestajUlaziIzlazi {
 						List<Lot> sviLotovi= iz.vratiSveLotove(odabraniLijek, odabranoSkladiste);	
 						List<Lot> ulazniLotovi = iz.vratiUlazneLotove(sviLotovi, datum_od, datum_do);		
 						List<Lot> izlazniLotovi = iz.vratiIzlazneLotove(sviLotovi, datum_od, datum_do);			
-						List<ObrisanLot> otpisaniLotovi = iz.vratiOtpisaneLotove(sviLotovi, datum_od, datum_do);
+						List<Lot> otpisaniLotovi = iz.vratiOtpisaneLotove(sviLotovi, datum_od, datum_do);//obrisan
 						
 						List<Integer> kolicineUlaznih = iz.vratiKolicine(ulazniLotovi, true);
 						List<Integer> kolicineIzlaznih = iz.vratiKolicine(izlazniLotovi, false);
@@ -216,12 +218,11 @@ public class IzvjestajUlaziIzlazi {
 							label_obavijest.setText("Nema podataka za taj vremenski period.");
 					}
 				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.error(e);
 				} catch (HibernateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.error(e);
 				} catch (WrongInputException e) {
+					logger.error(e);
 					label_obavijest.setText(e.getMessage());
 				} 
 				
@@ -255,13 +256,13 @@ public class IzvjestajUlaziIzlazi {
 	
 	private boolean validirajPolja() throws WrongInputException {
 		String msg = "";
-		label_obavijest.setForeground(Color.RED);
-		
+		label_obavijest.setForeground(Color.RED);		
 		if ( !Validator.isDateValid( datumOd.getText()) ) msg="Prvi datum nije ispravan";
 		else if ( !Validator.isDateValid( datumDo.getText()) ) msg="Drugi datum nije ispravan";
 		else if (!Validator.veciStringDatum(datumOd.getText() , datumDo.getText()) ) msg="Drugi datum mora biti veci od prvog";
 		else if (listaLijekova.getSelectedItem()==null) msg="Morate unijeti lijek";
 		else msg = Validator.validirajLijek(sesija, listaLijekova.getSelectedItem().toString());
+		
 		if(msg != ""){
 			label_obavijest.setText(msg);
 			return false;

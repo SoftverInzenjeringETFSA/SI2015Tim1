@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
 import org.hibernate.criterion.Restrictions;
 
 import Exceptions.WrongInputException;
@@ -30,6 +31,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class EvidencijaLotova {
+	final static Logger logger = Logger.getLogger(EvidencijaLotova.class);
 
 	private JFrame frmEvidencijaLota;
 	private JTextField textField_tezina;
@@ -143,10 +145,12 @@ public class EvidencijaLotova {
 					}
 				} 
 				catch (NumberFormatException e) {
+					logger.error(e);
 					label_obavijest.setForeground(Color.RED);
 					label_obavijest.setText("Morate unijeti sve podatke");
 				}
 				catch (Exception e) {
+					logger.error(e);
 					label_obavijest.setForeground(Color.RED);
 					label_obavijest.setText(e.getMessage());
 				}
@@ -188,7 +192,7 @@ public class EvidencijaLotova {
 		try {
 			txtRokTrajanja = new JFormattedTextField(Masks.vratiMaskuZaDatum());
 		} catch (WrongInputException e) {
-			label_obavijest.setText("ovo");
+			logger.error(e);
 		}
 		txtRokTrajanja.setBounds(150, 83, 170, 20);
 		frmEvidencijaLota.getContentPane().add(txtRokTrajanja);
@@ -210,7 +214,6 @@ public class EvidencijaLotova {
 		label_obavijest.setForeground(Color.RED);
 
 		String brojLota = textFieldBroj_lota.getText();
-		System.out.println(brojLota);
 
 		if (brojLota.length()==0) msg = "Morate unijeti broj lota";
 		else if(brojLota.length() < 6 || brojLota.length()>15) msg = "Broj lota mora biti duzine između 6 i 15";

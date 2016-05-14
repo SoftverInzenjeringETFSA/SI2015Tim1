@@ -13,6 +13,7 @@ import java.util.*;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
@@ -33,6 +34,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.*;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 
 public class IzvjestajNaOsnovuLotaVM {
+	final static Logger logger = Logger.getLogger(IzvjestajNaOsnovuLotaVM.class);
 	
 	private Sessions sesija;
 	private Document document;
@@ -64,7 +66,7 @@ public class IzvjestajNaOsnovuLotaVM {
 		return datum_ulaza_string;
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return "-";
 	}
@@ -80,7 +82,7 @@ public class IzvjestajNaOsnovuLotaVM {
 		return String.valueOf(kolicina_ulaza);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return "0";
 	}
@@ -90,8 +92,9 @@ public class IzvjestajNaOsnovuLotaVM {
 		try
 		{
 		//izabrani lot
-		Criteria criteria = ses.getSession().createCriteria(ObrisanLot.class).add(Restrictions.eq("broj_lota", broj_lota));
-		List<ObrisanLot> listaObrisanihLotova = criteria.list();
+			//obrisani
+		Criteria criteria = ses.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", broj_lota));
+		List<Lot> listaObrisanihLotova = criteria.list();
 		if (listaObrisanihLotova.size()!=0) {
 		Date datum_otpisa = listaObrisanihLotova.get(0).getDatum_otpisa();
 		
@@ -101,23 +104,24 @@ public class IzvjestajNaOsnovuLotaVM {
 		return datum_otpisa_string;}
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return "-";
 	}
 	
 	public static String kolicina_otpisa (Sessions ses, String broj_lota) throws NoSuchAlgorithmException,InvalidKeySpecException
 	{
+		//	obrisan
 		try
 		{
-		Criteria criteria = ses.getSession().createCriteria(ObrisanLot.class).add(Restrictions.eq("broj_lota", broj_lota));
-		List<ObrisanLot> listaObrisanihLotova = criteria.list();
+		Criteria criteria = ses.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", broj_lota));
+		List<Lot> listaObrisanihLotova = criteria.list();
 		if (listaObrisanihLotova.size()==0) return "0";
 		int kolicina_otpisa = listaObrisanihLotova.get(0).getKolicina_tableta();
 		return String.valueOf(kolicina_otpisa);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return "0";
 	}
@@ -139,7 +143,7 @@ public class IzvjestajNaOsnovuLotaVM {
 		return lista_datuma_izlaza;
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return Collections.emptyList();
 	}
@@ -160,7 +164,7 @@ public class IzvjestajNaOsnovuLotaVM {
 		return lista_kolicine_izlaza;
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return Collections.emptyList();
 	}
@@ -235,8 +239,10 @@ public class IzvjestajNaOsnovuLotaVM {
 				document.close();
 				writer.close();
 			} catch (DocumentException e) {
+				logger.error(e);
 				System.out.println(e.getMessage());
 			} catch (FileNotFoundException e) {
+				logger.error(e);
 				System.out.println(e.getMessage());
 			}
 
@@ -245,7 +251,7 @@ public class IzvjestajNaOsnovuLotaVM {
 					File myFile = new File(new_file_path);
 					Desktop.getDesktop().open(myFile);
 				} catch (IOException ex) {
-					// no application registered for PDFs
+					logger.error(ex);
 				}
 			}
 		}		

@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -23,8 +24,10 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SIDEVS.View.Login;
+import ba.unsa.etf.si.app.SIDEVS.View.Radnik.BrisanjeKupca;
 
 public class ChangePasswordVM {
+	final static Logger logger = Logger.getLogger(ChangePasswordVM.class);
 
 	public static boolean ChangePassword(String username, char[] password, char[] newPassword, char[] repeatPassword) throws NoSuchAlgorithmException,InvalidKeySpecException {
 		try{
@@ -33,7 +36,7 @@ public class ChangePasswordVM {
 			try{
 				s = Sessions.getInstance(username, p);
 			}catch(Exception e){
-				e.printStackTrace();
+				logger.error(e);
 				return false;
 			}
 			Transaction t = s.getSession().beginTransaction();
@@ -44,7 +47,7 @@ public class ChangePasswordVM {
 			t.commit();
 			s.ubijSesiju();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 			return false;
 		}
 		return true;		

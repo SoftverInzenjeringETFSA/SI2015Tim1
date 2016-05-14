@@ -6,7 +6,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.LijekVM;
 
 import javax.swing.JButton;
@@ -15,7 +18,7 @@ import java.awt.event.MouseEvent;
 import java.awt.Color;
 
 public class EvidencijaLijeka {
-
+	final static Logger logger = Logger.getLogger(EvidencijaLijeka.class);
 	private JFrame frmEvidencijaLijeka;
 	private JTextField textFieldNaziv;
 	private JTextField textFieldProizvodjac;
@@ -32,7 +35,7 @@ public class EvidencijaLijeka {
 					EvidencijaLijeka window = new EvidencijaLijeka();
 					window.frmEvidencijaLijeka.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}
 		});
@@ -50,6 +53,7 @@ public class EvidencijaLijeka {
 		this.s = s;
 		frmEvidencijaLijeka.setVisible(true);
 		if (!s.daLiPostoji()) {
+			
 			throw new Exception("Sesija nije kreirana!");
 		}
 	}
@@ -106,6 +110,7 @@ public class EvidencijaLijeka {
 						labelObavijest.setText("Uspješno ste kreirali lijek");
 					}
 				} catch (Exception e) {
+					logger.error(e);
 					labelObavijest.setForeground(Color.RED);
 					labelObavijest.setText(e.getMessage());
 				}
