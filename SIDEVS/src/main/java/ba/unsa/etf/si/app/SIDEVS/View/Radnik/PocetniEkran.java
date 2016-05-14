@@ -5,8 +5,12 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
+import ba.unsa.etf.si.app.SIDEVS.Model.Administrator;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
 import ba.unsa.etf.si.app.SIDEVS.View.Login;
 import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
 import ba.unsa.etf.si.app.SIDEVS.View.Radnik.EvidencijaLotova;
@@ -15,12 +19,13 @@ import ba.unsa.etf.si.app.SIDEVS.View.Radnik.DodajKupca;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 
 public class PocetniEkran {
 
 	final static Logger logger = Logger.getLogger(PocetniEkran.class);
 	private JFrame frmPoetniEkran;
-<<<<<<< HEAD
+
 	private Sessions s;
 	private EvidencijaLotova el;
 	private BrisanjeKupca bk;
@@ -30,14 +35,12 @@ public class PocetniEkran {
     private DodajLotUSkladiste dlus;
     private KreiranjeFakture kf;
 
-=======
-	private Sessions s;
->>>>>>> branch 'master' of https://github.com/SoftverInzenjeringETFSA/SI2015Tim1.git
 
 	/**
 	 * Create the application.
 	 */
 	public PocetniEkran(Sessions s) throws Exception{
+		
 		initialize();
 		this.s = s;
 		frmPoetniEkran.setVisible(true);
@@ -113,11 +116,9 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-<<<<<<< HEAD
+
 					if(ol==null) ol = new OtpisLijeka(s);
-=======
 					OtpisLijeka ol = new OtpisLijeka(s);
->>>>>>> branch 'master' of https://github.com/SoftverInzenjeringETFSA/SI2015Tim1.git
 				} catch (Exception c) {
 					logger.error(c);
 				}
