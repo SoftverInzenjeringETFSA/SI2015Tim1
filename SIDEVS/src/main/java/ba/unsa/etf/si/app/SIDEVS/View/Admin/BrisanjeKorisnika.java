@@ -1,5 +1,6 @@
 package ba.unsa.etf.si.app.SIDEVS.View.Admin;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,8 +17,10 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
+import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
+import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 
 import javax.swing.JButton;
 
@@ -27,7 +30,8 @@ public class BrisanjeKorisnika {
 	
 	private Sessions _sesija;
 	private JFrame frmAdministratorBrisanjeKorisnika;
-
+	private AutoCompleteJComboBox  listaKorisnikaBrisanje ;
+	private JLabel noticeLabel;
 	/**
 	 * Launch the application.
 	 */
@@ -77,38 +81,58 @@ public class BrisanjeKorisnika {
 		label.setBounds(117, 26, 169, 14);
 		frmAdministratorBrisanjeKorisnika.getContentPane().add(label);
 		
-		final AutoCompleteJComboBox  listaKorisnikaBrisanje = new AutoCompleteJComboBox(s, Korisnik.class, "ime");
+		listaKorisnikaBrisanje = new AutoCompleteJComboBox(s, Korisnik.class, "email");
 		listaKorisnikaBrisanje.setBounds(117, 51, 127, 20);
 		frmAdministratorBrisanjeKorisnika.getContentPane().add(listaKorisnikaBrisanje);
-		
-		/*JComboBox listaKorisnika = new JComboBox();
-		listaKorisnika.setBounds(117, 51, 127, 20);
-		frmAdministratorBrisanjeKorisnika.getContentPane().add(listaKorisnika);*/
+
 		
 		JButton btnObrisi = new JButton("Obrisi");
 		btnObrisi.setBounds(117, 82, 127, 23);
 		btnObrisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{					
-					String txt = listaKorisnikaBrisanje.getSelectedItem().toString();	
-					String[] parts = txt.split(" ");
-					String part1 = parts[0];
-					String part2 = parts[1];
-					
-					boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.BrisanjeKorisnikaVM.BrisiKorisnika(_sesija, part1, part2);		
-					if(!state) throw new Exception();
+					if (validirajPolja()){
+						noticeLabel.setText("");
+						
+						Korisnik k = (Korisnik) _sesija.getSession().createCriteria(Korisnik.class).
+								add(Restrictions.eq("email", listaKorisnikaBrisanje.getSelectedItem())).list().get(0);
+						
+						boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.BrisanjeKorisnikaVM.BrisiKorisnika(_sesija, k.getIme(), k.getPrezime());		
+						if(!state) throw new Exception();
 
-					JOptionPane.showMessageDialog(null, "Korisnik uspješno obrisan", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);				
+									
+						noticeLabel.setForeground(Color.decode("#008000"));
+						noticeLabel.setText("Korisnik je uspješno obrisan");
+					}
+									
 				}
-				catch(Exception ex){
-					logger.error(ex);
-					JOptionPane.showMessageDialog(null, "Došlo je do greške u brisanju", "InfoBox: " + "Error", JOptionPane.INFORMATION_MESSAGE);
 				
-				}
+			catch(Exception ex){
+				noticeLabel.setForeground(Color.red);
+				noticeLabel.setText(ex.getMessage());
+				logger.error(ex);
+				
+			}
 				listaKorisnikaBrisanje.setSelectedItem("");
 			}
 		});
 		frmAdministratorBrisanjeKorisnika.getContentPane().add(btnObrisi);
+		
+		noticeLabel = new JLabel("");
+		noticeLabel.setBounds(10, 131, 335, 14);
+		frmAdministratorBrisanjeKorisnika.getContentPane().add(noticeLabel);
+	}
+	
+	private boolean validirajPolja() {
+		String msg = "";
+		if (listaKorisnikaBrisanje.getSelectedItem()==null) msg="Morate unijeti korisnika";
+		else msg = Validator.validirajKorisnika(_sesija, listaKorisnikaBrisanje.getSelectedItem().toString());
+		if(msg != ""){
+			noticeLabel.setForeground(Color.red);
+			noticeLabel.setText(msg);
+			return false;
+		}
+		return true;
 	}
 	
 	public void prikazi() {
