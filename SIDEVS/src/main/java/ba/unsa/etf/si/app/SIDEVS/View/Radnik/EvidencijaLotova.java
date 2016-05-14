@@ -202,6 +202,9 @@ public class EvidencijaLotova {
 	public void prikazi() {
 		frmEvidencijaLota.setVisible(true);
 	}
+	public void ugasi(){
+		frmEvidencijaLota.dispose();
+	}
 	private boolean validirajPolja() throws WrongInputException {
 		String msg = "";
 		label_obavijest.setForeground(Color.RED);

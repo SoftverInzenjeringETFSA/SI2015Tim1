@@ -122,6 +122,9 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
+					if(dk!=null) dk.ugasi();
+					if(mk!=null) mk.ugasi();
+					if(bk!=null) bk.ugasi();						
 					_sesija.ubijSesiju();
 					frmAdministratorPocetniEkran.dispose();
 					new Login().prikazi();

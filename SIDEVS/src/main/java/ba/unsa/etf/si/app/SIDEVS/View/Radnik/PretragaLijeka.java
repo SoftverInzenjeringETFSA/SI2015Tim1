@@ -50,6 +50,10 @@ public class PretragaLijeka {
 			throw new Exception("Sesija nije kreirana!");
 		}
 	}
+	
+	public void ugasi(){
+		frmPretragaLijeka.dispose();
+	}
 
 	/**
 	 * Initialize the contents of the frame.

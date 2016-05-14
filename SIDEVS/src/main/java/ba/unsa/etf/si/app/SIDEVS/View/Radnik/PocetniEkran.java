@@ -23,6 +23,7 @@ public class PocetniEkran {
     private OtpisLijeka ol;
     private DodajKupca dk;
     private DodajLotUSkladiste dlus;
+    private KreiranjeFakture kf;
 
 
 	/**
@@ -89,7 +90,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					KreiranjeFakture kf = new KreiranjeFakture(s);
+					if(kf == null) kf = new KreiranjeFakture(s);
 					kf.prikazi();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -104,7 +105,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					ol = new OtpisLijeka(s);
+					if(ol==null) ol = new OtpisLijeka(s);
 				} catch (Exception c) {
 					c.printStackTrace();
 				}
@@ -171,7 +172,14 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					s.ubijSesiju();
+					if(el!=null)el.ugasi();
+					if(bk!=null)bk.ugasi();
+					if(pl!=null)pl.ugasi();
+				    if(ol!=null)ol.ugasi();
+				    if(dk!=null)dk.ugasi();
+				    if(dlus!=null)dlus.ugasi();
+				    if(kf!=null)kf.ugasi();
+				    s.ubijSesiju();
 					frmPoetniEkran.dispose();
 					new Login().prikazi();
 				} catch (Exception e) {

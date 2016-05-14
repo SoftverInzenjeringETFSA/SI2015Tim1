@@ -10,6 +10,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Administrator;
 import ba.unsa.etf.si.app.SIDEVS.Model.Menadzer;
@@ -24,6 +25,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
+
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 

@@ -75,6 +75,10 @@ public class ModifikacijaKorisnika {
 		}
 	}
 	
+	public void ugasi(){
+		frmAdministratormodifikacijaKorisnika.dispose();
+	}
+	
 	public void resetContent(){
 		imeModifikacija.setText("");
 		prezimeModifikacija.setText("");

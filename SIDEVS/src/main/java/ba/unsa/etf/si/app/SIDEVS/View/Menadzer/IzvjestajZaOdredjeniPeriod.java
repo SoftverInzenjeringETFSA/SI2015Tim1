@@ -64,6 +64,10 @@ public class IzvjestajZaOdredjeniPeriod {
 		if (!sesija.daLiPostoji())
 			throw new Exception("Sesija nije kreirana!");
 	}
+	
+	public void ugasi(){
+		frmMenadzerIzvjestajZa.dispose();
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 * @throws WrongInputException 

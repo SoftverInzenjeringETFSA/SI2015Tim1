@@ -81,6 +81,10 @@ public class IzvjestajUlaziIzlazi {
 		if (!sesija.daLiPostoji())
 			throw new Exception("Sesija nije kreirana!");
 	}
+	
+	public void ugasi(){
+		frmMenadzerIzvjestaO.dispose();
+	}
 
 	/**
 	 * Initialize the contents of the frame.

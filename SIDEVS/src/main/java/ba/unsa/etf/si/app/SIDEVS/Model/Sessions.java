@@ -58,6 +58,7 @@ public final class Sessions {
 		session.close();
 		korisnik = null;
 		instance = null;
+		return;
 	}
 	
 

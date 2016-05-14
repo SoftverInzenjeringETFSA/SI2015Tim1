@@ -58,6 +58,9 @@ public class BrisanjeKupca {
 			throw new Exception("Sesija nije kreirana!");
 		}	
 	}
+	public void ugasi(){
+		frmBrisanjeKupca.dispose();
+	}
 
 	/**
 	 * Initialize the contents of the frame.

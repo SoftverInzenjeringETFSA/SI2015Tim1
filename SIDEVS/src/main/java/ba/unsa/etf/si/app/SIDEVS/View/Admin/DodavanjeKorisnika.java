@@ -65,6 +65,10 @@ public class DodavanjeKorisnika {
 		_sesija = s;
 	}
 	
+	public void ugasi(){
+		frmAdministratorDodavanjeKorisnika.dispose();
+	}
+	
 	public void resetContent(){
 		ime.setText("");
 		prezime.setText("");

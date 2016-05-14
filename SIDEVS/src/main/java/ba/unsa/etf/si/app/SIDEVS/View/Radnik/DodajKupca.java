@@ -29,6 +29,10 @@ public class DodajKupca {
 			throw new Exception("Sesija nije kreirana!");
 		}
 	}
+	
+	public void ugasi(){
+		frmDodajKupca.dispose();
+	}
 
 	/**
 	 * Initialize the contents of the frame.

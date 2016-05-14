@@ -53,6 +53,10 @@ public class EvidencijaLijeka {
 			throw new Exception("Sesija nije kreirana!");
 		}
 	}
+	
+	public void ugasi(){
+		frmEvidencijaLijeka.dispose();
+	}
 
 	/**
 	 * Initialize the contents of the frame.
