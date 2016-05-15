@@ -23,7 +23,7 @@ import ba.unsa.etf.si.app.SIDEVS.ViewModel.SkladisteVM;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import java.util.Date;
 
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -140,7 +140,7 @@ public class EvidencijaLotova {
 						l.dodajLot(textFieldBroj_lota.getText(), Double.parseDouble(textField_tezina.getText()), Double.parseDouble(textField_cijena.getText()), datum, kolicina, lijek, skladiste, Integer.parseInt(textField_kolicina_pakovanje.getText()));
 						
 						refreshPolja();
-						label_obavijest.setForeground(Color.green);
+						label_obavijest.setForeground(Color.decode("#008000"));
 						label_obavijest.setText("Uspješno ste kreirali lot");
 					}
 				} 
@@ -220,8 +220,13 @@ public class EvidencijaLotova {
 		else if (!Validator.validirajBrojPozitivan(brojLota)) msg = "Broj lota ne moze sadrzavati druge karaktere osim brojeva";
 		else if(comboBox.getSelectedIndex() == -1) msg = "Odaberite lijek";
 		else if (!Validator.isDateValid(txtRokTrajanja.getText())) msg = "Neispravan datum";
+		else if (Conversions.stringToDate(txtRokTrajanja.getText()).before(new Date())) msg = "Rok trajanja vec istekao";
 		else if (textField_cijena.getText().length()==0) msg = "Niste unijeli cijenu";
 		else if (!Validator.validirajCijenu(textField_cijena.getText())) msg = "Cijena nije u ispravnom formatu";
+		else if (Double.parseDouble(textField_cijena.getText())<=0) msg = "Cijena mora biti veća od nule";
+		else if (Double.parseDouble(textField_tezina.getText())<=0) msg = "Težina mora biti veća od nule";
+		else if (Double.parseDouble(textField_kolicina.getText())<=0) msg = "Količina mora biti veća od nule";
+		else if (Double.parseDouble(textField_kolicina_pakovanje.getText())<=0) msg = "Količina pakovanja mora biti veća od nule";
 		
 		 if(msg != ""){
 			label_obavijest.setText(msg);
