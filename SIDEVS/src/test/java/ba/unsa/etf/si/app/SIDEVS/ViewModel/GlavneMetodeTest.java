@@ -46,7 +46,7 @@ public class GlavneMetodeTest {
 			session.flush();
 			session.clear();
 		} catch (Exception ex) {
-			fail("tu" + ex.getMessage());
+			fail(ex.getMessage());
 		}
 	}
 	/*
@@ -128,14 +128,14 @@ public class GlavneMetodeTest {
 			
 			Transaction t = s.getSession().beginTransaction();
 				Skladiste skladiste = new Skladiste();
-				skladiste.setBroj_skladista(20);
-				LijekVM.dodajLijek("lijekTest", "fr");	
+				skladiste.setBroj_skladista(1000);
+				LijekVM.dodajLijek("TESTNILIJEK", "fr");	
 				s.getSession().save(skladiste);
 			t.commit();
 			
-			Lijek lijek = (Lijek) s.getSession().createCriteria(Lijek.class).add(Restrictions.eq("naziv", "lijekTest")).list().get(0);
-			LotVM.dodajLot("555666", (Double)10.5, (Double)10.5, Conversions.stringToDate("12.12.2020"), 12, lijek, skladiste, 10);
-			Lot lot = (Lot)s.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", "555666")).list().get(0);
+			Lijek lijek = (Lijek) s.getSession().createCriteria(Lijek.class).add(Restrictions.eq("naziv", "TESTNILIJEK")).list().get(0);
+			LotVM.dodajLot("9999900000", (Double)10.5, (Double)10.5, Conversions.stringToDate("12.12.2020"), 12, lijek, skladiste, 10);
+			Lot lot = (Lot)s.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", "9999900000")).list().get(0);
 		
 			assertTrue(GlavneMetode.vratiSveLotove(s).contains(lot));
 			
@@ -149,7 +149,7 @@ public class GlavneMetodeTest {
 		}	
 	}
 	
-	
+	/*
 	
 	@Test
 	public void vratiOtpisaneLotoveTest(){
