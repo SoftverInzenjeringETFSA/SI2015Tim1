@@ -73,7 +73,6 @@ public final class FakturaVM {
 				s.getSession().save(fk);
 				s.getTrasaction().commit();
 			}
-
 			JFileChooser chooser = new JFileChooser();
 			chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			int option = chooser.showSaveDialog(null);
