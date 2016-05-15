@@ -61,7 +61,7 @@ public class EvidencijaLotova {
 		frmEvidencijaLota = new JFrame();
 		frmEvidencijaLota.setResizable(false);
 		frmEvidencijaLota.setTitle("Evidencija lota");
-		frmEvidencijaLota.setBounds(100, 100, 366, 320);
+		frmEvidencijaLota.setBounds(100, 100, 393, 320);
 		frmEvidencijaLota.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmEvidencijaLota.getContentPane().setLayout(null);
 		frmEvidencijaLota.setLocationRelativeTo(null);
@@ -91,11 +91,11 @@ public class EvidencijaLotova {
 		frmEvidencijaLota.getContentPane().add(lblKoliinatableta);
 		
 		comboBox = new AutoCompleteJComboBox(s, Lijek.class, "naziv");
-		comboBox.setBounds(150, 33, 170, 20);
+		comboBox.setBounds(184, 33, 170, 20);
 		frmEvidencijaLota.getContentPane().add(comboBox);
 		
 		textField_tezina = new JTextField();
-		textField_tezina.setBounds(150, 108, 170, 20);
+		textField_tezina.setBounds(184, 108, 170, 20);
 		frmEvidencijaLota.getContentPane().add(textField_tezina);
 		textField_tezina.setColumns(10);
 		
@@ -108,7 +108,7 @@ public class EvidencijaLotova {
 				}
 			}
 		});
-		textField_kolicina.setBounds(150, 164, 170, 20);
+		textField_kolicina.setBounds(184, 164, 170, 20);
 		frmEvidencijaLota.getContentPane().add(textField_kolicina);
 		textField_kolicina.setColumns(10);
 		
@@ -156,11 +156,11 @@ public class EvidencijaLotova {
 				}
 			}
 		});
-		btnEvidentiraj.setBounds(150, 222, 170, 23);
+		btnEvidentiraj.setBounds(184, 222, 170, 23);
 		frmEvidencijaLota.getContentPane().add(btnEvidentiraj);
 		
 		comboBox_Skladiste = new JComboBox(SkladisteVM.dajSvaSkladista(s));
-		comboBox_Skladiste.setBounds(150, 58, 170, 20);
+		comboBox_Skladiste.setBounds(184, 58, 170, 20);
 		frmEvidencijaLota.getContentPane().add(comboBox_Skladiste);
 		
 		JLabel lblSkladite = new JLabel("Skladište:");
@@ -176,17 +176,17 @@ public class EvidencijaLotova {
 				}
 			}
 		});
-		textField_kolicina_pakovanje.setBounds(150, 191, 170, 20);
+		textField_kolicina_pakovanje.setBounds(184, 191, 170, 20);
 		frmEvidencijaLota.getContentPane().add(textField_kolicina_pakovanje);
 		textField_kolicina_pakovanje.setColumns(10);
 		
 		JLabel lblKoliinapakovanje = new JLabel("Količina (pakovanje):");
-		lblKoliinapakovanje.setBounds(10, 194, 109, 14);
+		lblKoliinapakovanje.setBounds(10, 194, 133, 14);
 		frmEvidencijaLota.getContentPane().add(lblKoliinapakovanje);
 		
 		textFieldBroj_lota = new JFormattedTextField();
 		
-		textFieldBroj_lota.setBounds(148, 8, 172, 20);
+		textFieldBroj_lota.setBounds(182, 8, 172, 20);
 		frmEvidencijaLota.getContentPane().add(textFieldBroj_lota);
 		
 		try {
@@ -194,11 +194,11 @@ public class EvidencijaLotova {
 		} catch (WrongInputException e) {
 			logger.error(e);
 		}
-		txtRokTrajanja.setBounds(150, 83, 170, 20);
+		txtRokTrajanja.setBounds(184, 83, 170, 20);
 		frmEvidencijaLota.getContentPane().add(txtRokTrajanja);
 		
 		textField_cijena = new JTextField();
-		textField_cijena.setBounds(150, 133, 170, 20);
+		textField_cijena.setBounds(184, 133, 170, 20);
 		frmEvidencijaLota.getContentPane().add(textField_cijena);
 		textField_cijena.setColumns(10);
 	}
