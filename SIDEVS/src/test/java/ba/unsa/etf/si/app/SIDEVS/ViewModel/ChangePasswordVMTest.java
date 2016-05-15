@@ -33,7 +33,7 @@ public class ChangePasswordVMTest {
 				
 			char[] newPassword= "newPassword".toCharArray();
 			char[] oldPassword="password".toCharArray();
-			
+			 
 			boolean promjena= ChangePasswordVM.ChangePassword("administrator", oldPassword, newPassword, newPassword);
 			assertTrue(promjena);
 			
