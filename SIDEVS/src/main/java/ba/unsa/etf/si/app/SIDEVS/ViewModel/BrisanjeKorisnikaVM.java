@@ -41,6 +41,7 @@ public class BrisanjeKorisnikaVM {
 			
 			Korisnik k = (Korisnik) s.getSession().createCriteria(Korisnik.class).add(Restrictions.like("email", email).ignoreCase()).uniqueResult();
 			
+			s.getSession().beginTransaction();
 			s.getSession().delete(k);
 			s.getTrasaction().commit();
 			
