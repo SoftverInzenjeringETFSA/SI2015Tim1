@@ -338,6 +338,7 @@ public class GlavneMetodeTest {
 			}	
 		
 	}
+		/////////////
 		
 /*
 		@Test
