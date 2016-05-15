@@ -70,54 +70,8 @@ public class GlavneMetodeTest {
 		}	
 	}
 	
-/*
-	@Test
-	public void vratiSkladistaTest(){
-		
-		
-		try{
-			Sessions s = new Sessions("MAIDAA","password");
-			System.out.println(s.getKorisnik().getIme());
-			assertTrue (s.daLiPostoji());
-		} catch (Exception ex) {
-			fail("ovdje " + ex.getMessage());
-		}	
-	}
-	
-	
 
 	
-	
-	
-			
-			Transaction t = s.getSession().beginTransaction();
-				Skladiste skladiste = new Skladiste();
-				skladiste.setBroj_skladista(20);
-				LijekVM.dodajLijek("lijekTest", "fr");	
-				s.getSession().save(skladiste);
-			t.commit();
-			
-			Lijek lijek = (Lijek) s.getSession().createCriteria(Lijek.class).add(Restrictions.eq("naziv", "lijekTest")).list().get(0);
-			LotVM.dodajLot("555666", (Double)10.5, (Double)10.5, Conversions.stringToDate("12.12.2020"), 12, lijek, skladiste, 10);
-			Lot lot = (Lot)s.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", "555666")).list().get(0);
-			
-			Set<Skladiste> skladista = GlavneMetode.vratiSkladista(lot);
-		
-			assertTrue(skladista.contains(skladiste));
-			
-			s.getSession().delete(skladiste);
-			s.getSession().delete(lijek);
-			s.getSession().delete(lot);
-			t.commit();
-
-		
-		} catch (Exception ex) {
-			fail("ovdje " + ex.getMessage());
-		}	
-	}
-
-	*/
-	/*
 	@Test
 	public void vratiSveLotoveTest(){
 		try{
@@ -129,7 +83,7 @@ public class GlavneMetodeTest {
 				LijekVM.dodajLijek("TESTNILIJEK", "fr");	
 				s.getSession().save(skladiste);
 			t.commit();
-			/*
+			
 			Lijek lijek = (Lijek) s.getSession().createCriteria(Lijek.class).add(Restrictions.eq("naziv", "TESTNILIJEK")).list().get(0);
 			LotVM.dodajLot("9999900000", (Double)10.5, (Double)10.5, Conversions.stringToDate("12.12.2020"), 12, lijek, skladiste, 10);
 			Lot lot = (Lot)s.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", "9999900000")).list().get(0);
@@ -144,9 +98,9 @@ public class GlavneMetodeTest {
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}	
-	}*/
+	}
 	
-	/*
+	
 	
 	@Test
 	public void vratiOtpisaneLotoveTest(){
@@ -664,7 +618,7 @@ public class GlavneMetodeTest {
 			}	
 		
 	}
-	*/
+	
 	@After
 	public void ending(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
