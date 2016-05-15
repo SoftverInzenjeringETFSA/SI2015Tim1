@@ -30,6 +30,7 @@ public class FakturaLot implements Serializable{
     @JoinColumn(name="skladiste_id")
 	private Skladiste skladiste;
 	private int kolicina;
+	private double cijena;
 	
 	public long getId() {
 		return id;
@@ -60,6 +61,13 @@ public class FakturaLot implements Serializable{
 	}
 	public void setKolicina(int kolicina) {
 		this.kolicina = kolicina;
+	}
+	
+	public double getCijena() {
+		return cijena;
+	}
+	public void setCijena(double cijena) {
+		this.cijena = cijena;
 	}
 	
 	

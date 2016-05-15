@@ -1,6 +1,7 @@
 package ba.unsa.etf.si.app.SIDEVS.Model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -24,6 +25,7 @@ public class Pakovanje implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="skladiste_id")
 	private Skladiste skladiste;
+	private Date datum_nabavke;
 	
 	public Long getId() {
 		return id;
@@ -48,5 +50,11 @@ public class Pakovanje implements Serializable{
 	}
 	public void setSkladiste(Skladiste skladiste) {
 		this.skladiste = skladiste;
+	}
+	public Date setDatum_Nabavke() {
+		return datum_nabavke;
+	}
+	public void setDatum_Nabavke(Date datum_nabavke) {
+		this.datum_nabavke = datum_nabavke;
 	}
 }
