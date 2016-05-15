@@ -50,32 +50,10 @@ public class Login {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					/*
-					Session session = HibernateUtil.getSessionFactory().openSession();
-					try {
-						System.out.println("Kreiram!");
-						Administrator k = new Administrator();
-						k.setIme("KORISNIK");
-						k.setPrezime("Korisnicki");
-						k.setJmbg("1234567891234");
-						k.setAdresa("Adresa bb");
-						k.setEmail("KORISNIK");
-						k.setTelefon("012353451");
-						k.setDatum_polaska_rada(new Date());
-						k.setRadno_mjesto("radnik");
-						k.setLozinka("password");
-						Transaction t = session.beginTransaction();
-						session.save(k);
-						t.commit();
-						System.out.println("Korisnik kreiran!");
-					} catch (Exception ex) {
-						System.out.println(ex);
-					}*/
 					Login window = new Login(); 
 					window.frmLogin.setVisible(true);
 				} catch (Exception e) {
 					logger.error(e);
-					e.printStackTrace();
 				}
 			}
 		});
@@ -89,25 +67,6 @@ public class Login {
 	}
 	
 	public Login() {
-
-	/*	Session s = HibernateUtil.getSessionFactory().openSession();
-		Transaction t = (Transaction) s.beginTransaction();
-		try{
-			
-			Korisnik a = new Administrator();
-			a.setAdresa("a");
-			a.setDatum_polaska_rada(new Date());
-			a.setEmail("admin");
-			a.setIme("admin");
-			a.setPrezime("admin");
-			a.setJmbg("1234567890123");
-			a.setLozinka("password");
-			a.setRadno_mjesto("admin");
-			a.setTelefon("123456");
-			s.save(a);
-			t.commit();
-		}
-		catch(Exception ex){}	*/
 		HibernateUtil.getSessionFactory().openSession();
 		initialize();
 	}
