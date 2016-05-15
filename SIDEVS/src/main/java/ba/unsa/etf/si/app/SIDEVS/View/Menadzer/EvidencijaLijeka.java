@@ -103,7 +103,7 @@ public class EvidencijaLijeka {
 				try {
 					if (validirajPolja()) {
 						LijekVM l = new LijekVM(s);
-						l.dodajLijek((long) 1, textFieldNaziv.getText(),textFieldProizvodjac.getText());
+						l.dodajLijek(textFieldNaziv.getText(),textFieldProizvodjac.getText());
 						textFieldNaziv.setText("");
 						textFieldProizvodjac.setText("");
 						labelObavijest.setForeground(Color.green);

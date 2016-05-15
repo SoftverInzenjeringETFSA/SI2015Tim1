@@ -27,7 +27,7 @@ public final class LijekVM {
 		return true;
 	}
 
-	public static void dodajLijek(Long id, String naziv, String proizvodjac) throws Exception {
+	public static void dodajLijek(String naziv, String proizvodjac) throws Exception {
 		if (daLiPostojiSesija()) {
 			try {
 				List<Lijek> sviLijekovi = s.getSession().createCriteria(Lijek.class).add(Restrictions.like("naziv", naziv)).list();
