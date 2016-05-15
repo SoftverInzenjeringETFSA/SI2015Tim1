@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,33 +24,36 @@ import ba.unsa.etf.si.app.SIDEVS.View.Radnik.EvidencijaLotova;
 
 public class GlavneMetodeTest {
 
+	Menadzer k;
 	//TESTOVI
 	@Before 
 	public void atBegin(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			/*Menadzer k = new Menadzer();
-			k.setIme("MAIDA");
+			k = new Menadzer();
+			k.setIme("MAIDAB");
 			k.setPrezime("Korisnicki");
 			k.setJmbg("1234567891234");
 			k.setAdresa("Adresa bb");
-			k.setEmail("MAIDA");
+			k.setEmail("MAIDAB");
 			k.setTelefon("012353451");
 			k.setDatum_polaska_rada(new Date());
 			k.setRadno_mjesto("radnik");
 			k.setLozinka("password");
 			Transaction t = session.beginTransaction();
 			session.save(k);
-			t.commit();*/
+			t.commit();
+			session.flush();
+			session.clear();
 		} catch (Exception ex) {
-			fail("tu" + ex.getMessage());
+			fail(ex.getMessage());
 		}
 	}
-	
+	/*
 	@Test
 	public void TestirajSesiju(){
 		try{
-		Sessions s = new Sessions("menadzer","password");
+		Sessions s = new Sessions("MAIDAB","password");
 		System.out.println(s.getKorisnik().getIme());
 		
 		Skladiste skladiste = new Skladiste();
@@ -59,12 +63,14 @@ public class GlavneMetodeTest {
 		
 		assertTrue (true);
 		
+		
+		
 		} catch (Exception ex) {
 			fail("ovdje " + ex.getMessage());
 		}	
 	}
 	
-	
+	*/
 	
 	
 	/*
@@ -81,12 +87,12 @@ public class GlavneMetodeTest {
 		}	
 	}
 	
-	*/
+	
+
 	
 	
 	
-	
-			/*
+			
 			Transaction t = s.getSession().beginTransaction();
 				Skladiste skladiste = new Skladiste();
 				skladiste.setBroj_skladista(20);
@@ -106,45 +112,30 @@ public class GlavneMetodeTest {
 			s.getSession().delete(lijek);
 			s.getSession().delete(lot);
 			t.commit();
-*/
-		/*
+
+		
 		} catch (Exception ex) {
 			fail("ovdje " + ex.getMessage());
 		}	
-	}*/
-	/*
+	}
+*/
+
+	
 	@Test
 	public void vratiSveLotoveTest(){
 		try{
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			Transaction trans = session.beginTransaction();
-			Administrator k = null;
-				k = new Administrator();
-				k.setIme("adminTest");
-				k.setPrezime("Korisnicki");
-				k.setJmbg("1234567891234");
-				k.setAdresa("Adresa bb");
-				k.setEmail("adminTest");
-				k.setTelefon("012353451");
-				k.setDatum_polaska_rada(new Date());
-				k.setRadno_mjesto("radnik");
-				k.setLozinka("password");			
-			session.save(k);
-			trans.commit();
-			
-			Sessions s = new Sessions ("adminTest","password");
-			
+			Sessions s = new Sessions("MAIDAB","password");
 			
 			Transaction t = s.getSession().beginTransaction();
 				Skladiste skladiste = new Skladiste();
-				skladiste.setBroj_skladista(20);
-				LijekVM.dodajLijek("lijekTest", "fr");	
+				skladiste.setBroj_skladista(1000);
+				LijekVM.dodajLijek("TESTNILIJEK", "fr");	
 				s.getSession().save(skladiste);
 			t.commit();
 			
-			Lijek lijek = (Lijek) s.getSession().createCriteria(Lijek.class).add(Restrictions.eq("naziv", "lijekTest")).list().get(0);
-			LotVM.dodajLot("555666", (Double)10.5, (Double)10.5, Conversions.stringToDate("12.12.2020"), 12, lijek, skladiste, 10);
-			Lot lot = (Lot)s.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", "555666")).list().get(0);
+			Lijek lijek = (Lijek) s.getSession().createCriteria(Lijek.class).add(Restrictions.eq("naziv", "TESTNILIJEK")).list().get(0);
+			LotVM.dodajLot("9999900000", (Double)10.5, (Double)10.5, Conversions.stringToDate("12.12.2020"), 12, lijek, skladiste, 10);
+			Lot lot = (Lot)s.getSession().createCriteria(Lot.class).add(Restrictions.eq("broj_lota", "9999900000")).list().get(0);
 		
 			assertTrue(GlavneMetode.vratiSveLotove(s).contains(lot));
 			
@@ -152,37 +143,21 @@ public class GlavneMetodeTest {
 			s.getSession().delete(lijek);
 			s.getSession().delete(lot);
 			t.commit();
-			
-			session.delete(k);
-			trans.commit();
+			s.ubijSesiju();
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}	
 	}
 	
+	/*
+	
 	@Test
 	public void vratiOtpisaneLotoveTest(){
 		try{
 			
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			Transaction trans = session.beginTransaction();
-			Administrator k = null;
-				k = new Administrator();
-				k.setIme("adminTest");
-				k.setPrezime("Korisnicki");
-				k.setJmbg("1234567891234");
-				k.setAdresa("Adresa bb");
-				k.setEmail("adminTest");
-				k.setTelefon("012353451");
-				k.setDatum_polaska_rada(new Date());
-				k.setRadno_mjesto("radnik");
-				k.setLozinka("password");			
-			session.save(k);
-			trans.commit();
+			Sessions s = new Sessions("MAIDAB","password");
 			
-			Sessions s = new Sessions ("adminTest","password");
-			
-			
+
 			Transaction t = s.getSession().beginTransaction();
 				Skladiste skladiste = new Skladiste();
 				skladiste.setBroj_skladista(20);
@@ -204,9 +179,7 @@ public class GlavneMetodeTest {
 			s.getSession().delete(lijek);
 			s.getSession().delete(lot);
 			t.commit();
-			Sessions.ubijSesiju();
-			session.delete(k);
-			trans.commit();
+			s.ubijSesiju();
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}	
@@ -216,24 +189,7 @@ public class GlavneMetodeTest {
 		public void vratiNeotpisaneLotoveTest(){
 			try{
 				
-				Session session = HibernateUtil.getSessionFactory().openSession();
-				Transaction trans = session.beginTransaction();
-				Administrator k = null;
-					k = new Administrator();
-					k.setIme("adminTest");
-					k.setPrezime("Korisnicki");
-					k.setJmbg("1234567891234");
-					k.setAdresa("Adresa bb");
-					k.setEmail("adminTest");
-					k.setTelefon("012353451");
-					k.setDatum_polaska_rada(new Date());
-					k.setRadno_mjesto("radnik");
-					k.setLozinka("password");			
-				session.save(k);
-				trans.commit();
-				
-				Sessions s = new Sessions ("adminTest","password");
-				
+				Sessions s = new Sessions("MAIDAB","password");
 				
 				Transaction t = s.getSession().beginTransaction();
 					Skladiste skladiste = new Skladiste();
@@ -254,9 +210,7 @@ public class GlavneMetodeTest {
 				s.getSession().delete(lijek);
 				s.getSession().delete(lot);
 				t.commit();
-				Sessions.ubijSesiju();
-				session.delete(k);
-				trans.commit();
+				s.ubijSesiju();
 				} catch (Exception ex) {
 				System.out.println(ex);
 			}	
@@ -267,25 +221,8 @@ public class GlavneMetodeTest {
 		public void vratiSveLotoveOdDoTest(){
 			try{
 				
-				Session session = HibernateUtil.getSessionFactory().openSession();
-				Transaction trans = session.beginTransaction();
-				Administrator k = null;
-					k = new Administrator();
-					k.setIme("adminTest");
-					k.setPrezime("Korisnicki");
-					k.setJmbg("1234567891234");
-					k.setAdresa("Adresa bb");
-					k.setEmail("adminTest");
-					k.setTelefon("012353451");
-					k.setDatum_polaska_rada(new Date());
-					k.setRadno_mjesto("radnik");
-					k.setLozinka("password");			
-				session.save(k);
-				trans.commit();
-				
-				Sessions s = new Sessions ("adminTest","password");
-				
-				
+				Sessions s = new Sessions("MAIDAB","password");
+	
 				Transaction t = s.getSession().beginTransaction();
 					Skladiste skladiste = new Skladiste();
 					skladiste.setBroj_skladista(20);
@@ -313,8 +250,6 @@ public class GlavneMetodeTest {
 				s.getSession().delete(lot);
 				t.commit();
 				Sessions.ubijSesiju();
-				session.delete(k);
-				trans.commit();
 			} catch (Exception ex) {
 				System.out.println(ex);
 			}	
@@ -325,23 +260,7 @@ public class GlavneMetodeTest {
 		public void vratiLotoveOdDoTest(){
 			try{
 				
-				Session session = HibernateUtil.getSessionFactory().openSession();
-				Transaction trans = session.beginTransaction();
-				Administrator k = null;
-					k = new Administrator();
-					k.setIme("adminTest");
-					k.setPrezime("Korisnicki");
-					k.setJmbg("1234567891234");
-					k.setAdresa("Adresa bb");
-					k.setEmail("adminTest");
-					k.setTelefon("012353451");
-					k.setDatum_polaska_rada(new Date());
-					k.setRadno_mjesto("radnik");
-					k.setLozinka("password");			
-				session.save(k);
-				trans.commit();
-				
-				Sessions s = new Sessions ("adminTest","password");
+				Sessions s = new Sessions("MAIDAB","password");
 				
 				
 				Transaction t = s.getSession().beginTransaction();
@@ -371,8 +290,7 @@ public class GlavneMetodeTest {
 				s.getSession().delete(lot);
 				t.commit();
 				Sessions.ubijSesiju();
-				session.delete(k);
-				trans.commit();
+
 			} catch (Exception ex) {
 				System.out.println(ex);
 			}	
@@ -383,23 +301,7 @@ public class GlavneMetodeTest {
 		public void vratiOtpisaneLotoveOdDoTest(){
 			try{
 				
-				Session session = HibernateUtil.getSessionFactory().openSession();
-				Transaction trans = session.beginTransaction();
-				Administrator k = null;
-					k = new Administrator();
-					k.setIme("adminTest");
-					k.setPrezime("Korisnicki");
-					k.setJmbg("1234567891234");
-					k.setAdresa("Adresa bb");
-					k.setEmail("adminTest");
-					k.setTelefon("012353451");
-					k.setDatum_polaska_rada(new Date());
-					k.setRadno_mjesto("radnik");
-					k.setLozinka("password");			
-				session.save(k);
-				trans.commit();
-				
-				Sessions s = new Sessions ("adminTest","password");
+				Sessions s = new Sessions("MAIDAB","password");
 				
 				
 				Transaction t = s.getSession().beginTransaction();
@@ -431,15 +333,14 @@ public class GlavneMetodeTest {
 				s.getSession().delete(lot);
 				t.commit();
 				Sessions.ubijSesiju();
-				session.delete(k);
-				trans.commit();
 			} catch (Exception ex) {
 				System.out.println(ex);
 			}	
 		
 	}
+		/////////////
 		
-
+/*
 		@Test
 		public void vratiKolicinuIzlazaTest(){
 			try{
@@ -869,4 +770,14 @@ public class GlavneMetodeTest {
 			}	
 		
 	}*/
+	
+	@After
+	public void ending(){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction trans = session.beginTransaction();
+		session.delete(k);
+		trans.commit();
+		session.flush();
+		session.clear();
+	}
 }
