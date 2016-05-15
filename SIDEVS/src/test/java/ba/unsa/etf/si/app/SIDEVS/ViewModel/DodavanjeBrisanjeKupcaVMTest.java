@@ -62,7 +62,7 @@ public class DodavanjeBrisanjeKupcaVMTest {
 			email = "user_test";
 			brojTelefona = "5324231";
 			radnoMjesto = "Pozicija";
-			datumPocetkaRada = "";
+			datumPocetkaRada = "12.12.2002";
 		} catch (Exception ex) {
 			fail(ex.getMessage());
 		}
