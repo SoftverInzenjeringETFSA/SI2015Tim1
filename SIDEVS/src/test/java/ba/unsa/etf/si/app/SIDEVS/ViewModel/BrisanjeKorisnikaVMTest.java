@@ -22,7 +22,6 @@ public class BrisanjeKorisnikaVMTest {
 			if (ba.unsa.etf.si.app.SIDEVS.ViewModel.DodavanjeKorisnikaVM.KreirajKorisnika(s, "Ime", "Prezimenko", "1010991123123", "38761001123", "iprezimenko", "radnik", "12.03.2010.", "Adresa bb", "Radnik"))
 			{
 				assertTrue(ba.unsa.etf.si.app.SIDEVS.ViewModel.BrisanjeKorisnikaVM.BrisiKorisnika(s, "Ime", "Prezimenko"));
-
 				/*
 				Transaction t = s.getSession().beginTransaction();
 				Criteria criteria = s.getSession().createCriteria(Korisnik.class).add(Restrictions.like("email", "iprezimenko").ignoreCase());
