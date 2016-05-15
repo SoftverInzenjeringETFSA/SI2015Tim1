@@ -15,34 +15,41 @@ public class ChangePasswordVMTest {
 
 	@Test
 	public void ChangePasswordTest() {
-			try {
-				Session session = HibernateUtil.getSessionFactory().openSession();
-				Administrator k = new Administrator();
-				k.setIme("administrator");
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			Transaction trans = session.beginTransaction();
+			Administrator k = null;
+			//kreiranje administratora
+				k = new Administrator();
+				k.setIme("adminTest");
 				k.setPrezime("Korisnicki");
 				k.setJmbg("1234567891234");
 				k.setAdresa("Adresa bb");
-				k.setEmail("administrator");
+				k.setEmail("adminTest");
 				k.setTelefon("012353451");
 				k.setDatum_polaska_rada(new Date());
 				k.setRadno_mjesto("radnik");
 				k.setLozinka("password");
-				Transaction t = session.beginTransaction();
-				session.save(k);
-				t.commit();
 				
-			char[] newPassword= "newPassword".toCharArray();
+				session.save(k);
+				trans.commit();
+				
+				Sessions s_admin = new Sessions ("adminTest","password");
+				ba.unsa.etf.si.app.SIDEVS.ViewModel.DodavanjeKorisnikaVM.KreirajKorisnika(s_admin, "ime", "ime", "1234567893210", "061/789-321", "ime@sitim.com", "radnik", "01.05.2010.", "adresa", "Radnik");
+			    s_admin.ubijSesiju();
+				char[] newPassword= "newPassword".toCharArray();
 			char[] oldPassword="password".toCharArray();
 			 
-			boolean promjena= ChangePasswordVM.ChangePassword("administrator", oldPassword, newPassword, newPassword);
+			boolean promjena= ChangePasswordVM.ChangePassword("ime", oldPassword, newPassword, newPassword);
+			ba.unsa.etf.si.app.SIDEVS.ViewModel.BrisanjeKorisnikaVM.BrisiKorisnika(s_admin, "ime", "ime");
 			assertTrue(promjena);
 			
 			session.delete(k);
-			t.commit();
+			trans.commit();
 		}
 		catch (Exception ex)
 		{
-			fail("Bacen izuzetak " + ex.getMessage() + "!");
+			System.out.println(ex.getMessage());
 		}
 		}
 	}

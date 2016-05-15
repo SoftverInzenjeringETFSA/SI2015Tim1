@@ -42,6 +42,9 @@ public class ModifikacijaKorisnikaVMTest {
 		DodavanjeKorisnikaVM dk = new DodavanjeKorisnikaVM();
 		boolean kreirano = dk.KreirajKorisnika(s, "k", "k", "1234567890123", "062/111-333", "k@si.com", "Radnik", "01.05.2011.", "adresa", "Radnik");
 		assertTrue(kreirano);
+		
+		session.delete(k);
+		t.commit();
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
