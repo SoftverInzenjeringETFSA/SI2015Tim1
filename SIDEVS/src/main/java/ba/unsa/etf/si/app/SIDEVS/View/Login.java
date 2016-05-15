@@ -34,6 +34,9 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 
 public class Login {
+	
+	final static Logger logger = Logger.getLogger(Login.class);
+	
 	private JFrame frmLogin;
 	private ChangePassword cp;
 	private JTextField korisnickoIme;
@@ -71,6 +74,7 @@ public class Login {
 					Login window = new Login(); 
 					window.frmLogin.setVisible(true);
 				} catch (Exception e) {
+					logger.error(e);
 					e.printStackTrace();
 				}
 			}
@@ -120,7 +124,7 @@ public class Login {
 		frmLogin.getContentPane().setLayout(null);
 		frmLogin.setLocationRelativeTo(null);
 		
-		JLabel lblKorisnikoIme = new JLabel("Korisničko ime:");
+		JLabel lblKorisnikoIme = new JLabel("Korisnički email:");
 		lblKorisnikoIme.setBounds(64, 32, 131, 14);
 		frmLogin.getContentPane().add(lblKorisnikoIme);
 		
@@ -181,6 +185,7 @@ public class Login {
 					frmLogin.dispose();
 				}
 				catch(Exception ex){
+					logger.error(ex);
 					labelError.setText(ex.getMessage());
 				}
 			}

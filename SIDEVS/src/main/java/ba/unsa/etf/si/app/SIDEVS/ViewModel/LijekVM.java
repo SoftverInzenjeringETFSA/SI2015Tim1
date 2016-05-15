@@ -1,5 +1,7 @@
 package ba.unsa.etf.si.app.SIDEVS.ViewModel;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -28,16 +30,16 @@ public final class LijekVM {
 	public static void dodajLijek(Long id, String naziv, String proizvodjac) throws Exception {
 		if (daLiPostojiSesija()) {
 			try {
+				List<Lijek> sviLijekovi = s.getSession().createCriteria(Lijek.class).add(Restrictions.like("naziv", naziv)).list();
 				Lijek l = new Lijek();
-				l.setId(id);
 				l.setNaziv(naziv);
 				l.setProizvodjac(proizvodjac);
-				if (s.getSession().get(Lijek.class, id) == null && s.getSession().createCriteria(Lijek.class).add(Restrictions.eq("naziv", naziv)) .setProjection(Projections.property("naziv")).uniqueResult() == null) {
+				if (sviLijekovi.size() == 0) {
 					s.getSession().beginTransaction();
 					s.getSession().save(l);
 					s.getTrasaction().commit();
 				} else
-					throw new Exception("Lijek sa ovim ID ili nazivom već postoji");
+					throw new Exception("Lijek sa ovim nazivom već postoji");
 			} catch (Exception ex) {
 				logger.error(ex);
 				throw ex;

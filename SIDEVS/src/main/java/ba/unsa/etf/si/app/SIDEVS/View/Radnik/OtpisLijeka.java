@@ -237,9 +237,7 @@ public class OtpisLijeka {
 		List<Lot> lotovi = sesija.getSession().createCriteria(Lot.class).add(Restrictions.lt("rok_trajanja",myDate)).list();
 		for(int i = 0; i < lotovi.size(); i++){
 			Lijek tmp = lotovi.get(i).getLijek();
-			Long tmpx = Long.valueOf(tmp.getId()).longValue();
-			System.out.println(tmp);
-			List<Lijek> lijek =  sesija.getSession().createCriteria(Lijek.class).add(Restrictions.like("id", tmpx)).list();	
+			List<Lijek> lijek =  sesija.getSession().createCriteria(Lijek.class).add(Restrictions.like("naziv", tmp.getNaziv())).list();	
 			model.addRow(new Object[]{lijek.get(0).getNaziv(), lotovi.get(i).getBroj_lota()});
 		}
 	}

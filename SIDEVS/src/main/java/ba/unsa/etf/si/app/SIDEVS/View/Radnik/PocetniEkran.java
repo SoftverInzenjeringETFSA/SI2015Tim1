@@ -1,6 +1,7 @@
 package ba.unsa.etf.si.app.SIDEVS.View.Radnik;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
@@ -17,6 +18,8 @@ import ba.unsa.etf.si.app.SIDEVS.View.Radnik.EvidencijaLotova;
 import ba.unsa.etf.si.app.SIDEVS.View.Radnik.DodajKupca;
 
 import javax.swing.JButton;
+
+import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
@@ -70,7 +73,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-				    EvidencijaLotova el = new EvidencijaLotova(s);
+				    el = new EvidencijaLotova(s);
 					el.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
@@ -85,7 +88,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					PretragaLijeka pl = new PretragaLijeka(s);
+					pl = new PretragaLijeka(s);
 					pl.frmPretragaLijeka.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
@@ -100,7 +103,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(kf == null) kf = new KreiranjeFakture(s);
+					kf = new KreiranjeFakture(s);
 					kf.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
@@ -115,7 +118,8 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(ol==null) ol = new OtpisLijeka(s);
+					ol = new OtpisLijeka(s);
+					ol.frmOtpisLijeka.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
 				}
@@ -129,7 +133,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try{
-				DodajLotUSkladiste dlus = new DodajLotUSkladiste(s);
+				dlus = new DodajLotUSkladiste(s);
 				dlus.prikazi();
 				}
 				catch(Exception ex){
@@ -151,7 +155,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					BrisanjeKupca bk = new BrisanjeKupca(s);
+					bk = new BrisanjeKupca(s);
 					bk.frmBrisanjeKupca.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
@@ -166,7 +170,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					DodajKupca dk = new DodajKupca(s);				
+					dk = new DodajKupca(s);				
 					dk.frmDodajKupca.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
@@ -201,6 +205,22 @@ public class PocetniEkran {
 		frmPoetniEkran.getContentPane().add(btnOdjava);
 		
 		JButton btnPomo = new JButton("Pomoć");
+		btnPomo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String help = "<html><body width=300'" +
+		                    "'><h1>Help</h1>" +
+		                    "<p> Za sve informacije dostupni smo vam 24/7.<br><br>" +
+		                    "<p> TELEFONSKI BROJ:  033/589-326 <br>" +
+		                    "<p> EMAIL:            najbolji_tim@sidevs.ba <br><br>" +
+		                    "<p> Ili nas posjetite lično na adresi:" +
+		                    "<p> Zmaja od Bosne bb, Kampus Univerziteta u Sarajevu<br><br><br>" +
+		                    "<p> Vaš SIDEVS <br>" +
+		                    "";
+
+                JOptionPane.showMessageDialog(null, help);
+			}
+		});
 		btnPomo.setBounds(220, 237, 195, 23);
 		frmPoetniEkran.getContentPane().add(btnPomo);
 	}

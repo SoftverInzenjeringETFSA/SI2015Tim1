@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
 
@@ -36,6 +37,9 @@ public class PocetniEkran {
 	private IzvjestajNaOsnovuLota inol;
 	private DodajKupca dk;
 	private BrisanjeKupca bk;
+	private EvidencijaLotova elo;
+	private DodajLotUSkladiste dlus;
+	private OtpisLijeka oli;
 
 	/**
 	 * Launch the application.
@@ -89,11 +93,11 @@ public class PocetniEkran {
 		frmMenadzerPocetniEkran.getContentPane().add(lblLijek);
 		
 		JLabel lblDnevnikPromjena = new JLabel("Dnevnik promjena");
-		lblDnevnikPromjena.setBounds(10, 135, 168, 14);
+		lblDnevnikPromjena.setBounds(10, 145, 168, 14);
 		frmMenadzerPocetniEkran.getContentPane().add(lblDnevnikPromjena);
 		
 		JLabel lblKupac = new JLabel("Kupac");
-		lblKupac.setBounds(373, 135, 46, 14);
+		lblKupac.setBounds(373, 145, 46, 14);
 		frmMenadzerPocetniEkran.getContentPane().add(lblKupac);
 		
 		JButton btnTrenutnoStanjeNa = new JButton("Trenutno stanje na skladištima");
@@ -172,11 +176,13 @@ public class PocetniEkran {
 		
 		JButton btnOtpisLijekova = new JButton("Otpis lijekova");
 		btnOtpisLijekova.addMouseListener(new MouseAdapter() {
+			
+
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					ol = new OtpisLijeka(s);
-					ol.frmOtpisLijeka.setVisible(true);
+					oli = new OtpisLijeka(s);
+					oli.frmOtpisLijeka.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
 				}
@@ -256,11 +262,14 @@ public class PocetniEkran {
 					if(pl!=null)pl.ugasi();
 					if(kf!=null)kf.ugasi();
 					if(ol!=null)ol.ugasi();
+					if(oli!=null)oli.ugasi();
 					if(iop!=null)iop.ugasi();
 					if(iui!=null)iui.ugasi();
 					if(inol!=null)inol.ugasi();
 					if(dk!=null)dk.ugasi();
 					if(bk!=null)bk.ugasi();
+					if(elo!=null) elo.ugasi();
+					if(dlus!=null) dlus.ugasi();
 					s.ubijSesiju();
 					frmMenadzerPocetniEkran.dispose();
 					new Login().prikazi();
@@ -273,6 +282,22 @@ public class PocetniEkran {
 		frmMenadzerPocetniEkran.getContentPane().add(btnOdjava);
 		
 		JButton btnPomoc = new JButton("Pomoć");
+		btnPomoc.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String help = "<html><body width=300'" +
+	                    "'><h1>Help</h1>" +
+	                    "<p> Za sve informacije dostupni smo vam 24/7.<br><br>" +
+	                    "<p> TELEFONSKI BROJ:  033/589-326 <br>" +
+	                    "<p> EMAIL:            najbolji_tim@sidevs.ba <br><br>" +
+	                    "<p> Ili nas posjetite lično na adresi:" +
+	                    "<p> Zmaja od Bosne bb, Kampus Univerziteta u Sarajevu<br><br><br>" +
+	                    "<p> Vaš SIDEVS <br>" +
+	                    "";
+
+            JOptionPane.showMessageDialog(null, help);
+			}
+		});
 		btnPomoc.setBounds(528, 228, 141, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnPomoc);
 		
@@ -281,7 +306,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					if(dk==null)dk = new DodajKupca(s);				
+					dk = new DodajKupca(s);				
 					dk.frmDodajKupca.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
@@ -290,5 +315,39 @@ public class PocetniEkran {
 		});
 		btnDodaj.setBounds(373, 160, 141, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnDodaj);
+		
+		JButton btnEvidencijaLotova = new JButton("Evidencija lotova");
+		btnEvidencijaLotova.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+				    elo = new EvidencijaLotova(s);
+					elo.prikazi();
+				} catch (Exception e) {
+					logger.error(e);
+				}
+			}
+		});
+		btnEvidencijaLotova.setBounds(373, 96, 145, 23);
+		frmMenadzerPocetniEkran.getContentPane().add(btnEvidencijaLotova);
+		
+		JButton btnDodajLotU = new JButton("Dodaj/ažuriraj lot u skladištu");
+		btnDodajLotU.addMouseListener(new MouseAdapter() {
+			
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try{
+					dlus = new DodajLotUSkladiste(s);
+					dlus.prikazi();
+					}
+					catch(Exception ex){
+						logger.error(ex);
+					}
+			}
+		});
+		btnDodajLotU.setBounds(528, 96, 141, 23);
+		frmMenadzerPocetniEkran.getContentPane().add(btnDodajLotU);
 	}
 }

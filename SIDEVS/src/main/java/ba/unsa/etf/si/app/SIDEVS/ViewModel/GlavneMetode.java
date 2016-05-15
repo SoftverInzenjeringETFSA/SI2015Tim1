@@ -69,9 +69,12 @@ public final class GlavneMetode {
 	
 	public static Integer vratiKolicinuIzlaza(Lot lot, Skladiste skladiste){
 		Set<FakturaLot> fakture = lot.getFaktureLotovi();
+		if (fakture.isEmpty()) return 0;
 		Integer kolicina = 0;
 		for (FakturaLot f: fakture){
+			if (f.getSkladiste()==skladiste){
 			kolicina += f.getKolicina();
+			}
 		}
 		return kolicina;
 	}
@@ -89,7 +92,9 @@ public final class GlavneMetode {
 		Set<Pakovanje> pakovanja = lot.getPakovanja();
 		Integer kolicina = 0;
 		for (Pakovanje p: pakovanja){
+			if (p.getSkladiste()==skladiste){
 			kolicina += p.getKolicina();
+			}
 		}
 		return kolicina;
 	}
@@ -107,7 +112,9 @@ public final class GlavneMetode {
 		Set<FakturaLot> fakture = lot.getFaktureLotovi();
 		Integer kolicina = vratiKolicinuUlaza(lot, skladiste);
 		for (FakturaLot f: fakture){
+			if (f.getSkladiste()==skladiste){
 			kolicina -= f.getKolicina();
+			}
 		}
 		return kolicina;
 	}
