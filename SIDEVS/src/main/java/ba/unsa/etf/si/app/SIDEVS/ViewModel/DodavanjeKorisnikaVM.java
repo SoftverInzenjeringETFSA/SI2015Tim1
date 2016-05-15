@@ -30,9 +30,14 @@ import ba.unsa.etf.si.app.SIDEVS.Validation.Conversions;
 public class DodavanjeKorisnikaVM {
 	final static Logger logger = Logger.getLogger(DodavanjeKorisnikaVM.class);
 
-	public static  boolean KreirajKorisnika(Sessions ses, String ime, String prezime, String maticniBroj, String brojTelefona, String email, String radnoMjesto, String datumPocetkaRada, String adresa, String tipKorisnika) throws NoSuchAlgorithmException,InvalidKeySpecException {
+	private Sessions s;
+	
+	public DodavanjeKorisnikaVM(Sessions s){
+		this.s = s;
+	}
+	
+	public  boolean kreirajKorisnika(String ime, String prezime, String maticniBroj, String brojTelefona, String email, String radnoMjesto, String datumPocetkaRada, String adresa, String tipKorisnika) throws NoSuchAlgorithmException,InvalidKeySpecException {
 		try{
-			Transaction t = ses.getSession().beginTransaction();
 			Korisnik k;
 			if(tipKorisnika == "Menadzer"){
 				k = new Menadzer();
@@ -48,8 +53,8 @@ public class DodavanjeKorisnikaVM {
 			k.setDatum_polaska_rada(Conversions.dajDatumZaBazu(datumPocetkaRada)); 
 			k.setRadno_mjesto(radnoMjesto);
 			k.setLozinka("password");
-			ses.getSession().save(k);
-			t.commit();
+			s.getSession().save(k);
+			s.getTrasaction().commit();
 		} catch (Exception e) {
 			logger.error(e);
 			return false;

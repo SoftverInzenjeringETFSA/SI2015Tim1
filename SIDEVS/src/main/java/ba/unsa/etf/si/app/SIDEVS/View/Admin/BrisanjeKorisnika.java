@@ -21,6 +21,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
+import ba.unsa.etf.si.app.SIDEVS.ViewModel.BrisanjeKorisnikaVM;
 
 import javax.swing.JButton;
 
@@ -98,12 +99,13 @@ public class BrisanjeKorisnika {
 				try{					
 					if (validirajPolja()){
 						noticeLabel.setText("");
+					
 						
-						Korisnik k = (Korisnik) _sesija.getSession().createCriteria(Korisnik.class).
-								add(Restrictions.eq("email", listaKorisnikaBrisanje.getSelectedItem())).list().get(0);
+						BrisanjeKorisnikaVM bvm = new BrisanjeKorisnikaVM(_sesija);
 						
-						boolean state = ba.unsa.etf.si.app.SIDEVS.ViewModel.BrisanjeKorisnikaVM.BrisiKorisnika(_sesija, k.getIme(), k.getPrezime());		
-						if(!state) throw new Exception("Brisanje nije uspjelo");
+						String email_korisnika = listaKorisnikaBrisanje.getSelectedItem().toString();
+						
+						if(!bvm.BrisiKorisnika(email_korisnika)) throw new Exception("Brisanje nije uspjelo");
 
 									
 						noticeLabel.setForeground(Color.decode("#008000"));

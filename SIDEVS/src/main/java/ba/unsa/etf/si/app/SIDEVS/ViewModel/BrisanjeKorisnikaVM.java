@@ -29,20 +29,21 @@ import ba.unsa.etf.si.app.SIDEVS.View.Radnik.BrisanjeKupca;
 public class BrisanjeKorisnikaVM {
 	
 	final static Logger logger = Logger.getLogger(BrisanjeKorisnikaVM.class);
+	private Sessions s;
+	
+	public BrisanjeKorisnikaVM(Sessions s){
+		this.s = s;
+	}
 
-	public static boolean BrisiKorisnika(Sessions ses, String ime, String prezime) throws NoSuchAlgorithmException,InvalidKeySpecException {
+	public boolean BrisiKorisnika(String email) throws NoSuchAlgorithmException,InvalidKeySpecException {
 		try{
-			Korisnik a = ses.getKorisnik();
-			if(a.getIme() == ime && a.getPrezime() == prezime) return false;
+			if(s.getKorisnik().getEmail() == email) return false;
 			
-			Transaction t = ses.getSession().beginTransaction();
-			Criteria criteria = ses.getSession().createCriteria(Korisnik.class).add(Restrictions.like("ime", ime).ignoreCase()).add(Restrictions.like("prezime", prezime).ignoreCase());
+			Korisnik k = (Korisnik) s.getSession().createCriteria(Korisnik.class).add(Restrictions.like("email", email).ignoreCase()).uniqueResult();
 			
-			List<Korisnik> lista = criteria.list();
-			Korisnik k = lista.get(0);
+			s.getSession().delete(k);
+			s.getTrasaction().commit();
 			
-			ses.getSession().delete(k);
-			t.commit();
 		} catch (Exception e) {
 			logger.error(e);
 			return false;

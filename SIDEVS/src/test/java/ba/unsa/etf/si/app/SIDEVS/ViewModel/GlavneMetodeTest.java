@@ -28,7 +28,7 @@ public class GlavneMetodeTest {
 	public void atBegin(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			Menadzer k = new Menadzer();
+			/*Menadzer k = new Menadzer();
 			k.setIme("MAIDA");
 			k.setPrezime("Korisnicki");
 			k.setJmbg("1234567891234");
@@ -40,7 +40,7 @@ public class GlavneMetodeTest {
 			k.setLozinka("password");
 			Transaction t = session.beginTransaction();
 			session.save(k);
-			t.commit();
+			t.commit();*/
 		} catch (Exception ex) {
 			fail("tu" + ex.getMessage());
 		}
@@ -49,16 +49,14 @@ public class GlavneMetodeTest {
 	@Test
 	public void TestirajSesiju(){
 		try{
-			Sessions s = Sessions.getInstance("MAIDA", "password");
-		//Sessions s = new Sessions("MAIDAAAAA","password");
+		Sessions s = new Sessions("menadzer","password");
 		System.out.println(s.getKorisnik().getIme());
 		
-		Transaction t = s.getSession().beginTransaction();
 		Skladiste skladiste = new Skladiste();
 		skladiste.setBroj_skladista(20);
-		LijekVM.dodajLijek("lijekTest", "fr");	
-		s.getSession().save(skladiste);
-		t.commit();
+		LijekVM lvm = new LijekVM(s);
+		lvm.dodajLijek("TestLijek", "fr");
+		
 		assertTrue (true);
 		
 		} catch (Exception ex) {
