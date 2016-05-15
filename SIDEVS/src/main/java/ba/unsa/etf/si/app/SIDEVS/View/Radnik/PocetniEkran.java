@@ -1,6 +1,7 @@
 package ba.unsa.etf.si.app.SIDEVS.View.Radnik;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
@@ -17,6 +18,8 @@ import ba.unsa.etf.si.app.SIDEVS.View.Radnik.EvidencijaLotova;
 import ba.unsa.etf.si.app.SIDEVS.View.Radnik.DodajKupca;
 
 import javax.swing.JButton;
+
+import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
@@ -202,6 +205,22 @@ public class PocetniEkran {
 		frmPoetniEkran.getContentPane().add(btnOdjava);
 		
 		JButton btnPomo = new JButton("Pomoć");
+		btnPomo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String help = "<html><body width=300'" +
+		                    "'><h1>Help</h1>" +
+		                    "<p> Za sve informacije dostupni smo vam 24/7.<br><br>" +
+		                    "<p> TELEFONSKI BROJ:  033/589-326 <br>" +
+		                    "<p> EMAIL:            najbolji_tim@sidevs.ba <br><br>" +
+		                    "<p> Ili nas posjetite lično na adresi:" +
+		                    "<p> Zmaja od Bosne bb, Kampus Univerziteta u Sarajevu<br><br><br>" +
+		                    "<p> Vaš SIDEVS <br>" +
+		                    "";
+
+                JOptionPane.showMessageDialog(null, help);
+			}
+		});
 		btnPomo.setBounds(220, 237, 195, 23);
 		frmPoetniEkran.getContentPane().add(btnPomo);
 	}

@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
 
@@ -281,6 +282,22 @@ public class PocetniEkran {
 		frmMenadzerPocetniEkran.getContentPane().add(btnOdjava);
 		
 		JButton btnPomoc = new JButton("Pomoć");
+		btnPomoc.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String help = "<html><body width=300'" +
+	                    "'><h1>Help</h1>" +
+	                    "<p> Za sve informacije dostupni smo vam 24/7.<br><br>" +
+	                    "<p> TELEFONSKI BROJ:  033/589-326 <br>" +
+	                    "<p> EMAIL:            najbolji_tim@sidevs.ba <br><br>" +
+	                    "<p> Ili nas posjetite lično na adresi:" +
+	                    "<p> Zmaja od Bosne bb, Kampus Univerziteta u Sarajevu<br><br><br>" +
+	                    "<p> Vaš SIDEVS <br>" +
+	                    "";
+
+            JOptionPane.showMessageDialog(null, help);
+			}
+		});
 		btnPomoc.setBounds(528, 228, 141, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnPomoc);
 		
