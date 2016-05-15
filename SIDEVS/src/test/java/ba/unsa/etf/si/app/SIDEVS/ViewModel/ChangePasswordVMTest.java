@@ -21,11 +21,11 @@ public class ChangePasswordVMTest {
 			Administrator k = null;
 			//kreiranje administratora
 				k = new Administrator();
-				k.setIme("adminTest");
+				k.setIme("adminnTest");
 				k.setPrezime("Korisnicki");
 				k.setJmbg("1234567891234");
 				k.setAdresa("Adresa bb");
-				k.setEmail("adminTest");
+				k.setEmail("adminnnnTesttt");
 				k.setTelefon("012353451");
 				k.setDatum_polaska_rada(new Date());
 				k.setRadno_mjesto("radnik");
@@ -34,7 +34,7 @@ public class ChangePasswordVMTest {
 				session.save(k);
 				trans.commit();
 				
-				Sessions s_admin = new Sessions ("adminTest","password");
+				Sessions s_admin = new Sessions ("adminnnnTesttt","password");
 				ba.unsa.etf.si.app.SIDEVS.ViewModel.DodavanjeKorisnikaVM.KreirajKorisnika(s_admin, "ime", "ime", "1234567893210", "061/789-321", "ime@sitim.com", "radnik", "01.05.2010.", "adresa", "Radnik");
 			    s_admin.ubijSesiju();
 				char[] newPassword= "newPassword".toCharArray();
@@ -44,8 +44,10 @@ public class ChangePasswordVMTest {
 			ba.unsa.etf.si.app.SIDEVS.ViewModel.BrisanjeKorisnikaVM.BrisiKorisnika(s_admin, "ime", "ime");
 			assertTrue(promjena);
 			
+			
 			session.delete(k);
-			trans.commit();
+			session.flush();
+			
 		}
 		catch (Exception ex)
 		{

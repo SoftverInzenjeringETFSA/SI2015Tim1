@@ -50,16 +50,16 @@ public class Login {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					
-					/*Session session = HibernateUtil.getSessionFactory().openSession();
+					/*
+					Session session = HibernateUtil.getSessionFactory().openSession();
 					try {
 						System.out.println("Kreiram!");
 						Administrator k = new Administrator();
-						k.setIme("Korisnik");
+						k.setIme("KORISNIK");
 						k.setPrezime("Korisnicki");
 						k.setJmbg("1234567891234");
 						k.setAdresa("Adresa bb");
-						k.setEmail("admin");
+						k.setEmail("KORISNIK");
 						k.setTelefon("012353451");
 						k.setDatum_polaska_rada(new Date());
 						k.setRadno_mjesto("radnik");

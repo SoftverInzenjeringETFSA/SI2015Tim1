@@ -30,6 +30,7 @@ public final class Sessions {
 		if (korisnik != null) {
 			System.out.println("Korisnik: " + korisnik.getIme());
 			kreirajSesiju(password);
+			instance = this;
 		}
 		else{
 			throw new IllegalArgumentException("Pogrešan korisnički email");
