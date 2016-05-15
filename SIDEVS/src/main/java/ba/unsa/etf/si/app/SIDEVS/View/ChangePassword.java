@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import ba.unsa.etf.si.app.SIDEVS.Model.*;
+import ba.unsa.etf.si.app.SIDEVS.Util.HibernateUtil;
+import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
 
 import javax.swing.JLabel;
@@ -13,10 +15,16 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
+
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
+import java.awt.Color;
 import java.awt.Component;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.*;
 
@@ -30,6 +38,9 @@ public class ChangePassword {
 	private JPasswordField txtnovipass;
 	private JPasswordField txtponovljenipass;
 	private JTextField txt_ime;
+
+	private JLabel label_obavijest;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -89,24 +100,23 @@ public class ChangePassword {
 		txtponovljenipass.setBounds(146, 141, 155, 20);
 		frmChangePassword.getContentPane().add(txtponovljenipass);
 		
-		JLabel lblObavijest = new JLabel("");
-		lblObavijest.setBounds(10, 198, 145, 14);
-		frmChangePassword.getContentPane().add(lblObavijest);
-		
 		JButton btnPotvrdi = new JButton("Potvrdi");
 		btnPotvrdi.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					boolean b = ba.unsa.etf.si.app.SIDEVS.ViewModel.ChangePasswordVM.ChangePassword(txt_ime.getText(), txtstaripass.getPassword(), txtnovipass.getPassword(), txtponovljenipass.getPassword());
-					if(!b) throw new Exception();
-					JOptionPane.showMessageDialog(null, "Operacija uspješno završena", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);	
+					if (validirajPodatke()){
+						boolean b = ba.unsa.etf.si.app.SIDEVS.ViewModel.ChangePasswordVM.ChangePassword(txt_ime.getText(), txtstaripass.getPassword(), txtnovipass.getPassword(), txtponovljenipass.getPassword());
+						if(!b) throw new Exception();
+						JOptionPane.showMessageDialog(null, "Operacija uspješno završena", "InfoBox: " + "Success", JOptionPane.INFORMATION_MESSAGE);	
+						resetContent();
+					}
 				} catch (Exception e){
-					JOptionPane.showMessageDialog(null, "Došlo je do greške", "InfoBox: " + "Error", JOptionPane.INFORMATION_MESSAGE);		
+					JOptionPane.showMessageDialog(null, "Došlo je do greške", "InfoBox: " + e.getMessage(), JOptionPane.INFORMATION_MESSAGE);		
 					//_sesija.getTrasaction().rollback();
 					logger.error(e);
 				}
-				resetContent();
+				
 			}
 		});
 		btnPotvrdi.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -121,8 +131,45 @@ public class ChangePassword {
 		txt_ime.setBounds(146, 36, 155, 20);
 		frmChangePassword.getContentPane().add(txt_ime);
 		txt_ime.setColumns(10);
+		
+		label_obavijest = new JLabel("");
+		label_obavijest.setBounds(10, 198, 248, 14);
+		frmChangePassword.getContentPane().add(label_obavijest);
+		
+		lblNewLabel = new JLabel("name@example.com");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 9));
+		lblNewLabel.setForeground(Color.GRAY);
+		lblNewLabel.setBounds(146, 21, 145, 14);
+		frmChangePassword.getContentPane().add(lblNewLabel);
+		frmChangePassword.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txt_ime, txtstaripass, txtnovipass, txtponovljenipass, btnPotvrdi, lblStariPassword, lblNovaLozinka, lblPonovljenaLozinka, lblKorisnikoIme}));
+	}
+	
 
-		frmChangePassword.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txt_ime, txtstaripass, txtnovipass, txtponovljenipass, btnPotvrdi, lblStariPassword, lblNovaLozinka, lblPonovljenaLozinka, lblObavijest, lblKorisnikoIme}));
+	public Boolean validirajPodatke(){
+		String msg="";
+		if (txt_ime.getText().isEmpty())
+			msg = "Morate unijeti korisničko ime";
+		else if (txtstaripass.getPassword().length == 0)
+			msg = "Morate unijeti stari password";
+		else if (txtnovipass.getPassword().length == 0)
+			msg = "Morate unijeti password";
+		else if (txtponovljenipass.getPassword().length == 0)
+			msg = "Morate unijet ponovljeni password";
+		else {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			List<Lot> korisnici = session.createCriteria(Korisnik.class).
+					add(Restrictions.eq("email", txt_ime.getText())).list();
+			if (korisnici.isEmpty()) {
+				msg = "Korisničko ime ne postoji u sistemu!";
+			}
+			
+		}
+		if(msg != ""){
+			label_obavijest.setForeground(Color.RED);
+			label_obavijest.setText(msg);
+			return false;
+		}
+		return true;
 	}
 	
 	public void prikazi() {
