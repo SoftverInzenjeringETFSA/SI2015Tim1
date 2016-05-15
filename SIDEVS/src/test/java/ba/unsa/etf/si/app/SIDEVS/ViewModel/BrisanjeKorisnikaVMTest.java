@@ -24,13 +24,13 @@ public class BrisanjeKorisnikaVMTest {
 		{
 			Session session = HibernateUtil.getSessionFactory().openSession();
 				System.out.println("Kreiram!");
-				Administrator k = new Administrator();
+				Korisnik k = new Radnik();
 				k.setIme("Korisnik");
 				k.setPrezime("Korisnicki");
 				k.setJmbg("1234567891234");
 				k.setAdresa("Adresa bb");
 				k.setEmail("a");
-				k.setTelefon("012353451");
+				k.setTelefon("062/772-772");
 				k.setDatum_polaska_rada(new Date());
 				k.setRadno_mjesto("admin");
 				k.setLozinka("p");
@@ -39,14 +39,8 @@ public class BrisanjeKorisnikaVMTest {
 				t.commit();
 				System.out.println("Korisnik kreiran!");
 				
-			Sessions s = new Sessions ("a","p");
-			if (ba.unsa.etf.si.app.SIDEVS.ViewModel.DodavanjeKorisnikaVM.KreirajKorisnika(s, "Ime", "Prezimenko", "1010991123123", "38761001123", "iprezimenko", "radnik", "12.03.2010.", "Adresa bb", "Radnik"))
-			{
-				assertTrue(ba.unsa.etf.si.app.SIDEVS.ViewModel.BrisanjeKorisnikaVM.BrisiKorisnika(s, "Ime", "Prezimenko"));
-			}
-			else assertFalse(true);
-			
-			session.delete(k);
+				Sessions s = new Sessions("a","p");
+				assertTrue(ba.unsa.etf.si.app.SIDEVS.ViewModel.BrisanjeKorisnikaVM.BrisiKorisnika(s, "Korisnik", "Korisnicki"));
 		}
 		catch (Exception ex)
 		{
