@@ -90,19 +90,7 @@ public class KreiranjeFakture {
 		final AutoCompleteJComboBox comboBox_kupac = new AutoCompleteJComboBox(s, Kupac.class, "naziv");
 		comboBox_kupac.setBounds(10, 28, 181, 20);
 		panel_kupac.add(comboBox_kupac);
-/*
-		JButton btnDodajNovogKorisnika = new JButton("Dodaj novog kupca");
-		btnDodajNovogKorisnika.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					DodajKupca dk = new DodajKupca(s);
-					dk.prikazi();	
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});*/
+
 		
 		JButton btnDodajNovogKorisnika = new JButton("Dodaj novog kupca");
 		btnDodajNovogKorisnika.addMouseListener(new MouseAdapter() {
@@ -238,7 +226,7 @@ public class KreiranjeFakture {
 						redni_broj += 1;
 
 						refreshPolja();
-						label_obavijest.setForeground(Color.green);
+						label_obavijest.setForeground(Color.decode("#008000"));
 						label_obavijest.setText("Uspješno ste dodali stavku");
 
 						// Nakon prvog dodavanja zalediti kupca
@@ -263,19 +251,34 @@ public class KreiranjeFakture {
 				textField_cijena.setText("");
 			}
 
-			private boolean validriajUnosStavke() {				
+			private boolean validriajUnosStavke() {		
+				System.out.println("tu");
 				String msg = "";
 				if (comboBox_kupac.getSelectedItem() == null)
 					msg = "Odaberite kupca";
+				
+				//	msg = Validator.validirajKupca(s, comboBox_kupac.getSelectedItem().toString());
 				else if (comboBox_skladista.getSelectedItem() == null)
 					msg = "Odaberite skladište";
 				else if (comboBox_lot.getSelectedItem() == null)
 					msg = "Odaberite lot";
+				
+				//	msg = Validator.validirajLot(s, comboBox_lot.getSelectedItem().toString());
+				else if (textField_cijena.getText().isEmpty()) 
+					msg = "Unesite cijenu";
+				else if (Double.parseDouble(textField_cijena.getText())<=0) msg = "Cijena mora biti veća od nule";
 				else if (textField_kolicina.getText().isEmpty())
 					msg = "Unesite količinu";
+				else if (Double.parseDouble(textField_kolicina.getText())<=0) msg = "Količina mora biti veća od nule";
+				
+				if (comboBox_lot.getSelectedItem()!=null && msg == "") {
+					System.out.println("ovdje");
+					System.out.println(comboBox_lot.getSelectedItem().toString());
+					msg = Validator.validirajLot(s, comboBox_lot.getSelectedItem().toString());
+				}
 				
 				//provjera kolicine				
-				else if (comboBox_lot.getSelectedItem()!=null)
+				if (comboBox_lot.getSelectedItem()!=null && msg == "")
 	            {
 	            	List<Lot> lotovi = s.getSession().createCriteria(Lot.class).add(Restrictions.like("broj_lota", (String) comboBox_lot.getSelectedItem())).list();
 					Lot izabraniLot = lotovi.get(0);
@@ -287,6 +290,14 @@ public class KreiranjeFakture {
 					else if (Integer.parseInt(textField_kolicina.getText())>kol)
 						msg="Nemate dovoljnu količinu lijeka na skladištu!";
 	            }
+				
+				if (msg==""){
+					msg = Validator.validirajKupca(s, comboBox_kupac.getSelectedItem().toString());
+					
+				}
+				
+
+				
 				label_obavijest.setText(msg);
 				if (msg != "") {
 					label_obavijest.setForeground(Color.RED);
@@ -328,6 +339,11 @@ public class KreiranjeFakture {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				if (table.getSelectedRow() == -1) {
+					label_obavijest.setForeground(Color.red);
+					label_obavijest.setText("Niste selektovali stavku");
+					return;
+				}
 				comboBox_skladista.setSelectedIndex(0);
 				comboBox_lot.setSelectedIndex(-1);
 				textField_kolicina.setText("");
@@ -337,7 +353,7 @@ public class KreiranjeFakture {
 					c.setEnabled(true);
 				}
 				comboBox_kupac.setSelectedItem("");
-				label_obavijest.setForeground(Color.green);
+				label_obavijest.setForeground(Color.decode("#008000"));
 				label_obavijest.setText("Uspješno ste obrisali fakturu");
 			}
 		});

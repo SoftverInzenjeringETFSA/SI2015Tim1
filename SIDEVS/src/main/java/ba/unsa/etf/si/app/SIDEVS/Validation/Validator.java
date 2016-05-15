@@ -123,7 +123,7 @@ public final class Validator {
 	}
 	public static String validirajKupca(Sessions s, String kupac) {
 		String msg="";
-		if(kupac.length() == 0) msg = "Morate unijeti lijek";
+		if(kupac.length() == 0) msg = "Morate unijeti kupca";
 		else {
 			
 			
@@ -151,7 +151,9 @@ public final class Validator {
 	public static boolean validirajCijenu(String cijena) throws WrongInputException {
 		
 		try{
+			if (cijena != ""){
 			Double.parseDouble(cijena);
+			}
 		}
 		catch ( NumberFormatException e){
 			logger.error(e);
