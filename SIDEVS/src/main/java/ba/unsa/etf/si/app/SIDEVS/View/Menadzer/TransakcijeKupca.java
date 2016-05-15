@@ -35,6 +35,7 @@ import ba.unsa.etf.si.app.SIDEVS.View.Masks;
 import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.IzvjestajZaKupcaVM;
 import javax.swing.JFormattedTextField;
+import java.awt.Font;
 
 public class TransakcijeKupca {
 	final static Logger logger = Logger.getLogger(TransakcijeKupca.class);
@@ -45,6 +46,8 @@ public class TransakcijeKupca {
 	private JTable table;
 	private JLabel label_obavijest;
 	private AutoCompleteJComboBox  listaKupaca;
+	private Double total;
+	private IzvjestajZaKupcaVM iz;
 	
 	String [] cols=new String[] {"Naziv lijeka", "Količina","Vrijednost"};
 	DefaultTableModel model = new DefaultTableModel(cols, 0);
@@ -99,11 +102,12 @@ public class TransakcijeKupca {
 		Transaction t = s.getSession().beginTransaction();
 		
 		frmMenadzerTransakcijeKupca = new JFrame();
-		frmMenadzerTransakcijeKupca.setTitle("Menadzer- Transakcije kupca");
+		frmMenadzerTransakcijeKupca.setTitle("Transakcije kupca");
 		frmMenadzerTransakcijeKupca.setBounds(100, 100, 450, 300);
 		frmMenadzerTransakcijeKupca.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmMenadzerTransakcijeKupca.getContentPane().setLayout(null);
 		frmMenadzerTransakcijeKupca.setLocationRelativeTo(null);
+		frmMenadzerTransakcijeKupca.setResizable(false);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 103, 414, 73);
@@ -146,6 +150,16 @@ public class TransakcijeKupca {
 		datumDo = new JFormattedTextField(Masks.vratiMaskuZaDatum());
 		datumDo.setBounds(263, 11, 131, 23);
 		frmMenadzerTransakcijeKupca.getContentPane().add(datumDo);
+		
+		final JLabel label_total = new JLabel("");
+		label_total.setFont(new Font("Tahoma", Font.BOLD, 12));
+		label_total.setBounds(303, 187, 101, 14);
+		frmMenadzerTransakcijeKupca.getContentPane().add(label_total);
+		
+		final JLabel lblTotal = new JLabel("Total:");
+		lblTotal.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblTotal.setBounds(20, 187, 60, 14);
+		frmMenadzerTransakcijeKupca.getContentPane().add(lblTotal);
 
 		table = new JTable(model);
 		table.setEnabled(false);
@@ -154,6 +168,8 @@ public class TransakcijeKupca {
 		
 		JButton btnPretraga = new JButton("Pretraga");
 		btnPretraga.addMouseListener(new MouseAdapter() {
+			
+
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				
@@ -167,27 +183,42 @@ public class TransakcijeKupca {
 						System.out.println(datum_od);
 						String datum_do = datumDo.getText();
 						System.out.println(datum_do);
-						IzvjestajZaKupcaVM iz = new IzvjestajZaKupcaVM(s); 
+						iz = new IzvjestajZaKupcaVM(s); 
 						
 						List<Kupac> k = s.getSession().createCriteria(Kupac.class).add(Restrictions.eq("naziv", kupac)).list();
 							
 						
 						List<FakturaLot> fakture = iz.vratiFaktureKupca(k.get(0), datum_od, datum_do);
+						for (FakturaLot f: fakture)
+							System.out.println(f.getLot().getBroj_lota());
 						
 						List<Lijek> lijekovi = iz.vratiLijekoveKupca(fakture);
+						for (Lijek f: lijekovi)
+							System.out.println(f.getNaziv());
 						
-						List<Integer> kolicine = iz.vratiKolicineLijekova(fakture, lijekovi);
 						
-						List<Integer> cijene = iz.vratiCijene(fakture, kolicine);
 						
+						//Double cijena = iz.vratiCijene(fakture);
+						total = (double) 0;
 						int i=0;
-						while (i < lijekovi.size()){
-							Object[] row = { lijekovi.get(i).getNaziv(), kolicine.get(i), cijene.get(i) };
+						while (i < lijekovi.size()){	
+							Integer kolicina = iz.vratiKolicinuLijekova(fakture, lijekovi.get(i));
+							Double cijena = iz.vratiCijenuLijekova(fakture, lijekovi.get(i));
+							Object[] row = { lijekovi.get(i).getNaziv(), kolicina,  cijena};
+							String[] celije = {lijekovi.get(i).getNaziv(), kolicina.toString(),  cijena.toString()};
 							model.addRow(row);
+							iz.dodaj(celije);
 							i++;
+							total+=cijena;
 						}
+						
+						label_total.setText(total.toString());
+						iz.setTotal(total.toString());
+						
 						if (model.getRowCount()==0) 
 							label_obavijest.setText("Nema podataka za taj vremenski period.");
+						
+						
 					}
 				} catch (HibernateException e) {
 					logger.error(e);
@@ -204,9 +235,7 @@ public class TransakcijeKupca {
 		
 		
 		
-		JLabel lblTotal = new JLabel("Total");
-		lblTotal.setBounds(10, 193, 46, 14);
-		frmMenadzerTransakcijeKupca.getContentPane().add(lblTotal);
+		
 		
 		
 		
@@ -223,13 +252,15 @@ public class TransakcijeKupca {
 					label_obavijest.setText("Nije moguce generisati PDF jer nema podataka.");
 				}
 				else{
-					
-					
+					iz.createPDF(datumOd.getText(), datumDo.getText());
+					frmMenadzerTransakcijeKupca.dispose();
 				}
 			}
 		});
 		btnGenerisiIzvjestaj.setBounds(10, 218, 414, 23);
 		frmMenadzerTransakcijeKupca.getContentPane().add(btnGenerisiIzvjestaj);
+		
+		
 	}
 	
 	private boolean validirajPolja() throws WrongInputException {

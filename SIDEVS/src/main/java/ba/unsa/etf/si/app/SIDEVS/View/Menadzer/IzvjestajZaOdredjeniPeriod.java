@@ -85,6 +85,7 @@ public class IzvjestajZaOdredjeniPeriod {
 		frmMenadzerIzvjestajZa.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmMenadzerIzvjestajZa.getContentPane().setLayout(null);
 		frmMenadzerIzvjestajZa.setLocationRelativeTo(null);
+		frmMenadzerIzvjestajZa.setResizable(false);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 74, 522, 100);

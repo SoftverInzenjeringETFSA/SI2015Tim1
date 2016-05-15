@@ -92,6 +92,7 @@ public class IzvjestajNaOsnovuLota {
 		frmMenadzerIzvjestajNa.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmMenadzerIzvjestajNa.getContentPane().setLayout(null);
 		frmMenadzerIzvjestajNa.setLocationRelativeTo(null);
+		frmMenadzerIzvjestajNa.setResizable(false);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 59, 414, 84);

@@ -22,6 +22,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -38,6 +39,8 @@ public class IzvjestajUlaziIzlaziVM {
 	private Document document;
 	private PdfPTable tableData;
 	private List<String[]> lista;
+	private Lijek odabraniLijek;
+	private Skladiste odabranoSkladiste;
 
 	public IzvjestajUlaziIzlaziVM(Sessions s){
 		sesija = s;
@@ -49,24 +52,22 @@ public class IzvjestajUlaziIzlaziVM {
 		tableData.setSpacingAfter(10f);
 	}
 	
-	public int samoTest(String s){
-		return 5;
-	}
-	
 	//funkcija vraca sve evidentirane lotove za odabrani lijek i skladiste
 	public List<Lot> vratiSveLotove(Lijek odabraniLijek, Skladiste odabranoSkladiste){
+		this.odabraniLijek = odabraniLijek;
+		this.odabranoSkladiste = odabranoSkladiste;
 		
-		List<Lot> lotovi_tmp = sesija.getSession().createCriteria(Lot.class).add(Restrictions.eq("lijek", odabraniLijek)).list();		
+		List<Lot> lotovi_tmp = sesija.getSession().createCriteria(Lot.class).list();		
 		List<Lot> lotovi = new ArrayList<Lot>();
 		for (Lot lot: lotovi_tmp){
 			Set<Pakovanje> pakovanja = lot.getPakovanja();
 			for (Pakovanje p: pakovanja){
-				if (p.getSkladiste() == odabranoSkladiste){
+				if (p.getSkladiste() == odabranoSkladiste && lot.getLijek()==odabraniLijek){
+					System.out.println(lot.getBroj_lota());
 					lotovi.add(lot);
 				}
 			}
 		}
-		
 		return lotovi;
 	}
 	
@@ -103,10 +104,11 @@ public class IzvjestajUlaziIzlaziVM {
 	
 	//obrisan lot
 	public List<Lot> vratiOtpisaneLotove(List<Lot> sviLotovi, String datumOd, String datumDo){
+		
 		Date datum_od = Conversions.stringToDate(datumOd);
 		Date datum_do = Conversions.stringToDate(datumDo);
 		
-		List<Lot> obrisaniLotovi = sesija.getSession().createCriteria(Lot.class).list();
+		List<Lot> obrisaniLotovi = GlavneMetode.vratiOtpisaneLotoveOdDo(sesija, datumOd, datumDo);
 		
 		List<Lot> otpisaniLotovi = new ArrayList<Lot>();
 		
@@ -124,7 +126,7 @@ public class IzvjestajUlaziIzlaziVM {
 		
 		List<String> datumi = new ArrayList<String>();	
 		if (ulazni){
-			datumi.add(Conversions.dateToString((lot.getDatum_ulaza())));
+			datumi.add(Conversions.dateToString(lot.getDatum_ulaza()));
 		}
 		else{
 			Set<FakturaLot> fakture = lot.getFaktureLotovi();
@@ -136,50 +138,27 @@ public class IzvjestajUlaziIzlaziVM {
 		return datumi;
 	}
 	
-	public List<Integer> vratiKolicine(List<Lot> lotovi, Boolean ulazni){
+	
+	public Integer vratiKolicine(Lot lot, Boolean ulazni){
 		List<Integer> kolicine = new ArrayList<Integer>();
 		if (ulazni){
-			for (Lot l: lotovi){
-				Set<Pakovanje> pakovanja = l.getPakovanja();
-				for (Pakovanje p: pakovanja)
-					kolicine.add(p.getKolicina());
-			}
-				
+			return GlavneMetode.vratiKolicinuUlaza(lot);	
 		}
 		else{
-			for (Lot l:lotovi){
-				Set<FakturaLot> fakture = l.getFaktureLotovi();
-				for (FakturaLot f: fakture)
-					kolicine.add(f.getKolicina());
-			}
+			return GlavneMetode.vratiKolicinuIzlaza(lot);
 		}
-		
-		return kolicine;
 	}
 	
 	public Integer vratiKolicinuOtpisanog(Lot lot){
-		return vratiStanjePomocna((Lot)lot);
+		return GlavneMetode.vratiKolicinuOtpisanog(lot);
 	}
 	
 	public Integer vratiTrenutnoStanje(Lot lot){
-		return vratiStanjePomocna(lot);
-	}
-	
-	public Integer vratiStanjePomocna(Lot lot){
-		List<Lot> lotovi= new ArrayList<Lot>();
-		lotovi.add(lot);
-		int suma = 0;	
-		List<Integer> ul = vratiKolicine(lotovi, true);
-		for (int i: ul){
-			suma+=i;
-		}
-		List<Integer> izlazi = vratiKolicine(lotovi, false);
-		for (int i: izlazi){
-			suma-=i;
-		}
+		Integer suma = GlavneMetode.vratiKolicinuUlaza(lot);
+		suma -= GlavneMetode.vratiKolicinuIzlaza(lot);
 		return suma;
 	}
-	
+
 	public void dodaj(String[] celije){
 		lista.add(celije);
 	}
@@ -213,6 +192,22 @@ public class IzvjestajUlaziIzlaziVM {
 					cell.setPadding(10);
 					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					table.addCell(cell);
+				}
+				document.add(table);
+				document.add(new Phrase("\n"));
+				
+				table = new PdfPTable(2);
+				table.setWidthPercentage(100);
+				table.setSpacingBefore(10f);
+				table.setSpacingAfter(10f);
+				String[] sta = {"Lijek: " + odabraniLijek.getNaziv(), "Skladiste: "+odabranoSkladiste.getBroj_skladista()};					
+				for (String s: sta){
+					PdfPCell cell = new PdfPCell(new Paragraph(s, boldFont));
+					cell.setPadding(10);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
 					table.addCell(cell);
 				}
 				document.add(table);

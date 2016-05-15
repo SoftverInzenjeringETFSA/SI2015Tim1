@@ -99,7 +99,8 @@ public class IzvjestajUlaziIzlazi {
 		frmMenadzerIzvjestaO.setBounds(100, 100, 450, 308);
 		frmMenadzerIzvjestaO.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmMenadzerIzvjestaO.getContentPane().setLayout(null);
-		frmMenadzerIzvjestaO.setLocationRelativeTo(null);		
+		frmMenadzerIzvjestaO.setLocationRelativeTo(null);	
+		frmMenadzerIzvjestaO.setResizable(false);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 134, 414, 73);
@@ -171,17 +172,16 @@ public class IzvjestajUlaziIzlazi {
 						List<Lot> izlazniLotovi = iz.vratiIzlazneLotove(sviLotovi, datum_od, datum_do);			
 						List<Lot> otpisaniLotovi = iz.vratiOtpisaneLotove(sviLotovi, datum_od, datum_do);//obrisan
 						
-						List<Integer> kolicineUlaznih = iz.vratiKolicine(ulazniLotovi, true);
-						List<Integer> kolicineIzlaznih = iz.vratiKolicine(izlazniLotovi, false);
 						
 						int i=0;
 						while (i < ulazniLotovi.size()){
-							int stanje = iz.vratiTrenutnoStanje(ulazniLotovi.get(i));
-							Object[] row = {iz.vratiDatum(ulazniLotovi.get(i),true).toString(), "ulaz", 
-									ulazniLotovi.get(i).getBroj_lota(), kolicineUlaznih.get(i), stanje};
+							int stanje = iz.vratiTrenutnoStanje(ulazniLotovi.get(0));
+							String date = Conversions.dateToString(ulazniLotovi.get(i).getDatum_ulaza());
+							Object[] row = {date, "ulaz", 
+									ulazniLotovi.get(i).getBroj_lota(), iz.vratiKolicine(ulazniLotovi.get(i), true), stanje};
 							model.addRow(row);
-							String[] all = {iz.vratiDatum(ulazniLotovi.get(i),true).toString(), "ulaz", 
-									ulazniLotovi.get(i).getBroj_lota(), Integer.toString(kolicineUlaznih.get(i)), Integer.toString(stanje)};
+							String[] all = {date, "ulaz", 
+									ulazniLotovi.get(i).getBroj_lota(), Integer.toString(iz.vratiKolicine(ulazniLotovi.get(i), true)), Integer.toString(stanje)};
 							iz.dodaj(all);
 							i++;
 						}
@@ -193,10 +193,10 @@ public class IzvjestajUlaziIzlazi {
 							int j=0;
 							List<String> datumi = iz.vratiDatum(izlazniLotovi.get(i),false);
 							while(j<datumi.size()){
-								Object[] row = {datumi.get(j), "izlaz", izlazniLotovi.get(i).getBroj_lota(), kolicineIzlaznih.get(i), stanje };
+								Object[] row = {datumi.get(j), "izlaz", izlazniLotovi.get(i).getBroj_lota(), iz.vratiKolicine(izlazniLotovi.get(i), false), stanje };
 								model.addRow(row);
 								String[] all = {datumi.get(j), "izlaz",
-										izlazniLotovi.get(i).getBroj_lota(), Integer.toString(kolicineIzlaznih.get(i)), Integer.toString(stanje)};
+										izlazniLotovi.get(i).getBroj_lota(), Integer.toString(iz.vratiKolicine(izlazniLotovi.get(i), false)), Integer.toString(stanje)};
 								iz.dodaj(all);
 								j++;
 							}
@@ -205,11 +205,12 @@ public class IzvjestajUlaziIzlazi {
 
 						i=0;
 						while (i < otpisaniLotovi.size()){
+							String date = Conversions.dateToString(otpisaniLotovi.get(i).getDatum_otpisa());
 							int suma = iz.vratiKolicinuOtpisanog(otpisaniLotovi.get(i));
-							Object[] row = { otpisaniLotovi.get(i).getDatum_otpisa(), "otpis", otpisaniLotovi.get(i).getBroj_lota(), 
+							Object[] row = {date , "otpis", otpisaniLotovi.get(i).getBroj_lota(), 
 									suma , 0 };
 							model.addRow(row);
-							String[] all = {Conversions.dateToString(otpisaniLotovi.get(i).getDatum_otpisa()), "otpis", 
+							String[] all = {date, "otpis", 
 									otpisaniLotovi.get(i).getBroj_lota(), Integer.toString(suma), "0"};
 							iz.dodaj(all);
 							i++;

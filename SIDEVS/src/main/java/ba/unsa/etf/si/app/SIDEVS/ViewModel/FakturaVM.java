@@ -66,6 +66,7 @@ public final class FakturaVM {
 				fk.setFaktura(f);
 				fk.setLot(l);
 				fk.setKolicina(kolicine.get(i));
+				fk.setCijena(cijene.get(i));
 				fk.setSkladiste(skladista.get(i));
 				i++;
 

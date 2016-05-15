@@ -44,53 +44,14 @@ public class TrenutnoStanjeVM {
 		lijekovi = sesija.getSession().createCriteria(Lijek.class).list();
 	}
 
-	public List<Integer> vratiKolicine(List<Lot> lotovi, Boolean ulazni){
-		List<Integer> kolicine = new ArrayList<Integer>();
-		if (ulazni){
-			for (Lot l: lotovi){
-				Set<Pakovanje> pakovanja = l.getPakovanja();
-				for (Pakovanje p: pakovanja)
-					kolicine.add(p.getKolicina());
-			}
-				
-		}
-		else{
-			for (Lot l:lotovi){
-				Set<FakturaLot> fakture = l.getFaktureLotovi();
-				for (FakturaLot f: fakture)
-					kolicine.add(f.getKolicina());
-			}
-		}
+	
+	
+	public Integer vratiTrenutnoStanje(Lot lot, Skladiste s){
 		
-		return kolicine;
-	}
-	
-	//OBRISAN
-	public Integer vratiKolicinuOtpisanog(Lot lot){
-		return vratiStanjePomocna((Lot)lot);
-	}
-	
-	public Integer vratiTrenutnoStanje(Lot lot){
-		return vratiStanjePomocna(lot);
-	}
-	
-	public Integer vratiStanjePomocna(Lot lot){
-		List<Lot> lotovi= new ArrayList<Lot>();
-		lotovi.add(lot);
-		int suma = 0;	
-		List<Integer> ul = vratiKolicine(lotovi, true);
-		for (int i: ul){
-			suma+=i;
-		}
-		List<Integer> izlazi = vratiKolicine(lotovi, false);
-		for (int i: izlazi){
-			suma-=i;
-		}
+		Integer suma = GlavneMetode.vratiKolicinuUlaza(lot, s);
+		suma -= GlavneMetode.vratiKolicinuIzlaza(lot, s);
 		return suma;
 	}
-	
-
-	
 	
 	public void createPDF(){
 		
@@ -157,7 +118,7 @@ public class TrenutnoStanjeVM {
 								if (lot.getLijek() == lijek && p.getSkladiste()==s){
 									imaLi=true;
 									
-									int kolicina = vratiTrenutnoStanje(lot);
+									int kolicina = vratiTrenutnoStanje(lot, s);
 									
 									String[] podaciLota = {lot.getBroj_lota(),
 															Double.toString(lot.getUlazna_cijena()),
