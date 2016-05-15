@@ -23,7 +23,7 @@ import ba.unsa.etf.si.app.SIDEVS.View.Radnik.EvidencijaLotova;
 
 public class GlavneMetodeTest {
 
-
+	//TESTOVI
 	@Before 
 	public void atBegin(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
