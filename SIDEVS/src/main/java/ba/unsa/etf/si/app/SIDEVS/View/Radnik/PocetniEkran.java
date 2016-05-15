@@ -70,7 +70,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-				    EvidencijaLotova el = new EvidencijaLotova(s);
+				    el = new EvidencijaLotova(s);
 					el.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
@@ -85,7 +85,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					PretragaLijeka pl = new PretragaLijeka(s);
+					pl = new PretragaLijeka(s);
 					pl.frmPretragaLijeka.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
@@ -100,7 +100,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(kf == null) kf = new KreiranjeFakture(s);
+					kf = new KreiranjeFakture(s);
 					kf.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
@@ -130,7 +130,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try{
-				DodajLotUSkladiste dlus = new DodajLotUSkladiste(s);
+				dlus = new DodajLotUSkladiste(s);
 				dlus.prikazi();
 				}
 				catch(Exception ex){
@@ -152,7 +152,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					BrisanjeKupca bk = new BrisanjeKupca(s);
+					bk = new BrisanjeKupca(s);
 					bk.frmBrisanjeKupca.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
@@ -167,7 +167,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					DodajKupca dk = new DodajKupca(s);				
+					dk = new DodajKupca(s);				
 					dk.frmDodajKupca.setVisible(true);
 				} catch (Exception c) {
 					logger.error(c);
