@@ -149,11 +149,11 @@ public final class Validator {
 	}
 	
 	public static boolean validirajCijenu(String cijena) throws WrongInputException {
-		
+		if (cijena == "") return true;
 		try{
-			if (cijena != ""){
+			
 			Double.parseDouble(cijena);
-			}
+			
 		}
 		catch ( NumberFormatException e){
 			logger.error(e);

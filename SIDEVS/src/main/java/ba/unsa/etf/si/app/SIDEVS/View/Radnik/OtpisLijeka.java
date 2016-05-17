@@ -153,6 +153,7 @@ public class OtpisLijeka {
                    
                    Object[] l = nizLotova.toArray();
                    
+                   //bug fixed:
                    refreshCombo();
                    
                    for(int i=0;i<l.length;i++){

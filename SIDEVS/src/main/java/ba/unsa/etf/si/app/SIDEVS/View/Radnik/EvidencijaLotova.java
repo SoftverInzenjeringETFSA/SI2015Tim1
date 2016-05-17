@@ -135,9 +135,14 @@ public class EvidencijaLotova {
 						kolicina = Integer.parseInt(textField_kolicina.getText());
 							
 				        java.util.Date datum = Conversions.stringToDate(txtRokTrajanja.getText());
+				        
 					
-						
+						if (textField_tezina.getText().isEmpty() || textField_cijena.getText().isEmpty()){
+							l.dodajLot(textFieldBroj_lota.getText(), (double) 0, (double) 0, datum, kolicina, lijek, skladiste, Integer.parseInt(textField_kolicina_pakovanje.getText()));
+						}
+						else{
 						l.dodajLot(textFieldBroj_lota.getText(), Double.parseDouble(textField_tezina.getText()), Double.parseDouble(textField_cijena.getText()), datum, kolicina, lijek, skladiste, Integer.parseInt(textField_kolicina_pakovanje.getText()));
+						}
 						
 						refreshPolja();
 						label_obavijest.setForeground(Color.decode("#008000"));
@@ -224,8 +229,8 @@ public class EvidencijaLotova {
 		else if (textField_cijena.getText().length()==0) msg = "Niste unijeli cijenu";
 		else if (!Validator.validirajCijenu(textField_cijena.getText())) msg = "Cijena nije u ispravnom formatu";
 		else if (Double.parseDouble(textField_cijena.getText())<=0) msg = "Cijena mora biti veća od nule";
-		else if (Double.parseDouble(textField_tezina.getText())<=0) msg = "Težina mora biti veća od nule";
-		else if (Double.parseDouble(textField_kolicina.getText())<=0) msg = "Količina mora biti veća od nule";
+		//else if (Double.parseDouble(textField_tezina.getText())<=0) msg = "Težina mora biti veća od nule";
+		//else if (Double.parseDouble(textField_kolicina.getText())<=0) msg = "Količina mora biti veća od nule";
 		else if (Double.parseDouble(textField_kolicina_pakovanje.getText())<=0) msg = "Količina pakovanja mora biti veća od nule";
 		
 		 if(msg != ""){

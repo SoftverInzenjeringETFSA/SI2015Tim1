@@ -95,7 +95,8 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(mk == null) mk = new ModifikacijaKorisnika(_sesija);
+					//bug fixed:
+					mk = new ModifikacijaKorisnika(_sesija);
 					mk.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
