@@ -137,7 +137,8 @@ public class OtpisLijeka {
 			public void actionPerformed(ActionEvent arg0) {
 				try{		
 					
-					System.out.println("OVDJE");
+				   
+					
                    String lijek = listaLijekova.getSelectedItem().toString();
                    String skladiste = listaSkladista.getSelectedItem().toString();
                    
@@ -152,6 +153,8 @@ public class OtpisLijeka {
                    
                    Object[] l = nizLotova.toArray();
                    
+                   refreshCombo();
+                   
                    for(int i=0;i<l.length;i++){
                 	   listaLotova.addItem(l[i]);
                    }
@@ -161,6 +164,11 @@ public class OtpisLijeka {
 					noticeLabel.setForeground(Color.RED);
 					noticeLabel.setText("Greška, lijek ne postoji");
 				}
+			}
+
+			private void refreshCombo() {
+				listaLotova.removeAllItems();
+				
 			}
 		});
 		btnOdaberi.setBounds(10, 61, 246, 23);
