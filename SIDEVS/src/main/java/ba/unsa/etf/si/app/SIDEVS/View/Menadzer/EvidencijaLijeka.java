@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
+import ba.unsa.etf.si.app.SIDEVS.Validation.Validator;
 import ba.unsa.etf.si.app.SIDEVS.View.Admin.BrisanjeKorisnika;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.LijekVM;
 
@@ -124,7 +125,10 @@ public class EvidencijaLijeka {
 		String msg = "";
 		labelObavijest.setForeground(Color.RED);
 		if(textFieldNaziv.getText().isEmpty()) msg = "Popunite naziv proizvoda";
+		else if (!Validator.validirajRijec(textFieldNaziv.getText())) msg = "Naziv proizvoda ne smije sadržavati specijalne znakove";	
 		else if(textFieldProizvodjac.getText().isEmpty()) msg = "Popunite naziv proizvođača proizvoda";		
+		else if (!Validator.validirajRijec(textFieldProizvodjac.getText())) msg = "Naziv proizvođača ne smije sadržavati specijalne znakove";
+		
 		if(msg != ""){
 			labelObavijest.setText(msg);
 			return false;

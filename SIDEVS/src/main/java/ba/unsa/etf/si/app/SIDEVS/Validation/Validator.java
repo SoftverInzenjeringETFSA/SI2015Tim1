@@ -19,12 +19,19 @@ public final class Validator {
 	final static Logger logger = Logger.getLogger(Validator.class);
 	
 	private static Pattern VALID_TEXT = Pattern.compile("^[\\p{L}0-9]*$");
+	private static Pattern VALID_WORD = Pattern.compile("^[a-zA-Z0-9]*$");
 	
 	public static Boolean validirajString(String tekst){
 		if(tekst.isEmpty()) return false;
 		Matcher m = VALID_TEXT.matcher(tekst);
 		return m.find();
 	}
+	public static Boolean validirajRijec(String tekst){
+		if(tekst.isEmpty()) return false;
+		Matcher m = VALID_WORD.matcher(tekst);
+		return m.find();
+	}
+	
 	public static Boolean validirajBrojPozitivan(String broj){
 		try{
 			Double d = Double.parseDouble(broj);
