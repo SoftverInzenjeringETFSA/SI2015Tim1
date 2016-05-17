@@ -80,7 +80,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(dk == null) dk = new DodavanjeKorisnika(_sesija);
+					dk = new DodavanjeKorisnika(_sesija);
 					dk.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
@@ -110,7 +110,7 @@ public class PocetniEkran {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					if(bk == null) bk = new BrisanjeKorisnika(_sesija);
+					bk = new BrisanjeKorisnika(_sesija);
 					bk.prikazi();
 				} catch (Exception e) {
 					logger.error(e);
