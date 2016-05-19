@@ -7,10 +7,13 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
 import Exceptions.WrongInputException;
+import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Lijek;
+import ba.unsa.etf.si.app.SIDEVS.Model.Lot;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
@@ -24,6 +27,7 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -144,9 +148,10 @@ public class EvidencijaLotova {
 						l.dodajLot(textFieldBroj_lota.getText(), Double.parseDouble(textField_tezina.getText()), Double.parseDouble(textField_cijena.getText()), datum, kolicina, lijek, skladiste, Integer.parseInt(textField_kolicina_pakovanje.getText()));
 						}
 						
-						refreshPolja();
+						
 						label_obavijest.setForeground(Color.decode("#008000"));
 						label_obavijest.setText("Uspješno ste kreirali lot");
+						refreshPolja();
 					}
 				} 
 				catch (NumberFormatException e) {
@@ -216,10 +221,14 @@ public class EvidencijaLotova {
 	}
 	private boolean validirajPolja() throws WrongInputException {
 		String msg = "";
+		label_obavijest.setText("");
 		label_obavijest.setForeground(Color.RED);
 
 		String brojLota = textFieldBroj_lota.getText();
-
+		
+		Criteria criteria = s.getSession().createCriteria(Lot.class).add(Restrictions.like("broj_lota", brojLota).ignoreCase());
+		List<Lot> l = criteria.list();
+     
 		if (brojLota.length()==0) msg = "Morate unijeti broj lota";
 		else if(brojLota.length() < 6 || brojLota.length()>15) msg = "Broj lota mora biti duzine između 6 i 15";
 		else if (!Validator.validirajBrojPozitivan(brojLota)) msg = "Broj lota ne moze sadrzavati druge karaktere osim brojeva";
@@ -232,7 +241,14 @@ public class EvidencijaLotova {
 		//else if (Double.parseDouble(textField_tezina.getText())<=0) msg = "Težina mora biti veća od nule";
 		//else if (Double.parseDouble(textField_kolicina.getText())<=0) msg = "Količina mora biti veća od nule";
 		else if (Double.parseDouble(textField_kolicina_pakovanje.getText())<=0) msg = "Količina pakovanja mora biti veća od nule";
-		
+		else  {
+				for(int i=0;i<l.size();i++)
+				{
+					if(l.get(i).getBroj_lota().equals(brojLota))
+						msg="Lot već postoji u bazi";
+				}
+				
+		}
 		 if(msg != ""){
 			label_obavijest.setText(msg);
 			return false;
@@ -247,5 +263,6 @@ public class EvidencijaLotova {
 		textField_cijena.setText("");
 		textField_kolicina.setText("");
 		textField_kolicina_pakovanje.setText("");
+		
 	}
 }
