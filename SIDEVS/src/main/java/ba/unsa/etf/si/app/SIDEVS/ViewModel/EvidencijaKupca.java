@@ -14,48 +14,48 @@ import ba.unsa.etf.si.app.SIDEVS.ViewModel.*;
 public final class EvidencijaKupca {
 	final static Logger logger = Logger.getLogger(EvidencijaKupca.class);
 
-	
 	private static Sessions s;
 	private static Kupac noviKupac;
-	
-	public Sessions getSessions(){
+
+	public Sessions getSessions() {
 		return this.s;
 	}
-	
-	public EvidencijaKupca(Sessions s)throws Exception{
+
+	public EvidencijaKupca(Sessions s) throws Exception {
 		this.s = s;
 	}
-	
-	public static Boolean daLiPostojiSesija(){
-		if (s == null){
+
+	public static Boolean daLiPostojiSesija() {
+		if (s == null) {
 			return false;
 		}
-			return true;
+		return true;
 	}
-	
-	
-	public static void dodajKupca(String naziv, String adresa) throws Exception{
-		if (daLiPostojiSesija()){
-			try{
-				
 
-				System.out.println("Pocinjem!");
-				noviKupac = new Kupac();
-				noviKupac.setNaziv(naziv);
-				noviKupac.setAdresa(adresa);
-				//provjera da li postoji u bazi
-				if (s.getSession().createCriteria(Kupac.class).add(Restrictions.eq("naziv", naziv)).setProjection(Projections.property("naziv")).uniqueResult() == null){
-
+	public static void dodajKupca(String naziv, String adresa) throws Exception {
+		if (daLiPostojiSesija()) {
+			try {
+				Kupac stari = (Kupac) s.getSession().createCriteria(Kupac.class).add(Restrictions.eq("naziv", naziv))
+						.uniqueResult();
+				// Ako postoji kupac vrati ga
+				if (stari != null) {
+					if (stari.getObrisan()) {
+						stari.setObrisan(false);
+						s.getSession().beginTransaction();
+						s.getSession().update(stari);
+						s.getTrasaction().commit();
+					} else
+						throw new Exception("Kupac kojeg ste unijeli već postoji");
+				} else {
+					noviKupac = new Kupac();
+					noviKupac.setNaziv(naziv);
+					noviKupac.setAdresa(adresa);
+					noviKupac.setObrisan(false);
 					s.getSession().beginTransaction();
 					s.getSession().save(noviKupac);
 					s.getTrasaction().commit();
-					
 				}
-				
-				
-				else throw new Exception("Kupac kojeg ste unijeli već postoji");
-			}
-			catch(Exception e){
+			} catch (Exception e) {
 				logger.error(e);
 				throw e;
 			}

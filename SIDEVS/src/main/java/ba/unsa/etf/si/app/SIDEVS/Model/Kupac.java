@@ -18,6 +18,7 @@ public class Kupac implements Serializable {
 	@Column(unique = true)
 	private String naziv;
 	private String adresa;
+	private Boolean obrisan = false;
 	public Long getId() {
 		return id;
 	}
@@ -35,6 +36,12 @@ public class Kupac implements Serializable {
 	}
 	public void setAdresa(String adresa) {
 		this.adresa = adresa;
+	}
+	public Boolean getObrisan() {
+		return obrisan;
+	}
+	public void setObrisan(Boolean obrisan) {
+		this.obrisan = obrisan;
 	}
 
 }

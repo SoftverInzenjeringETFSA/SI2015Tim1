@@ -23,6 +23,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
+import ba.unsa.etf.si.app.SIDEVS.Model.Kupac;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 
 public class AutoCompleteJComboBox extends JComboBox<Object> {
@@ -59,7 +60,13 @@ public class AutoCompleteJComboBox extends JComboBox<Object> {
 						public void run() {
 							try {
 								if (!tc.getText().isEmpty()) {
-									Criteria criteria = session.getSession().createCriteria(klasa)
+									Criteria criteria;
+									if(klasa == Kupac.class){
+										criteria = session.getSession().createCriteria(klasa).add(Restrictions.eq("obrisan", false))
+												.add(Restrictions.like(naziv_kolone, tc.getText() + "%").ignoreCase())
+												.setProjection(Projections.property(naziv_kolone));
+									}
+									else criteria = session.getSession().createCriteria(klasa)
 												.add(Restrictions.like(naziv_kolone, tc.getText() + "%").ignoreCase())
 												.setProjection(Projections.property(naziv_kolone));
 									List<String> foundx = null;

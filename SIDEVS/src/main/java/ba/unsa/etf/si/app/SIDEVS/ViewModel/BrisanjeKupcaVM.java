@@ -19,14 +19,16 @@ public class BrisanjeKupcaVM {
 	
 	public static boolean BrisiKupca(Sessions ses, String naziv) throws NoSuchAlgorithmException,InvalidKeySpecException {
 		try{
-			Transaction t = ses.getSession().beginTransaction();
 			Criteria criteria = ses.getSession().createCriteria(Kupac.class).add(Restrictions.like("naziv", naziv).ignoreCase());
 			
 			List<Kupac> lista = criteria.list();
 			Kupac k = lista.get(0);
+		
 			
-			ses.getSession().delete(k);
-			//t.commit();
+			k.setObrisan(true);
+			
+			ses.getSession().update(k);
+			
 			
 		} catch (Exception e) {
 			logger.error(e);
