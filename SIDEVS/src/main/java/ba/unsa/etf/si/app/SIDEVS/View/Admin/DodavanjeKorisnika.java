@@ -83,7 +83,7 @@ public class DodavanjeKorisnika {
 		brojTelefona.setValue("");
 		email.setValue("");
 		radnoMjesto.setText("");
-		datumPocetkaRada.setValue(null);
+		datumPocetkaRada.setValue("");
 		adresa.setText("");
 	}
 

@@ -53,6 +53,7 @@ public class DodavanjeKorisnikaVM {
 			k.setDatum_polaska_rada(Conversions.dajDatumZaBazu(datumPocetkaRada)); 
 			k.setRadno_mjesto(radnoMjesto);
 			k.setLozinka("password");
+			s.getSession().beginTransaction();
 			s.getSession().save(k);
 			s.getTrasaction().commit();
 		} catch (Exception e) {

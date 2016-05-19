@@ -99,7 +99,7 @@ public class ModifikacijaKorisnika {
 		brojTelefonaModifikacija.setValue("");
 		emailModifikacija.setValue("");
 		radnoMjestoModifikacija.setText("");
-		datumPocetkaRadaModifikacija.setValue(null);
+		datumPocetkaRadaModifikacija.setValue("");
 		adresa.setText("");
 	}
 
@@ -277,6 +277,7 @@ public class ModifikacijaKorisnika {
 					if (validirajOdabir()){
 						String txt = listaKorisnikaModifikacija.getSelectedItem().toString();	
 
+						_sesija.setSession();
 						
 						Criteria criteria = _sesija.getSession().createCriteria(Korisnik.class).add(Restrictions.like("email", txt).ignoreCase());
 						List<Korisnik> k = criteria.list();
@@ -284,8 +285,6 @@ public class ModifikacijaKorisnika {
 						
 						String ime2 = k.get(0).getIme();
 						String prezime2 = k.get(0).getPrezime();
-						System.out.println(ime2);
-						System.out.println(prezime2);
 						String maticniBroj2 = k.get(0).getJmbg();
 						String adresa2 = k.get(0).getAdresa();
 						String email2 = k.get(0).getEmail();
@@ -310,9 +309,9 @@ public class ModifikacijaKorisnika {
 						DateFormat originalFormat = new SimpleDateFormat("yyyy-mm-dd");
 						DateFormat targetFormat = new SimpleDateFormat("dd.mm.yyyy");
 						Date date = originalFormat.parse(datumPocetkaRada2);
-						String formattedDate = targetFormat.format(date);  	
-						datumPocetkaRadaModifikacija.setText(formattedDate.toString());
-						
+						String formattedDate = targetFormat.format(date);
+						datumPocetkaRadaModifikacija.setText(formattedDate);
+						datumPocetkaRada2 = formattedDate;
 					}
 				}
 				catch(Exception ex){
