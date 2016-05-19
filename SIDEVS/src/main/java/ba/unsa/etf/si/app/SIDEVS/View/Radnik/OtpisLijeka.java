@@ -23,6 +23,7 @@ import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
 import ba.unsa.etf.si.app.SIDEVS.Model.Skladiste;
 import ba.unsa.etf.si.app.SIDEVS.Validation.*;
 import ba.unsa.etf.si.app.SIDEVS.ViewModel.OtpisLijekovaVM;
+import ba.unsa.etf.si.app.SIDEVS.ViewModel.SkladisteVM;
 import ba.unsa.etf.si.app.SIDEVS.Util.Controls.AutoCompleteJComboBox;
 
 import javax.swing.JComboBox;
@@ -115,8 +116,8 @@ public class OtpisLijeka {
 		lblLot.setBounds(10, 98, 81, 14);
 		frmOtpisLijeka.getContentPane().add(lblLot);
 		
-		final JComboBox listaSkladista = new JComboBox();
-		listaSkladista.setModel(new DefaultComboBoxModel(new String[] {"1", "2"}));
+		final JComboBox listaSkladista = new JComboBox(SkladisteVM.dajSvaSkladista(sesija));
+		
 		listaSkladista.setBounds(101, 8, 147, 20);
 		frmOtpisLijeka.getContentPane().add(listaSkladista);
 		
