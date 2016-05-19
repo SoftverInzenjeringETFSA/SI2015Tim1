@@ -95,9 +95,9 @@ public class ModifikacijaKorisnika {
 	public void resetContent(){
 		imeModifikacija.setText("");
 		prezimeModifikacija.setText("");
-		maticniBrojModifikacija.setValue(null);
-		brojTelefonaModifikacija.setValue(null);
-		emailModifikacija.setValue(null);
+		maticniBrojModifikacija.setValue("");
+		brojTelefonaModifikacija.setValue("");
+		emailModifikacija.setValue("");
 		radnoMjestoModifikacija.setText("");
 		datumPocetkaRadaModifikacija.setValue(null);
 		adresa.setText("");
@@ -107,8 +107,6 @@ public class ModifikacijaKorisnika {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(Sessions s) {
-		
-		Transaction t = s.getSession().beginTransaction();
 		
 		frmAdministratormodifikacijaKorisnika = new JFrame();
 		frmAdministratormodifikacijaKorisnika.setTitle("Administrator-Modifikacija korisnika");
@@ -304,6 +302,7 @@ public class ModifikacijaKorisnika {
 						prezimeModifikacija.setText(prezime2);
 						maticniBrojModifikacija.setText(maticniBroj2);
 						brojTelefonaModifikacija.setText(brojTelefona2);
+						adresa.setText(adresa2);
 						emailModifikacija.setText(email2);
 						radnoMjestoModifikacija.setText(radnoMjesto2);
 						
@@ -313,7 +312,7 @@ public class ModifikacijaKorisnika {
 						Date date = originalFormat.parse(datumPocetkaRada2);
 						String formattedDate = targetFormat.format(date);  	
 						datumPocetkaRadaModifikacija.setText(formattedDate.toString());
-						adresa.setText(adresa2);
+						
 					}
 				}
 				catch(Exception ex){

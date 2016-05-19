@@ -79,9 +79,9 @@ public class DodavanjeKorisnika {
 	public void resetContent() {
 		ime.setText("");
 		prezime.setText("");
-		maticniBroj.setValue(null);
-		brojTelefona.setValue(null);
-		email.setValue(null);
+		maticniBroj.setValue("");
+		brojTelefona.setValue("");
+		email.setValue("");
 		radnoMjesto.setText("");
 		datumPocetkaRada.setValue(null);
 		adresa.setText("");
@@ -93,29 +93,28 @@ public class DodavanjeKorisnika {
 	private void initialize() {
 		frmAdministratorDodavanjeKorisnika = new JFrame();
 		frmAdministratorDodavanjeKorisnika.setTitle("Dodavanje korisnika");
-		frmAdministratorDodavanjeKorisnika.setBounds(100, 100, 255, 560);
+		frmAdministratorDodavanjeKorisnika.setBounds(100, 100, 291, 560);
 		frmAdministratorDodavanjeKorisnika.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmAdministratorDodavanjeKorisnika.getContentPane().setLayout(null);
 		frmAdministratorDodavanjeKorisnika.setLocationRelativeTo(null);
-		frmAdministratorDodavanjeKorisnika.setResizable(false);
 
 		ime = new JTextField();
-		ime.setBounds(45, 41, 140, 20);
+		ime.setBounds(45, 41, 184, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(ime);
 		ime.setColumns(10);
 
 		prezime = new JTextField();
-		prezime.setBounds(45, 89, 140, 20);
+		prezime.setBounds(45, 89, 184, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(prezime);
 		prezime.setColumns(10);
 
 		radnoMjesto = new JTextField();
-		radnoMjesto.setBounds(45, 339, 140, 20);
+		radnoMjesto.setBounds(45, 339, 184, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(radnoMjesto);
 		radnoMjesto.setColumns(10);
 
 		adresa = new JTextField();
-		adresa.setBounds(45, 236, 140, 20);
+		adresa.setBounds(45, 236, 184, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(adresa);
 		adresa.setColumns(10);
 
@@ -148,11 +147,11 @@ public class DodavanjeKorisnika {
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(lblNewLabel_6);
 
 		radnik = new JRadioButton("Radnik");
-		radnik.setBounds(29, 417, 72, 23);
+		radnik.setBounds(55, 417, 72, 23);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(radnik);
 
 		menadzer = new JRadioButton("Menadzer");
-		menadzer.setBounds(105, 417, 86, 23);
+		menadzer.setBounds(142, 417, 86, 23);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(menadzer);
 
 		ButtonGroup bg = new ButtonGroup();
@@ -160,7 +159,7 @@ public class DodavanjeKorisnika {
 		bg.add(menadzer);
 
 		JButton btnDodaj = new JButton("Dodaj");
-		btnDodaj.setBounds(45, 461, 140, 23);
+		btnDodaj.setBounds(45, 447, 184, 23);
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -215,11 +214,11 @@ public class DodavanjeKorisnika {
 			logger.error(e);
 		}
 
-		datumPocetkaRada.setBounds(45, 390, 140, 20);
+		datumPocetkaRada.setBounds(45, 390, 184, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(datumPocetkaRada);
 
 		maticniBroj = new JFormattedTextField(Masks.vratiMaskuZaJMBG());
-		maticniBroj.setBounds(45, 139, 140, 20);
+		maticniBroj.setBounds(45, 139, 184, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(maticniBroj);
 
 		label_obavijest = new JLabel("");
@@ -227,16 +226,16 @@ public class DodavanjeKorisnika {
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(label_obavijest);
 
 		brojTelefona = new JFormattedTextField(Masks.vratiMaskuZaTelefon());
-		brojTelefona.setBounds(45, 195, 140, 20);
+		brojTelefona.setBounds(45, 195, 184, 20);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(brojTelefona);
 
 		email = new JFormattedTextField(new EmailFormatter());
-		email.setBounds(45, 289, 140, 23);
+		email.setBounds(45, 289, 184, 23);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(email);
 
 		lblNameexamplecom = new JLabel("name@example.com");
 		lblNameexamplecom.setForeground(Color.DARK_GRAY);
-		lblNameexamplecom.setBounds(87, 276, 142, 14);
+		lblNameexamplecom.setBounds(86, 272, 142, 23);
 		frmAdministratorDodavanjeKorisnika.getContentPane().add(lblNameexamplecom);
 
 	}
