@@ -76,9 +76,8 @@ public class PocetniEkran {
 	 */
 	private void initialize() {
 		frmMenadzerPocetniEkran = new JFrame();
-		frmMenadzerPocetniEkran.setResizable(false);
 		frmMenadzerPocetniEkran.setTitle("Početni ekran");
-		frmMenadzerPocetniEkran.setBounds(100, 100, 731, 300);
+		frmMenadzerPocetniEkran.setBounds(100, 100, 774, 300);
 		frmMenadzerPocetniEkran.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmMenadzerPocetniEkran.getContentPane().setLayout(null);
 		frmMenadzerPocetniEkran.setLocationRelativeTo(null);
@@ -156,7 +155,7 @@ public class PocetniEkran {
 				}
 			}
 		});
-		btnPretragaLijekova.setBounds(528, 28, 178, 23);
+		btnPretragaLijekova.setBounds(528, 28, 200, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnPretragaLijekova);
 		
 		JButton btnKreiranjeFakture = new JButton("Kreiranje fakture");
@@ -188,7 +187,7 @@ public class PocetniEkran {
 				}
 			}
 		});
-		btnOtpisLijekova.setBounds(528, 62, 178, 23);
+		btnOtpisLijekova.setBounds(528, 62, 200, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnOtpisLijekova);
 		
 		JButton btnDesavanjaZaOdredjeni = new JButton("Dešavanja za određeni vremenski period");
@@ -248,7 +247,7 @@ public class PocetniEkran {
 			}
 		});
 
-		btnObrisi.setBounds(528, 160, 178, 23);
+		btnObrisi.setBounds(528, 160, 200, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnObrisi);
 		
 		JButton btnOdjava = new JButton("Odjava");
@@ -298,7 +297,7 @@ public class PocetniEkran {
             JOptionPane.showMessageDialog(null, help);
 			}
 		});
-		btnPomoc.setBounds(528, 228, 178, 23);
+		btnPomoc.setBounds(528, 228, 200, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnPomoc);
 		
 		JButton btnDodaj = new JButton("Dodaj");
@@ -347,7 +346,7 @@ public class PocetniEkran {
 					}
 			}
 		});
-		btnDodajLotU.setBounds(528, 96, 178, 23);
+		btnDodajLotU.setBounds(528, 96, 200, 23);
 		frmMenadzerPocetniEkran.getContentPane().add(btnDodajLotU);
 	}
 }

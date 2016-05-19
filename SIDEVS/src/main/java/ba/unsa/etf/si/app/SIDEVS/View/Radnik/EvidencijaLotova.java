@@ -113,7 +113,7 @@ public class EvidencijaLotova {
 		textField_kolicina.setColumns(10);
 		
 		label_obavijest = new JLabel("");
-		label_obavijest.setBounds(10, 256, 310, 14);
+		label_obavijest.setBounds(10, 256, 367, 24);
 		frmEvidencijaLota.getContentPane().add(label_obavijest);
 		
 		JButton btnEvidentiraj = new JButton("Evidentiraj");
