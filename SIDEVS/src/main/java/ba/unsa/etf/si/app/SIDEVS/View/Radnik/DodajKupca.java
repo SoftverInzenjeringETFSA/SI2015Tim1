@@ -50,7 +50,7 @@ public class DodajKupca {
 		frmDodajKupca.getContentPane().setLayout(null);
 		frmDodajKupca.setLocationRelativeTo(null);
 		frmDodajKupca.setResizable(false);
-		JLabel lblImeIPrezime = new JLabel("Ime i prezime:");
+		JLabel lblImeIPrezime = new JLabel("Naziv:");
 		lblImeIPrezime.setBounds(10, 36, 91, 14);
 		frmDodajKupca.getContentPane().add(lblImeIPrezime);
 		

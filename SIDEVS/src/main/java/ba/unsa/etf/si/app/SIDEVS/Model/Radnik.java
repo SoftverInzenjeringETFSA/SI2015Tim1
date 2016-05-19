@@ -5,6 +5,11 @@ import javax.persistence.Entity;
 
 @Entity
 public class Radnik extends Korisnik {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Radnik() throws NoSuchAlgorithmException{
 		super();
 	}

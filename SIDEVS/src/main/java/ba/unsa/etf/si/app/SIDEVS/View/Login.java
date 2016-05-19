@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ba.unsa.etf.si.app.SIDEVS.Model.Administrator;
+import ba.unsa.etf.si.app.SIDEVS.Model.Korisnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Menadzer;
 import ba.unsa.etf.si.app.SIDEVS.Model.Radnik;
 import ba.unsa.etf.si.app.SIDEVS.Model.Sessions;
