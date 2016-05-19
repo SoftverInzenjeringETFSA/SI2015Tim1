@@ -55,7 +55,7 @@ public class DodajLotUSkladiste {
 		frmDodajLotUSkladiste = new JFrame();
 		frmDodajLotUSkladiste.setResizable(false);
 		frmDodajLotUSkladiste.setTitle("Dodaj/ažuriraj lot u skladište");
-		frmDodajLotUSkladiste.setBounds(100, 100, 295, 185);
+		frmDodajLotUSkladiste.setBounds(100, 100, 341, 185);
 		frmDodajLotUSkladiste.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmDodajLotUSkladiste.getContentPane().setLayout(null);
 
@@ -64,11 +64,11 @@ public class DodajLotUSkladiste {
 		frmDodajLotUSkladiste.getContentPane().add(lblLot);
 
 		comboBox = new AutoCompleteJComboBox(s, Lot.class, "broj_lota");
-		comboBox.setBounds(89, 8, 166, 20);
+		comboBox.setBounds(89, 8, 236, 20);
 		frmDodajLotUSkladiste.getContentPane().add(comboBox);
 
 		JLabel lblSkladite = new JLabel("Skladište:");
-		lblSkladite.setBounds(10, 37, 31, 14);
+		lblSkladite.setBounds(10, 37, 69, 14);
 		frmDodajLotUSkladiste.getContentPane().add(lblSkladite);
 
 		JLabel lblKoliina = new JLabel("Količina:");
@@ -76,7 +76,7 @@ public class DodajLotUSkladiste {
 		frmDodajLotUSkladiste.getContentPane().add(lblKoliina);
 
 		final JComboBox comboBox_skladiste = new JComboBox(SkladisteVM.dajSvaSkladista(s));
-		comboBox_skladiste.setBounds(89, 34, 166, 20);
+		comboBox_skladiste.setBounds(89, 34, 236, 20);
 		frmDodajLotUSkladiste.getContentPane().add(comboBox_skladiste);
 
 		textField_kolicina = new JTextField();
@@ -88,7 +88,7 @@ public class DodajLotUSkladiste {
 				}
 			}
 		});
-		textField_kolicina.setBounds(89, 59, 166, 20);
+		textField_kolicina.setBounds(89, 59, 236, 20);
 		frmDodajLotUSkladiste.getContentPane().add(textField_kolicina);
 		textField_kolicina.setColumns(10);
 
@@ -139,7 +139,7 @@ public class DodajLotUSkladiste {
 				return true;
 			}
 		});
-		btnDodaj.setBounds(89, 90, 166, 23);
+		btnDodaj.setBounds(89, 90, 236, 23);
 		frmDodajLotUSkladiste.getContentPane().add(btnDodaj);
 	}
 
