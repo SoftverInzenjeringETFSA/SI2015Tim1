@@ -68,7 +68,7 @@ public class DodajLotUSkladiste {
 		frmDodajLotUSkladiste.getContentPane().add(comboBox);
 
 		JLabel lblSkladite = new JLabel("Skladište:");
-		lblSkladite.setBounds(10, 37, 69, 14);
+		lblSkladite.setBounds(10, 37, 31, 14);
 		frmDodajLotUSkladiste.getContentPane().add(lblSkladite);
 
 		JLabel lblKoliina = new JLabel("Količina:");

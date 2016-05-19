@@ -209,9 +209,12 @@ public class KreiranjeFakture {
 						for (Pakovanje pakovanje : pakovanja) {
 							if(pakovanje.getSkladiste() == skladiste) {
 								postoji = true;
+								if(pakovanje.getKolicina() < kolicina){
+									msg = "Na skladištu postoji " + pakovanje.getKolicina() + " pakovanja";
+								}
 							}
 						}
-						if(!postoji) msg = "Lot " + lot.getBroj_lota() + " ne postoji u skladištu " + skladiste.getBroj_skladista();
+						if(msg == "" && !postoji) msg = "Lot " + lot.getBroj_lota() + " ne postoji u skladištu " + skladiste.getBroj_skladista();
 					}
 					if (msg == "") {
 						Lijek lijek = lot.getLijek();

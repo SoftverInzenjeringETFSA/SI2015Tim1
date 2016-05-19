@@ -43,13 +43,13 @@ public class DodajKupca {
 	 */
 	private void initialize() {
 		frmDodajKupca = new JFrame();
+		frmDodajKupca.setResizable(false);
 		frmDodajKupca.getContentPane().setLayout(null);
 		frmDodajKupca.setTitle("Dodaj kupca");
-		frmDodajKupca.setBounds(100, 100, 302, 196);
+		frmDodajKupca.setBounds(100, 100, 302, 183);
 		frmDodajKupca.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmDodajKupca.getContentPane().setLayout(null);
 		frmDodajKupca.setLocationRelativeTo(null);
-		frmDodajKupca.setResizable(false);
 		JLabel lblImeIPrezime = new JLabel("Naziv:");
 		lblImeIPrezime.setBounds(10, 36, 91, 14);
 		frmDodajKupca.getContentPane().add(lblImeIPrezime);
