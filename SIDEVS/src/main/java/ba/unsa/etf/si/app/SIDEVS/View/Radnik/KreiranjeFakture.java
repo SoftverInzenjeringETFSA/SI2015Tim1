@@ -58,14 +58,14 @@ public class KreiranjeFakture {
 	public KreiranjeFakture(Sessions s) throws Exception {
 		this.s = s;
 		initialize();
-		
+
 		frmKreiranjeFakture.setVisible(true);
 		if (!s.daLiPostoji()) {
 			throw new Exception("Sesija nije kreirana!");
 		}
 	}
-	
-	public void ugasi(){
+
+	public void ugasi() {
 		frmKreiranjeFakture.dispose();
 	}
 
@@ -91,14 +91,13 @@ public class KreiranjeFakture {
 		comboBox_kupac.setBounds(10, 28, 181, 20);
 		panel_kupac.add(comboBox_kupac);
 
-		
 		JButton btnDodajNovogKorisnika = new JButton("Dodaj novog kupca");
 		btnDodajNovogKorisnika.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
 					DodajKupca dk = new DodajKupca(s);
-					dk.prikazi();	
+					dk.prikazi();
 				} catch (Exception e1) {
 					logger.error(e1);
 				}
@@ -145,11 +144,11 @@ public class KreiranjeFakture {
 		textField_kolicina.setBounds(96, 82, 95, 20);
 		panel_2.add(textField_kolicina);
 		textField_kolicina.setColumns(10);
-		
+
 		JLabel lblCijena = new JLabel("Cijena:");
 		lblCijena.setBounds(10, 60, 46, 14);
 		panel_2.add(lblCijena);
-		
+
 		textField_cijena = new JTextField();
 		textField_cijena.setBounds(96, 57, 95, 20);
 		panel_2.add(textField_cijena);
@@ -203,22 +202,35 @@ public class KreiranjeFakture {
 					else if (lot == null)
 						msg = "Lot ne postoji";
 					else {
+						
+						// Finalna validacija kolicine lijeka
+						// Zbir trenutnog na stanju tebele i novi
+						int trenutno_kolicina_lota = 0;
+						for (int i = 0; i < lotovi.size(); i++) {
+							if (lotovi.get(i) == lot) {
+								trenutno_kolicina_lota += kolicine.get(i);
+							}
+						}
+						
 						Boolean postoji = false;
-						Criteria criteria = s.getSession().createCriteria(Pakovanje.class).add(Restrictions.eq("lot", lot));
+						Criteria criteria = s.getSession().createCriteria(Pakovanje.class)
+								.add(Restrictions.eq("lot", lot));
 						List<Pakovanje> pakovanja = criteria.list();
 						for (Pakovanje pakovanje : pakovanja) {
-							if(pakovanje.getSkladiste() == skladiste) {
+							if (pakovanje.getSkladiste() == skladiste) {
 								postoji = true;
-								if(pakovanje.getKolicina() < kolicina){
-									msg = "Na skladištu postoji " + pakovanje.getKolicina() + " pakovanja";
+								if (pakovanje.getKolicina()-trenutno_kolicina_lota < kolicina) {
+									msg = "Na skladištu postoji " + (pakovanje.getKolicina()-trenutno_kolicina_lota) + " pakovanja";
 								}
 							}
 						}
-						if(msg == "" && !postoji) msg = "Lot " + lot.getBroj_lota() + " ne postoji u skladištu " + skladiste.getBroj_skladista();
+						if (msg == "" && !postoji)
+							msg = "Lot " + lot.getBroj_lota() + " ne postoji u skladištu "
+									+ skladiste.getBroj_skladista();
 					}
 					if (msg == "") {
 						Lijek lijek = lot.getLijek();
-						
+
 						lotovi.add(lot);
 						kolicine.add(kolicina);
 						cijene.add(cijena);
@@ -254,53 +266,55 @@ public class KreiranjeFakture {
 				textField_cijena.setText("");
 			}
 
-			private boolean validriajUnosStavke() {		
+			private boolean validriajUnosStavke() {
 				System.out.println("tu");
 				String msg = "";
 				if (comboBox_kupac.getSelectedItem() == null)
 					msg = "Odaberite kupca";
-				
-				//	msg = Validator.validirajKupca(s, comboBox_kupac.getSelectedItem().toString());
+
+				// msg = Validator.validirajKupca(s,
+				// comboBox_kupac.getSelectedItem().toString());
 				else if (comboBox_skladista.getSelectedItem() == null)
 					msg = "Odaberite skladište";
 				else if (comboBox_lot.getSelectedItem() == null)
 					msg = "Odaberite lot";
-				
-				//	msg = Validator.validirajLot(s, comboBox_lot.getSelectedItem().toString());
-				else if (textField_cijena.getText().isEmpty()) 
+
+				// msg = Validator.validirajLot(s,
+				// comboBox_lot.getSelectedItem().toString());
+				else if (textField_cijena.getText().isEmpty())
 					msg = "Unesite cijenu";
-				else if (Double.parseDouble(textField_cijena.getText())<=0) msg = "Cijena mora biti veća od nule";
+				else if (Double.parseDouble(textField_cijena.getText()) <= 0)
+					msg = "Cijena mora biti veća od nule";
 				else if (textField_kolicina.getText().isEmpty())
 					msg = "Unesite količinu";
-				else if (Double.parseDouble(textField_kolicina.getText())<=0) msg = "Količina mora biti veća od nule";
-				
-				if (comboBox_lot.getSelectedItem()!=null && msg == "") {
+				else if (Double.parseDouble(textField_kolicina.getText()) <= 0)
+					msg = "Količina mora biti veća od nule";
+
+				if (comboBox_lot.getSelectedItem() != null && msg == "") {
 					System.out.println("ovdje");
 					System.out.println(comboBox_lot.getSelectedItem().toString());
 					msg = Validator.validirajLot(s, comboBox_lot.getSelectedItem().toString());
 				}
-				
-				//provjera kolicine				
-				if (comboBox_lot.getSelectedItem()!=null && msg == "")
-	            {
-	            	List<Lot> lotovi = s.getSession().createCriteria(Lot.class).add(Restrictions.like("broj_lota", (String) comboBox_lot.getSelectedItem())).list();
+
+				// provjera kolicine
+				if (comboBox_lot.getSelectedItem() != null && msg == "") {
+					List<Lot> lotovi = s.getSession().createCriteria(Lot.class)
+							.add(Restrictions.like("broj_lota", (String) comboBox_lot.getSelectedItem())).list();
 					Lot izabraniLot = lotovi.get(0);
-					Integer kol=izabraniLot.getKolicina_tableta();
+					Integer kol = izabraniLot.getKolicina_tableta();
 					System.out.println(kol.toString());
 					System.out.println(textField_kolicina.getText());
-					if (izabraniLot.getDatum_otpisa()!=null) { msg = "Izabrani lot je otpisan";
-					}
-					else if (Integer.parseInt(textField_kolicina.getText())>kol)
-						msg="Nemate dovoljnu količinu lijeka na skladištu!";
-	            }
-				
-				if (msg==""){
-					msg = Validator.validirajKupca(s, comboBox_kupac.getSelectedItem().toString());
-					
+					if (izabraniLot.getDatum_otpisa() != null) {
+						msg = "Izabrani lot je otpisan";
+					} else if (Integer.parseInt(textField_kolicina.getText()) > kol)
+						msg = "Nemate dovoljnu količinu lijeka na skladištu!";
 				}
-				
 
-				
+				if (msg == "") {
+					msg = Validator.validirajKupca(s, comboBox_kupac.getSelectedItem().toString());
+
+				}
+
 				label_obavijest.setText(msg);
 				if (msg != "") {
 					label_obavijest.setForeground(Color.RED);
@@ -362,7 +376,7 @@ public class KreiranjeFakture {
 		});
 		btnNewButton.setBounds(10, 389, 201, 23);
 		frmKreiranjeFakture.getContentPane().add(btnNewButton);
-		
+
 		JButton btnNewButton_brisi_redove = new JButton("Obriši odabrane redove");
 		btnNewButton_brisi_redove.addMouseListener(new MouseAdapter() {
 			@Override
@@ -387,7 +401,7 @@ public class KreiranjeFakture {
 		int brojac = 0;
 		int k = 0;
 		for (Lot lot : lotovi) {
-			if(rows[k] == brojac){
+			if (rows[k] == brojac) {
 				lotovi.remove(lot);
 				kolicine.remove(brojac);
 				skladista.remove(brojac);
