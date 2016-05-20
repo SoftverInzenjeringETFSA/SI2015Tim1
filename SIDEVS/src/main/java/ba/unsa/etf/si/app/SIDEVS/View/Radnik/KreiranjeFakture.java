@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -34,18 +35,21 @@ import ba.unsa.etf.si.app.SIDEVS.ViewModel.SkladisteVM;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Date;
 
 public class KreiranjeFakture {
 	final static Logger logger = Logger.getLogger(KreiranjeFakture.class);
-
+	
 	private JFrame frmKreiranjeFakture;
 	private JTextField textField_kolicina;
 	private JTable table;
 	private Sessions s;
 	private int redni_broj = 1;
+	
 
 	// Za PDF
 	private Kupac k;
@@ -58,7 +62,7 @@ public class KreiranjeFakture {
 	public KreiranjeFakture(Sessions s) throws Exception {
 		this.s = s;
 		initialize();
-
+    
 		frmKreiranjeFakture.setVisible(true);
 		if (!s.daLiPostoji()) {
 			throw new Exception("Sesija nije kreirana!");
@@ -80,6 +84,7 @@ public class KreiranjeFakture {
 		frmKreiranjeFakture.getContentPane().setLayout(null);
 		frmKreiranjeFakture.setLocationRelativeTo(null);
 		frmKreiranjeFakture.setResizable(false);
+		
 
 		final JPanel panel_kupac = new JPanel();
 		panel_kupac.setBounds(10, 11, 201, 109);
@@ -235,7 +240,8 @@ public class KreiranjeFakture {
 						kolicine.add(kolicina);
 						cijene.add(cijena);
 						skladista.add(skladiste);
-
+                        
+						
 						table_model.addRow(new Object[] { redni_broj, skladiste.getBroj_skladista(), lijek.getNaziv(),
 								lot.getBroj_lota(), kolicina, cijena, kolicina * cijena });
 						redni_broj += 1;
@@ -295,20 +301,31 @@ public class KreiranjeFakture {
 					System.out.println(comboBox_lot.getSelectedItem().toString());
 					msg = Validator.validirajLot(s, comboBox_lot.getSelectedItem().toString());
 				}
-
+			    
+				Date today=new Date();
+				
 				// provjera kolicine
 				if (comboBox_lot.getSelectedItem() != null && msg == "") {
 					List<Lot> lotovi = s.getSession().createCriteria(Lot.class)
 							.add(Restrictions.like("broj_lota", (String) comboBox_lot.getSelectedItem())).list();
 					Lot izabraniLot = lotovi.get(0);
 					Integer kol = izabraniLot.getKolicina_tableta();
+					
 					System.out.println(kol.toString());
 					System.out.println(textField_kolicina.getText());
 					if (izabraniLot.getDatum_otpisa() != null) {
 						msg = "Izabrani lot je otpisan";
 					} else if (Integer.parseInt(textField_kolicina.getText()) > kol)
 						msg = "Nemate dovoljnu količinu lijeka na skladištu!";
+					//provjera isteka roka
+					else if(izabraniLot.getRok_trajanja().before(today)){
+						msg = "Rok trajanja za izabrani lot je istekao";
+					}
 				}
+				
+				
+				
+				
 
 				if (msg == "") {
 					msg = Validator.validirajKupca(s, comboBox_kupac.getSelectedItem().toString());
