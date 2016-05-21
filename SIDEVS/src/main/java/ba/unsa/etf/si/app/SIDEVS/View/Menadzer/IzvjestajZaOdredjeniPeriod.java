@@ -79,6 +79,9 @@ public class IzvjestajZaOdredjeniPeriod {
 	 * @throws WrongInputException 
 	 */
 	private void initialize(final Sessions sesija) throws WrongInputException {
+		
+		sesija.setSession();
+		
 		frmMenadzerIzvjestajZa = new JFrame();
 		frmMenadzerIzvjestajZa.setTitle("Izvjestaj za odredjeni vremenski period");
 		frmMenadzerIzvjestajZa.setBounds(100, 100, 571, 268);
