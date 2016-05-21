@@ -119,6 +119,7 @@ public class IzvjestajNaOsnovuLota {
 						 
 						   //novi kod:
 						
+						_sesija.setSession();
 						
 						List<Lot> sviLotovi = GlavneMetode.vratiSveLotove(_sesija);
 						   List<Lot> otpisaniLotovi = GlavneMetode.vratiOtpisaneLotove(_sesija);
