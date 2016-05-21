@@ -96,9 +96,6 @@ public class OtpisLijeka {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(final Sessions sesija) {
-		
-		sesija.setSession();
-		
 		frmOtpisLijeka = new JFrame();
 		frmOtpisLijeka.setTitle("Otpis lijeka");
 		frmOtpisLijeka.setBounds(100, 100, 278, 395);

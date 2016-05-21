@@ -14,9 +14,6 @@ public final class Sessions {
 	public Session getSession() {
 		return session;
 	}
-	public void setSession(){
-		session = HibernateUtil.getSessionFactory().openSession();
-	}
 	private static Transaction trasaction;
 	public Transaction getTrasaction() {
 		return trasaction;

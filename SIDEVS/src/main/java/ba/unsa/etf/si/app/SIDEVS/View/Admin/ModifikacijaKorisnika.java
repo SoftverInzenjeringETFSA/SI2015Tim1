@@ -275,10 +275,7 @@ public class ModifikacijaKorisnika {
 			public void actionPerformed(ActionEvent arg0) {
 				try{					
 					if (validirajOdabir()){
-						String txt = listaKorisnikaModifikacija.getSelectedItem().toString();	
-
-						_sesija.setSession();
-						
+						String txt = listaKorisnikaModifikacija.getSelectedItem().toString();							
 						Criteria criteria = _sesija.getSession().createCriteria(Korisnik.class).add(Restrictions.like("email", txt).ignoreCase());
 						List<Korisnik> k = criteria.list();
 						
